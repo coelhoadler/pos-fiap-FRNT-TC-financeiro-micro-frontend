@@ -2,8 +2,6 @@
 
 Este é um projeto feito com a multifrontend, cujo objetivo é representar as **transações financeiras** de um usuário.
 
----
-
 ## 👨‍💻 Autores do projeto 
 
 - [@Adler Coelho](https://www.linkedin.com/in/adlercoelhosantos/)

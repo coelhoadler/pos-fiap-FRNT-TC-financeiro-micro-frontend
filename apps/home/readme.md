@@ -1,0 +1,1 @@
+Criar boilerplate da aplicação React
