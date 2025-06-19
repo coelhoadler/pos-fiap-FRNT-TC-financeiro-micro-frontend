@@ -4,7 +4,13 @@
   "description": "Este é um projeto feito com multi-frontend, cujo objetivo é representar as **transações financeiras** de um usuário.",
   "main": "index.js",
   "scripts": {
-    "commit": "git add . && git cz"
+    "commit": "git add . && git cz",
+    "install": "npm-run-all --serial install:*",
+    "install:root-config": "cd apps/root-config && npm install",
+    "install:home": "cd apps/home && npm install",
+    "start": "npm-run-all --parallel start:*",
+    "start:root-config": "cd apps/root-config && npm start",
+    "start:home": "cd apps/home && npm start"
   },
   "repository": {
     "type": "git",
@@ -18,7 +24,8 @@
   },
   "homepage": "https://github.com/coelhoadler/pos-fiap-FRNT-TC-financeiro-micro-frontend#readme",
   "devDependencies": {
-    "commitizen": "^4.3.1"
+    "commitizen": "^4.3.1",
+    "npm-run-all": "^4.1.5"
   },
   "config": {
     "commitizen": {
