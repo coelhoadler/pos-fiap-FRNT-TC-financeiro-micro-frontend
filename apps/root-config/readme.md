@@ -1,1 +1,0 @@
-Crair estrutura do Single-SPA
