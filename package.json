@@ -1,0 +1,28 @@
+{
+  "name": "pos-fiap-frnt-tc-financeiro-micro-frontend",
+  "version": "1.0.0",
+  "description": "Este é um projeto feito com multi-frontend, cujo objetivo é representar as **transações financeiras** de um usuário.",
+  "main": "index.js",
+  "scripts": {
+    "commit": "git add . && git cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coelhoadler/pos-fiap-FRNT-TC-financeiro-micro-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coelhoadler/pos-fiap-FRNT-TC-financeiro-micro-frontend/issues"
+  },
+  "homepage": "https://github.com/coelhoadler/pos-fiap-FRNT-TC-financeiro-micro-frontend#readme",
+  "devDependencies": {
+    "commitizen": "^4.3.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}
