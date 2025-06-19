@@ -1,0 +1,19 @@
+{
+  "name": "root-config",
+  "version": "1.0.0",
+  "description": "Crair estrutura do Single-SPA",
+  "main": "root-config.js",
+  "scripts": {
+     "start": "serve -s -l 3000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "single-spa": "^6.0.3",
+    "systemjs": "^6.15.1"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

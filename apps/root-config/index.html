@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Root Config</title>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js"></script>
+  <script type="systemjs-importmap" src="./importmap.json"></script>
+</head>
+<body>
+   <h1>Root-config carregado ✅</h1>
+  <div id="container"></div>
+  <script>
+    System.import('home')
+    .then(() => console.log('[Root-config] ✅ Microfrontend Home carregado com sucesso'))
+    .catch((err) => console.error('[Root-config] ❌ Falha ao carregar Home', err));
+  </script>
+
+  <script>
+    window.addEventListener('single-spa:before-mount-routing-event', () => {
+      console.log('[Root-config] 🔄 Antes de montar qualquer microfrontend');
+    });
+
+    window.addEventListener('single-spa:app-change', (evt) => {
+      console.log(`[Root-config] 🔥 Microfrontend mudou:`, evt.detail);
+    });
+
+    window.addEventListener('single-spa:routing-event', () => {
+      console.log('[Root-config] 📦 Routing event');
+    });
+
+    window.addEventListener('single-spa:before-app-change', (evt) => {
+      console.log(`[Root-config] ⚙️ Antes de mudar:`, evt.detail.newAppStatuses);
+    });
+
+    window.addEventListener('single-spa:app-change', (evt) => {
+      console.log(`[Root-config] 🚀 Microfrontend carregado:`, evt.detail);
+    });
+
+    window.addEventListener('error', (err) => {
+      console.error('[Root-config] ❌ Error geral capturado:', err);
+    });
+
+    window.addEventListener('unhandledrejection', (err) => {
+      console.error('[Root-config] ❌ Promise não tratada:', err);
+    });
+</script>
+
+</body>
+</html>

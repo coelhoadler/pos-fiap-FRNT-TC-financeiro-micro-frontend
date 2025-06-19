@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "home": "http://localhost:5000/home.umd.js"
+  }
+}
