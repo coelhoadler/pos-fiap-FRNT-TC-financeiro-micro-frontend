@@ -18,8 +18,13 @@
   -->
 
   <main>
+    <route path="login" exact>
+      <application name="@financeiro/login3"></application>
+    </route>
+
     <route default>
       <application name="@financeiro/home"></application>
     </route>
+
   </main>
 </single-spa-router>
