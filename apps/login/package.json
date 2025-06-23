@@ -1,5 +1,5 @@
 {
-  "name": "@financeiro/login3",
+  "name": "@financeiro/login",
   "scripts": {
     "start": "webpack serve --port 8501",
     "start:standalone": "webpack serve --env standalone",
@@ -57,5 +57,5 @@
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9"
   },
-  "types": "dist/financeiro-login3.d.ts"
+  "types": "dist/financeiro-login.d.ts"
 }

@@ -4,7 +4,7 @@
     "jsx": "react-jsx",
     "declarationDir": "dist"
   },
-  "files": ["src/financeiro-login3.tsx"],
+  "files": ["src/financeiro-login.tsx"],
   "include": ["src/**/*"],
   "exclude": ["src/**/*.test*"]
 }
