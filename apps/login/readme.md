@@ -1,1 +1,0 @@
-Criar boilerplate da aplicação Angular 20
