@@ -22,9 +22,13 @@
       <application name="@financeiro/login"></application>
     </route>
 
-    <route default>
+    <route path="dashboard" exact>
+      <application name="@financeiro/dashboard"></application>
+    </route>    
+
+    <!-- <route default>
       <application name="@financeiro/home"></application>
-    </route>
+    </route> -->
 
   </main>
 </single-spa-router>
