@@ -8,9 +8,11 @@
     "install": "npm-run-all --serial install:*",
     "install:root-config": "cd apps/root-config && npm install",
     "install:home": "cd apps/home && npm install",
+    "install:login": "cd apps/login && npm install",
     "start": "npm-run-all --parallel start:*",
-    "start:root-config": "cd apps/root-config && npm start",
-    "start:home": "cd apps/home && npm start"
+    "start:home": "cd apps/home && npm start",
+    "start:login": "cd apps/login && npm start",
+    "start:root-config": "cd apps/root-config && npm start"
   },
   "repository": {
     "type": "git",
