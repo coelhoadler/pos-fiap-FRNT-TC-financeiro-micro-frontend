@@ -9,7 +9,9 @@
     "install:root-config": "cd apps/root-config && npm install",
     "install:dashboard": "cd apps/dashboard && npm install",
     "install:login": "cd apps/login && npm install",
-    "start": "npm-run-all --parallel start:*",
+    "start:docker": "docker compose up -d",
+    "start:test-mongodb": "node scripts/start-mongodb.js",
+    "start": "npm-run-all --parallel start:docker start:*",
     "start:dashboard": "cd apps/dashboard && npm start",
     "start:login": "cd apps/login && npm start",
     "start:root-config": "cd apps/root-config && npm start"
@@ -33,5 +35,8 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "mongodb": "^6.17.0"
   }
 }

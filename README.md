@@ -35,6 +35,11 @@ Este é um projeto feito com a multifrontend, cujo objetivo é representar as **
   │   ├── deploy.sh (Script de deploy)
 ```
 
+## Docker + Mongodb
+1 - Necessário que o Docker esteja rodando na máquina
+2 - Necessário instalar o mongodb **npm install mongodb**
+
+
 - /apps: Contém os microfrontends individuais, cada um com sua própria lógica e dependências.
 - /shared: Armazena código reutilizável, como componentes, serviços e utilitários. **(verificar necessidade)**
 - /config: Centraliza configurações do projeto, como Webpack e TypeScript. **(verificar necessidade)**
