@@ -1,5 +1,13 @@
-import './index.css';
+import Home from './components/Home';
+import { TransactionProvider } from './setup/context/transactionContext';
+import './styles/globals.css';
 
-export default function Root(props) {
-  return <section className="bg-primary text-yellow-600">{props.name} is mounted!</section>;
+export default function Root() {
+  return (
+    <>
+      <TransactionProvider>
+        <Home />
+      </TransactionProvider>
+    </>
+  );
 }
