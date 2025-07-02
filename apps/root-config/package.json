@@ -1,5 +1,6 @@
 {
   "name": "@financeiro/root-config",
+
   "scripts": {
     "start": "webpack serve --port 9000 --env isLocal",
     "lint": "eslint src --ext js",
@@ -7,7 +8,8 @@
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "build": "concurrently npm:build:*",
-    "build:webpack": "webpack --mode=production"
+    "build:webpack": "webpack --mode=production",
+    "clean": "rimraf dist node_modules/.cache/webpack"
   },
   "devDependencies": {
     "@babel/core": "^7.27.4",
