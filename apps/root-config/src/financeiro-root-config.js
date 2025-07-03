@@ -7,16 +7,7 @@ import {
 
 import microfrontendLayout from './microfrontend-layout.html';
 
-function limparExportDefault(conteudo){
-  const regex = /^export\s+default\s+["`](.*)["`];?$/s;
-  const match = conteudo.match(regex);
-  return match ? match[1] : conteudo;
-}
-
-const layoutString = limparExportDefault(microfrontendLayout);
-// console.log("Layout content:", layoutString);
-
-const routes = constructRoutes(layoutString);
+const routes = constructRoutes(microfrontendLayout);
 const applications = constructApplications({
   routes,
   loadApp({ name }) {
