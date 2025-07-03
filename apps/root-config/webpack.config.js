@@ -17,7 +17,7 @@ module.exports = (webpackConfigEnv, argv) => {
       rules: [
         {
           test: /\.html$/i,
-          use: 'raw-loader',
+          type: 'asset/source',
         },
       ],
     },

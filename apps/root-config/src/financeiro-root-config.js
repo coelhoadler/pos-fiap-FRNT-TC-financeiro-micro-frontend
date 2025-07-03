@@ -14,7 +14,7 @@ function limparExportDefault(conteudo){
 }
 
 const layoutString = limparExportDefault(microfrontendLayout);
-console.log("Layout content:", layoutString);
+// console.log("Layout content:", layoutString);
 
 const routes = constructRoutes(layoutString);
 const applications = constructApplications({
