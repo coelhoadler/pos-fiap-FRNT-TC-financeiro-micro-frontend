@@ -3,8 +3,9 @@
   "scripts": {
     "start": "webpack serve --port 8500",
     "start:standalone": "webpack serve --env standalone",
-    "build": "concurrently npm:build:*",
+    "build": "npm run build:webpack && npm run build:copy-dist",
     "build:webpack": "webpack --mode=production",
+    "build:copy-dist": "copyfiles -u 1 -V dist/**/* ../../dist",
     "analyze": "webpack --mode=production --env analyze",
     "lint": "eslint src --ext js,ts,tsx",
     "format": "prettier --write .",
@@ -27,6 +28,7 @@
     "@testing-library/react": "^16.0.1",
     "babel-jest": "^27.5.1",
     "concurrently": "^6.2.1",
+    "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
