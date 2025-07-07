@@ -16,7 +16,7 @@
     {
       "imports": {
         "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/esm/single-spa.min.js",
-        "react": "https://cdn.jsdelivr.net/npm/react@19.0.0/+esm",
+        "react": "https://react.microfrontends.app/deps/npm:react@19.0.0/dev.index.js",
         "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@19.0.0/+esm",
         "react-dom/client": "https://cdn.jsdelivr.net/npm/react-dom@19.1.0/client/+esm"
       }
@@ -33,13 +33,24 @@
     {
       "imports": {
         "@financeiro/root-config": "//localhost:9000/financeiro-root-config.js",
-        "@financeiro/home": "//localhost:8500/financeiro-home.js",
         "@financeiro/dashboard": "//localhost:8500/financeiro-dashboard.js",
         "@financeiro/login": "//localhost:8501/financeiro-login.js"
       }
     }
   </script>
   <% } %>
+
+  <% if (!isLocal) { %>
+  <script type="injector-importmap">
+    {
+      "imports": {
+        "@financeiro/root-config": "//feature-deploy-amplify.d1jk05awk6u8l5.amplifyapp.com/financeiro-root-config.js",
+        "@financeiro/dashboard": "//feature-deploy-amplify.d1jk05awk6u8l5.amplifyapp.com/financeiro-dashboard.js",
+        "@financeiro/login": "//feature-deploy-amplify.d1jk05awk6u8l5.amplifyapp.com/financeiro-login.js"
+      }
+    }
+  </script>
+  <% } %> 
 
   <script src="https://cdn.jsdelivr.net/npm/zone.js@0.11.4/dist/zone.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js"></script>
