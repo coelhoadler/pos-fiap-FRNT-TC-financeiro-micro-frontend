@@ -12,7 +12,11 @@
     "start": "npm-run-all --parallel start:*",
     "start:dashboard": "cd apps/dashboard && npm start",
     "start:login": "cd apps/login && npm start",
-    "start:root-config": "cd apps/root-config && npm start"
+    "start:root-config": "cd apps/root-config && npm start",
+    "build": "npm-run-all --serial build:*",
+    "build:dashboard": "cd apps/dashboard && npm run build",
+    "build:login": "cd apps/login && npm run build",
+    "build:root-config": "cd apps/root-config && npm run build"
   },
   "repository": {
     "type": "git",
