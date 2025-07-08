@@ -21,6 +21,10 @@ module.exports = (webpackConfigEnv, argv) => {
         },
       ]
     },
+    watchOptions: {
+      poll: true, // Enable polling to detect file changes
+      ignored: /node_modules/, // Ignore node_modules for performance
+    }
   });
 
 };
