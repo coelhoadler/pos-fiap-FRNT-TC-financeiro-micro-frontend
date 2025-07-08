@@ -1,1 +1,162 @@
 @import "tailwindcss";
+
+@theme {
+  --font-family-base: 'Inter', sans-serif;
+  --text-sm: 13px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 25px;
+}
+
+@theme {
+  --background-color: #e4ede3;
+  --color-primary: #004d61;
+  --color-primary-500: #056983;
+  --color-primary-600: #cfa8a8;
+  --color-inactive: #dee9ea;
+  --color-secondary: #ff5031;
+  --color-tertiary: #2a3c41;
+  --color-gray-100: #f8f8f8;
+  --color-gray-200: #f5f5f5;
+  --color-gray-300: #cbcbcb;
+  --color-link: #47a138;
+}
+
+@theme {
+  --filter-primary: brightness(0) saturate(100%) invert(22%) sepia(71%)
+    saturate(854%) hue-rotate(152deg) brightness(92%) contrast(101%);
+  --filter-inactive: brightness(0) saturate(100%) invert(93%) sepia(8%)
+    saturate(169%) hue-rotate(136deg) brightness(100%) contrast(92%);
+  --filter-secondary: brightness(0) saturate(100%) invert(43%) sepia(29%)
+    saturate(2302%) hue-rotate(332deg) brightness(97%) contrast(111%);
+  --filter-tertiary: brightness(0) saturate(100%) invert(18%) sepia(26%)
+    saturate(522%) hue-rotate(146deg) brightness(95%) contrast(88%);
+  --filter-gray-100: brightness(0) saturate(100%) invert(99%) sepia(76%)
+    saturate(196%) hue-rotate(232deg) brightness(111%) contrast(95%);
+  --filter-gray-200: brightness(0) saturate(100%) invert(100%) sepia(34%)
+    saturate(2%) hue-rotate(276deg) brightness(112%) contrast(92%);
+  --filter-gray-300: brightness(0) saturate(100%) invert(89%) sepia(0%)
+    saturate(1%) hue-rotate(162deg) brightness(93%) contrast(90%);
+  --filter-link: brightness(0) saturate(100%) invert(49%) sepia(72%)
+    saturate(447%) hue-rotate(65deg) brightness(94%) contrast(87%);
+}
+
+@theme {
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+.toast-centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f0f4f8;
+  color: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+  padding: 1rem 1.5rem;
+  min-width: 300px;
+  text-align: center;
+  z-index: 9999;
+}
+
+@theme {
+  --font-family-base: 'Inter', sans-serif;
+  --text-sm: 13px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 25px;
+}
+
+
+/* @layer components {
+  body {
+    @apply bg-background-color w-screen h-screen m-0 p-0 overflow-x-hidden text-size-16;
+  }
+  .center {
+    @apply flex items-center justify-center;
+  }
+  .container {
+    @apply flex flex-col justify-end px-4 max-w-250 gap-6 md:flex-row;
+  }
+  .container-page {
+    @apply flex flex-col md:flex-row gap-6 w-full;
+  }
+  .title {
+    @apply text-size-25 font-semibold text-verde;
+  }
+  .menu {
+    @apply flex-col bg-transparent rounded-md md:shadow-lg text-verde gap-10 md:p-4 md:bg-white xs:flex hidden;
+  }
+  .menu-open {
+    @apply flex flex-col bg-white flex-1 fixed left-0 top-0 p-4 z-30 shadow-lg rounded-md;
+  }
+  .menu-open ul {
+    @apply flex flex-col gap-8;
+  }
+  .modal {
+    @apply fixed inset-0 bg-black/20 backdrop-blur-xs z-10;
+  }
+  .line {
+    @apply w-24 h-0.5 bg-preto border-0 rounded-sm hover:bg-verde-claro;
+  }
+  .card {
+    @apply flex flex-col items-start justify-start bg-white rounded-md shadow-lg text-black p-4;
+  }
+  .campo {
+    @apply flex flex-col py-2 gap-1 md:gap-2;
+  }
+  .campo-input {
+    @apply h-10 border-2 border-verde-claro bg-white rounded-md p-2 text-black text-start focus:border-verde focus:outline-none text-size-14;
+  }
+  .btn {
+    @apply bg-verde text-white rounded-md p-2 md:px-4 text-center font-semibold cursor-pointer transition-colors duration-300 ease-in-out hover:bg-verde-claro min-w-45;
+  }
+  .btn-secoundary {
+    @apply bg-white text-verde rounded-md p-2 md:px-4 text-center font-semibold cursor-pointer transition-colors duration-300 ease-in-out hover:bg-verde-claro hover:text-white;
+  }
+  .btn-outline {
+    @apply border border-white text-black rounded-md p-2 md:px-4 text-center font-semibold cursor-pointer transition-colors duration-300 ease-in-out hover:bg-cinza;
+  }
+  .btn-icon {
+    @apply bg-verde text-white rounded-full p-2 mt-2 text-center font-semibold cursor-pointer transition-colors duration-300 ease-in-out hover:bg-verde-claro;
+  }
+  .btn-danger {
+    @apply bg-erro text-white rounded-md py-2 px-4 text-center font-semibold cursor-pointer transition-colors duration-300 ease-in-out hover:bg-red-500;
+  }
+  .link {
+    @apply text-white font-semibold text-size-14 xs:text-size-16 cursor-pointer;
+  }
+  .link-secoundary {
+    @apply text-verde font-semibold text-size-16 cursor-pointer;
+  }
+  .transacoes {
+    @apply flex flex-col items-start justify-start gap-4 min-w-42;
+
+    .mes-group {
+      @apply text-verde font-semibold text-size-16 py-2;
+    }
+
+    .transacao-item {
+      @apply flex flex-col items-start justify-start;
+
+      h6 {
+        @apply font-bold;
+      }
+    }
+  }
+}
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
