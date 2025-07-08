@@ -74,16 +74,16 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
     }, 0);
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
-    const accountJoana = {
-      accountNumber: '123456789',
-      balance: calculateTotalAmount(responseData || []),
-      currency: 'BRL',
-      accountType: 'Conta Corrente',
-    };
-    setBalance(accountJoana.balance);
-    // await accountServices.updateAccountById('123456789', accountJoana);
-  };
+  // const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  //   const accountJoana = {
+  //     accountNumber: '123456789',
+  //     balance: calculateTotalAmount(responseData || []),
+  //     currency: 'BRL',
+  //     accountType: 'Conta Corrente',
+  //   };
+  //   setBalance(accountJoana.balance);
+  //   // await accountServices.updateAccountById('123456789', accountJoana);
+  // };
 
   return (
     <TransactionContext.Provider

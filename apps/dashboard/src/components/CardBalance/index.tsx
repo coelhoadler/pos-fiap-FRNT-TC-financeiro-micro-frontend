@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTransaction } from '../../setup/context/transactionContext';
+import bgCardTransaction from '/src/assets/img/bg-card-transaction.png';
+import bgBanker from '/src/assets/img/banker.png';
 
 export default function CardBalance({
   balance: amount,
@@ -43,7 +45,7 @@ export default function CardBalance({
       <img
         width={180}
         height={177}
-        src={'src/assets/img/bg-card-transaction.png'}
+        src={bgCardTransaction}
         alt={'Fundo quadriculado do card de balanço financeiro'}
         className="absolute top-0 right-0 max-h-[177px] max-w-[180px] opacity-30 scale-y-[-1] rotate-270 z-1"
       />
@@ -109,7 +111,7 @@ export default function CardBalance({
       <img
         width={283}
         height={228}
-        src={'src/assets/img/banker.png'}
+        src={bgBanker}
         alt={'Ícone de banqueiro'}
         className="absolute bottom-3 left-10 max-h-[228px] max-w-[283px] z-2"
       />
@@ -117,7 +119,7 @@ export default function CardBalance({
       <img
         width={180}
         height={177}
-        src={'src/assets/img/bg-card-transaction.png'}
+        src={bgCardTransaction}
         alt={'Fundo quadriculado do card de balanço financeiro'}
         className="absolute bottom-0 left-0 max-h-[177px] max-w-[180px] opacity-30 scale-y-[-1] rotate-90 z-1"
       />
