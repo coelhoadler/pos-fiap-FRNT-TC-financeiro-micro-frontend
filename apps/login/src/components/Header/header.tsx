@@ -3,7 +3,7 @@ import byteBankLogo from "./../../assets/logo-bytebank.svg";
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-black  px-10 py-4">
+    <header className="bg-black  px-10 py-4 fixed w-full">
       <div className="container max-w-290 m-auto flex justify-between items-center">
         <div className="flex items-center space-x-4 ">
           <img
