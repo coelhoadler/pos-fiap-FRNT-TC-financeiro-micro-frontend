@@ -1,7 +1,7 @@
-import Home from "./components/Home/home";
+import Home from "./components/Home";
 import "./index.css";
-import Header from "./components/Header/header";
-import Footer from "./components/Footer/footer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default function Root(props) {
   return (
