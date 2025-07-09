@@ -18,17 +18,17 @@
   -->
 
   <main>
-    <route path="login" exact>
+    <route path="/" exact>
       <application name="@financeiro/login"></application>
     </route>
 
     <route path="dashboard" exact>
       <application name="@financeiro/dashboard"></application>
-    </route>    
+    </route>
 
-    <!-- <route default>
-      <application name="@financeiro/home"></application>
-    </route> -->
+    <route default>
+      <h1>A rota requerida não existe</h1>
+    </route>    
 
   </main>
 </single-spa-router>
