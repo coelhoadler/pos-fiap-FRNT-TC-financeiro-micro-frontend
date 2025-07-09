@@ -12,7 +12,7 @@ import {
 const MenuFooterTitle = ({ text, className }: TMenuFooterTitle) => {
   return (
     <h4
-      className={`font-bold font-family-base text-md mb-2 text-white ${
+      className={`font-bold font-family-base text-md mb-2 text-white max-md:text-center ${
         className ? className : ""
       }`}
     >
@@ -24,7 +24,7 @@ const MenuFooterTitle = ({ text, className }: TMenuFooterTitle) => {
 const MenuFooterItems = ({ text, className, children }: TMenuFooterItems) => {
   return (
     <li
-      className={`font-normal font-family-base text-sm mb-2 text-white ${
+      className={`font-normal font-family-base text-sm mb-2 text-white max-md:text-center ${
         className ? className : ""
       }`}
     >
@@ -62,8 +62,8 @@ const SocialMediaFooter = ({
 const Footer: React.FC = () => {
   return (
     <footer className="bg-black text-white px-10 py-10 ">
-      <div className="container max-w-290 m-auto flex justify-between items-center">
-        <div>
+      <div className="container max-w-290 m-auto flex justify-between items-center max-md:flex-col max-md:gap-7">
+        <div className="max-md:w-full max-md:flex max-md:flex-col max-md:items-center">
           <MenuFooterTitle text="Serviços" />
           <ul className="space-y-1">
             <MenuFooterItems text="Conta corrente" />
@@ -71,12 +71,12 @@ const Footer: React.FC = () => {
             <MenuFooterItems text="Cartão de crédito" />
           </ul>
         </div>
-        <div>
+        <div className="max-md:w-full max-md:flex max-md:flex-col max-md:items-center">
           <MenuFooterTitle text="Contato" />
           <ul className="space-y-1">
-            <MenuFooterItems text="0800 004 250 08" />
+            <MenuFooterItems  text="0800 004 250 08" />
 
-            <MenuFooterItems>
+            <MenuFooterItems >
               <a
                 href="mailto:#"
                 className="hover:underline transition-all"
@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
             </MenuFooterItems>
           </ul>
         </div>
-        <div>
+        <div className="max-md:w-full max-md:flex max-md:flex-col max-md:items-center">
           <MenuFooterTitle text="Desenvolvido por Equipe" />
           <img
             src={byteBankIconWhite}
