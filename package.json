@@ -9,7 +9,7 @@
     "install:root-config": "cd apps/root-config && npm install",
     "install:dashboard": "cd apps/dashboard && npm install",
     "install:login": "cd apps/login && npm install",
-    "start": "npm-run-all --parallel start:*",
+    "start": "docker-compose up",
     "start:dashboard": "cd apps/dashboard && npm start",
     "start:login": "cd apps/login && npm start",
     "start:root-config": "cd apps/root-config && npm start",
