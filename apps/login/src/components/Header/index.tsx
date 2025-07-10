@@ -62,13 +62,13 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               open ? "hidden" : "flex justify-between w-full items-center"
             }`}
           >
-            <DialogTrigger asChild onClick={() => setOpen(true)}>
+            {/* <DialogTrigger asChild onClick={() => setOpen(true)}>
               <img
                 src={hamburgerMenuIcon}
                 alt="Menu"
                 className="cursor-pointer filter-(--filter-link)"
               />
-            </DialogTrigger>
+            </DialogTrigger> */}
             <div className="relative">
               <LinkItem
                 text="Inicio"

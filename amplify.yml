@@ -5,7 +5,7 @@ frontend:
             commands:
                 - 'nvm install $VERSION_NODE_22'
                 - 'nvm use $VERSION_NODE_22'
-                - 'npm ci --cache .npm --force --prefer-offline'
+                - 'npm i --force'
         build:
             commands:
                 - 'nvm use $VERSION_NODE_22'
