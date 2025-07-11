@@ -11,5 +11,4 @@ export default function Root(props) {
       <Footer />
     </>
   );
-  // <section className="bg-primary text-green-500">{props.name} is mounted!</section>;
 }

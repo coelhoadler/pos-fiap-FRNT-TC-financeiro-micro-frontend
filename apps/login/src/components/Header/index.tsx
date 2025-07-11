@@ -62,7 +62,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               open ? "hidden" : "flex justify-between w-full items-center"
             }`}
           >
-            <DialogTrigger asChild={true} onClick={() => setOpen(true)}>
+            <DialogTrigger asChild onClick={() => setOpen(true)}>
               <img
                 src={hamburgerMenuIcon}
                 alt="Menu"

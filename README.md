@@ -10,13 +10,12 @@ Este é um projeto feito com a multifrontend, cujo objetivo é representar as **
 - [@Luiz Paulo](https://www.linkedin.com/in/luizpaulocaldas/) 
 - [@Virgílio Cano](https://www.linkedin.com/in/virgiliocano/)
 
-
 ## Estruturação da aplicação
 
 ```
 /microfrontends
   ├── /apps
-  │   ├── /login (Angular)  
+  │   ├── /login (React)  
   │   ├── /home (React)
   │   ├── /root-config (Orquestração com Single-SPA)
   │
