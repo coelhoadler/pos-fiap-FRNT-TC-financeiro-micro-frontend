@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-slide-in-left: SlideInLeft .4s ease-in-out 0s 1 normal forwards;
+  --animate-slide-out-left: SlideOutLeft .4s ease-in-out 0s 1 normal forwards;
+  --animate-slide-out-top: SlideOutTop .2s ease-in-out 0s 1 normal forwards;
+  --animate-slide-in-top: SlideInTop .2s ease-in-out 0s 1 normal forwards;
+
+  @keyframes SlideInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-250px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes SlideOutLeft {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  
+    100% {
+      opacity: 0;
+      transform: translateX(-250px);
+    }
+  }
+
+  @keyframes SlideOutTop {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  
+    100% {
+      opacity: 0;
+      transform: translateY(-250px);
+    }
+  }
+  @keyframes SlideInTop {
+    0% {
+      opacity: 0;
+      transform: translateY(-250px);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
