@@ -45,3 +45,7 @@ Cada microfrontend é independente e isolado, o que facilita a manutenção e a 
 ### Comunicação entre Microfrontends
 
 A comunicação entre microfrontends pode ser feita usando eventos ou um estado compartilhado. Por exemplo, a aplicação principal pode disparar um evento para abrir o carrinho de compras, que é um módulo carregado dinamicamente.
+
+### Requisitos
+
+- Ter o Docker configurado na máquina. [Para mais informações](https://www.docker.com/).
