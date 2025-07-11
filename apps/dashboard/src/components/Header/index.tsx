@@ -1,5 +1,5 @@
-import { MobileMenu } from '../MobileMenu';
 import profileIcon from '../../assets/svg/profile-icon.svg';
+import { MobileMenu } from '../MobileMenu';
 
 export type THeader = {
   nameUser: string;

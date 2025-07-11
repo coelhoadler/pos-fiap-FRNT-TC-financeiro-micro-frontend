@@ -3,9 +3,9 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from '@headlessui/react';
-import React, { useEffect, useState } from 'react';
-import hamburgerMenuIcon from '../../assets/svg/hamburger-menu-icon.svg';
+import { useState } from 'react';
 import closeIcon from '../../assets/svg/close-icon.svg';
+import hamburgerMenuIcon from '../../assets/svg/hamburger-menu-icon.svg';
 
 export type TMenu = {
   onClickItem?: () => void;
@@ -141,4 +141,4 @@ const MobileMenu = () => {
   );
 };
 
-export { MenuItens, MobileMenu, DesktopMenu };
+export { DesktopMenu, MenuItens, MobileMenu };
