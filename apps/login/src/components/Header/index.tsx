@@ -281,8 +281,8 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-black min-h-[56px] flex items-center px-10 fixed w-full z-10">
-      <div className="max-md:hidden">
+    <header className="bg-black min-h-[80px] max-md:min-h-[56px] flex items-center px-10 fixed w-full z-10">
+      <div className="max-md:hidden w-full">
         <MenuDesktop />
       </div>
       <div className="max-md:block hidden w-full">
