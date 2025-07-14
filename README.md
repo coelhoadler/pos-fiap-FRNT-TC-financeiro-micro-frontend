@@ -15,9 +15,9 @@ Este é um projeto feito com a multifrontend, cujo objetivo é representar as **
 ```
 /microfrontends
   ├── /apps
-  │   ├── /login (React)  
-  │   ├── /dashboard (React)
-  │   ├── /root-config (Orquestração com Single-SPA)
+  │   ├── /login (React ::8501)
+  │   ├── /dashboard (React ::8500)
+  │   ├── /root-config (Orquestração com Single-SPA ::9000)
 ```
 
 - /apps: Contém os microfrontends individuais, cada um com sua própria lógica e dependências.
@@ -46,6 +46,19 @@ Cada microfrontend é independente e isolado, o que facilita a manutenção e a 
 
 A comunicação entre microfrontends pode ser feita usando eventos ou um estado compartilhado. Por exemplo, a aplicação principal pode disparar um evento para abrir o carrinho de compras, que é um módulo carregado dinamicamente.
 
-### Requisitos
+## Requisitos
 
+### Docker
+
+- Faça o clone desse projeto
 - Ter o Docker configurado na máquina. [Para mais informações](https://www.docker.com/).
+- Após configurado, execute ```npm start```
+- Acesse em: [localhost](//localhost:9000/).
+
+### NPM
+
+- Node 22+
+- Faça o clone desse projeto
+- Dentro da pasta do projeto, execute ```npm i -f```
+- Para subir as aplicações, execute ```npm run start:dev```
+- Acesse em: [localhost](//localhost:9000/).
