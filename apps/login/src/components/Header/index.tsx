@@ -47,8 +47,106 @@ const LinkItem = ({
   );
 };
 
+// const MenuMobileWithLib = ({ className }: TMenuMobile) => {
+//   const [open, setOpen] = useState(false);
+//   return (
+//     <>
+//       <div
+//         className={`flex items-center justify-between space-x-4 w-full ${
+//           className ? className : ""
+//         }`}
+//       >
+//         <Dialog open={open} onOpenChange={setOpen}>
+//           <div
+//             className={`${
+//               open ? "hidden" : "flex justify-between w-full items-center"
+//             }`}
+//           >
+//             {/* tive que remove a propriedade asChild do DialogTrigger */}
+//             <DialogTrigger onClick={() => setOpen(true)}>
+//               <img
+//                 src={hamburgerMenuIcon}
+//                 alt="Menu"
+//                 className="cursor-pointer filter-(--filter-link)"
+//               />
+//             </DialogTrigger>
+//             <div className="relative">
+//               <LinkItem
+//                 text="Inicio"
+//                 href="/login"
+//                 isBlank={false}
+//                 className="text-zero cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block"
+//               />
+//               <img src={byteBankLogo} alt="Bytebank" className="h-6" />
+//             </div>
+//           </div>
+//           <DialogContent
+//             className={` min-h-screen w-full  fixed top-0 left-0  bg-black ${
+//               open ? "animate-in" : "animate-out"
+//             }`}
+//           >
+//             <div className="container max-w-full pt-5 px-10 m-auto">
+//               <DialogClose className="flex w-full justify-end items-center my-3.5 focus:outline-none focus:border-none focus:shadow-none">
+//                 <img
+//                   src={closeIcon}
+//                   alt="Fechar menu"
+//                   className="filter-(--filter-link)"
+//                 />
+//               </DialogClose>
+//               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
+//                 <nav className="space-x-6 text-green-500 flex flex-col gap-4 w-full">
+//                   {MenulinksItems.map((link) => (
+//                     <LinkItem
+//                       className="border-b border-white pb-3 w-full m-0"
+//                       key={link.text}
+//                       text={link.text}
+//                       href={link.href}
+//                       isBlank={link.isBlank}
+//                       onClick={() => setOpen(false)}
+//                     />
+//                   ))}
+//                 </nav>
+//                 <div className="flex flex-col gap-4 w-full mt-8">
+//                   <Button text="Abrir minha conta" className="w-full" onClick={() => setOpen(false)} />
+//                   <Button
+//                     text="Já tenho conta"
+//                     typeButton="outline"
+//                     className="w-full" onClick={() => setOpen(false)}
+//                   />
+//                 </div>
+//               </div>
+//             </div>
+//           </DialogContent>
+//         </Dialog>
+//       </div>
+//     </>
+//   );
+// };
+
 const MenuMobile = ({ className }: TMenuMobile) => {
   const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    const contentMenuMobile = document.querySelector(".menu-mobile-wrapper");
+    contentMenuMobile?.classList.add("animate-slide-out-left");
+    const openMenuMobileWrapper = document.querySelector(
+      ".open-menu-mobile-wrapper"
+    );
+    openMenuMobileWrapper?.classList.add("animate-slide-in-top");
+    setTimeout(() => {
+      setOpen(false);
+    }, 400);
+  };
+  const handleOpen = () => {
+    const contentMenuMobile = document.querySelector(".menu-mobile-wrapper");
+    contentMenuMobile?.classList.remove("animate-slide-out-left");
+    const openMenuMobileWrapper = document.querySelector(
+      ".open-menu-mobile-wrapper"
+    );
+    openMenuMobileWrapper?.classList.remove("animate-slide-in-top");
+
+    setOpen(true);
+  };
+
   return (
     <>
       <div
@@ -56,20 +154,25 @@ const MenuMobile = ({ className }: TMenuMobile) => {
           className ? className : ""
         }`}
       >
-        <Dialog open={open} onOpenChange={setOpen}>
+        <div className="w-full">
           <div
-            className={`${
-              open ? "hidden" : "flex justify-between w-full items-center"
+            className={`open-menu-mobile-wrapper ${
+              open
+                ? "hidden"
+                : "flex justify-between w-full items-center animate-slide-in-top"
             }`}
           >
-            {/* tive que remove a propriedade asChild do DialogTrigger */}
-            <DialogTrigger onClick={() => setOpen(true)}>
+            <button
+              type="button"
+              onClick={handleOpen}
+              className="focus:outline-none focus:border-none focus:shadow-none"
+            >
               <img
                 src={hamburgerMenuIcon}
                 alt="Menu"
                 className="cursor-pointer filter-(--filter-link)"
               />
-            </DialogTrigger>
+            </button>
             <div className="relative">
               <LinkItem
                 text="Inicio"
@@ -80,19 +183,26 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               <img src={byteBankLogo} alt="Bytebank" className="h-6" />
             </div>
           </div>
-          <DialogContent
-            className={` min-h-screen w-full  fixed top-0 left-0  bg-black ${
-              open ? "animate-in" : "animate-out"
+
+          <div
+            className={` menu-mobile-wrapper min-h-screen w-full  fixed top-0 left-0  bg-black ${
+              open
+                ? "animate-slide-in-left block"
+                : "animate-slide-out-left hidden"
             }`}
           >
             <div className="container max-w-full pt-5 px-10 m-auto">
-              <DialogClose className="flex w-full justify-end items-center my-3.5 focus:outline-none focus:border-none focus:shadow-none">
+              <button
+                type="button"
+                onClick={handleClose}
+                className="flex w-full justify-end items-center my-3.5 focus:outline-none focus:border-none focus:shadow-none"
+              >
                 <img
                   src={closeIcon}
                   alt="Fechar menu"
                   className="filter-(--filter-link)"
                 />
-              </DialogClose>
+              </button>
               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
                 <nav className="space-x-6 text-green-500 flex flex-col gap-4 w-full">
                   {MenulinksItems.map((link) => (
@@ -102,22 +212,27 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                       text={link.text}
                       href={link.href}
                       isBlank={link.isBlank}
-                      onClick={() => setOpen(false)}
+                      onClick={handleClose}
                     />
                   ))}
                 </nav>
                 <div className="flex flex-col gap-4 w-full mt-8">
-                  <Button text="Abrir minha conta" className="w-full" onClick={() => setOpen(false)} />
+                  <Button
+                    text="Abrir minha conta"
+                    className="w-full"
+                    onClick={handleClose}
+                  />
                   <Button
                     text="Já tenho conta"
                     typeButton="outline"
-                    className="w-full" onClick={() => setOpen(false)}
+                    className="w-full"
+                    onClick={handleClose}
                   />
                 </div>
               </div>
             </div>
-          </DialogContent>
-        </Dialog>
+          </div>
+        </div>
       </div>
     </>
   );
@@ -166,11 +281,11 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-black  px-10 py-4 fixed w-full z-10">
-      <div className="max-md:hidden">
+    <header className="bg-black min-h-[80px] max-md:min-h-[56px] flex items-center px-10 fixed w-full z-10">
+      <div className="max-md:hidden w-full">
         <MenuDesktop />
       </div>
-      <div className="max-md:block hidden">
+      <div className="max-md:block hidden w-full">
         <MenuMobile />
       </div>
     </header>
