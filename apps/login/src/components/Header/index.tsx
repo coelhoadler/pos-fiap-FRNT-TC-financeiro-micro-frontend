@@ -3,14 +3,11 @@ import byteBankLogo from "./../../assets/logo-bytebank.svg";
 import byteBankLogoTablet from "./../../assets/logo-bytebank-tablet.svg";
 import closeIcon from "./../../assets/close-icon.svg";
 import hamburgerMenuIcon from "./../../assets/hamburger-menu-icon.svg";
+import illustrationRegisterModal from "./../../assets/ilustration-register-modal.svg";
+import illustrationLoginModal from "./../../assets/ilustration-login-modal.svg";
 import Button from "../Button";
 import { TMenuLinksItems, TMenuMobile, TMenuDesktop } from "../../types/TMenu";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTrigger,
-} from "@radix-ui/react-dialog";
+import { CustomModal }   from "../CustomModal";
 
 const MenulinksItems: TMenuLinksItems[] = [
   {
@@ -24,6 +21,24 @@ const MenulinksItems: TMenuLinksItems[] = [
     isBlank: false,
   },
 ];
+
+const CtaItems = () => {
+  const [openModalLogin, setOpenModalLogin] = useState(false);
+  const [openModalRegister, setOpenModalRegister] = useState(false);
+  return (
+    <div className="flex items-center gap-4 max-md:flex-col max-md:w-full max-md:mt-8">
+      <Button className="max-md:w-full" text="Abrir minha conta" onClick={() => setOpenModalLogin(true)} />
+      <Button
+        className="max-md:w-full"
+        text="Já tenho conta"
+        typeButton="outline"
+        onClick={() => setOpenModalRegister(true)}
+      />
+      <CustomModal title="Login"  isOpen={openModalLogin} onClose={() => setOpenModalLogin(false)} typeForm={"login"} pathImage={illustrationLoginModal} />
+      <CustomModal title="Preencha os campos abaixo para criar sua conta corrente!" pathImage={illustrationRegisterModal} isOpen={openModalRegister} onClose={() => setOpenModalRegister(false)} typeForm={"register"} />
+    </div>
+  );
+};
 
 const LinkItem = ({
   text,
@@ -216,19 +231,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                     />
                   ))}
                 </nav>
-                <div className="flex flex-col gap-4 w-full mt-8">
-                  <Button
-                    text="Abrir minha conta"
-                    className="w-full"
-                    onClick={handleClose}
-                  />
-                  <Button
-                    text="Já tenho conta"
-                    typeButton="outline"
-                    className="w-full"
-                    onClick={handleClose}
-                  />
-                </div>
+                <CtaItems />
               </div>
             </div>
           </div>
@@ -272,8 +275,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
         </nav>
       </div>
       <div className="space-x-4">
-        <Button text="Abrir minha conta" />
-        <Button text="Já tenho conta" typeButton="outline" />
+        <CtaItems />
       </div>
     </div>
   );
@@ -292,4 +294,4 @@ const Header: React.FC = () => {
   );
 };
 
-export { Header, LinkItem, MenuMobile, MenuDesktop };
+export { Header, LinkItem, MenuMobile, MenuDesktop, CtaItems };
