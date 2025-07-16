@@ -8,10 +8,12 @@ const CustomModal = ({
   pathImage,
   descripption,
   typeForm,
+  id,
   onClose,
 }: TCustomModal) => {
   return (
     <div
+      id={id}
       className={`fixed inset-0 flex justify-center items-center z-50 ${
         isOpen ? "block" : "hidden"
       }`}
@@ -21,8 +23,8 @@ const CustomModal = ({
         className="absolute top-0 bottom-0 left-0 right-0 m-auto h-full block w-full bg-black/45"
       ></div>
       <div
-        className={`bg-gray-100 p-8 flex flex-col items-center justify-center rounded-md transition-all min-w-[40%] duration-300 shadow-sm  ${
-          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-0"
+        className={`bg-gray-100 modal-container p-8 flex flex-col items-center justify-center rounded-md transition-all min-w-[40%] max-w-[800px] max-lg:max-w-[80%] max-lg:min-w-[60%] max-md:max-w-[95%] max-2xl:max-h-[800px] max-2xl:overflow-y-auto max-2xl:justify-start max-md:max-h-[750px] max-md:justify-start max-md:overflow-y-auto duration-300 shadow-sm  ${
+          isOpen ? "animate-scaleIn" : "animate-scaleOut"
         }`}
       >
         <div className="w-full relative">
@@ -38,7 +40,7 @@ const CustomModal = ({
             />
           </button>
 
-          <div className="w-full flex flex-col items-center justify-center gap-2 ">
+          <div className="w-full flex flex-col items-center justify-center gap-2 mt-8 mb-8">
             {pathImage && (
               <div className="mb-4">
                 <img
@@ -60,12 +62,12 @@ const CustomModal = ({
           </div>
 
           {typeForm == "login" && (
-            <div className="mt-2">
-              <FormLogin action="login" id="login" method="post " />
+            <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
+              <FormLogin action="login" id="login" method="get" />
             </div>
           )}
           {typeForm == "register" && (
-            <div className="mt-2">
+            <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
               <FormRegister action="register" id="register" method="post" />
             </div>
           )}

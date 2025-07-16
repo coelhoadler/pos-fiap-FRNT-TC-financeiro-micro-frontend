@@ -5,4 +5,5 @@ export type TCustomModal = {
   title?: string;
   pathImage?: string;
   descripption?:string;
+  id?: string;
 };

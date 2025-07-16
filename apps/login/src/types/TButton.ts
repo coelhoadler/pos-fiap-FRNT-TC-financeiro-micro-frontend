@@ -2,6 +2,7 @@ export type TButton = {
     text: string;
     className?: string;
     onClick?: () => void;
-    typeButton?: | 'outline' | 'default';
+    styleButton?: | 'outline' | 'default';
+    typeButton?:| "button" | "submit" | "reset";
     children?: React.ReactNode;
 };

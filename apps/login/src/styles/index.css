@@ -3,6 +3,7 @@
 @import "./animations.css";
 @import "./spacing.css";
 @import "./typography.css";
+@import "./background-image.css";
 
 html,
 body {

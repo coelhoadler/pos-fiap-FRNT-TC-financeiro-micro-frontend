@@ -6,8 +6,13 @@ import hamburgerMenuIcon from "./../../assets/hamburger-menu-icon.svg";
 import illustrationRegisterModal from "./../../assets/ilustration-register-modal.svg";
 import illustrationLoginModal from "./../../assets/ilustration-login-modal.svg";
 import Button from "../Button";
-import { TMenuLinksItems, TMenuMobile, TMenuDesktop } from "../../types/TMenu";
-import { CustomModal }   from "../CustomModal";
+import {
+  TMenuLinksItems,
+  TMenuMobile,
+  TMenuDesktop,
+  TCtaItems,
+} from "../../types/TMenu";
+import { CustomModal } from "../CustomModal";
 
 const MenulinksItems: TMenuLinksItems[] = [
   {
@@ -22,20 +27,26 @@ const MenulinksItems: TMenuLinksItems[] = [
   },
 ];
 
-const CtaItems = () => {
-  const [openModalLogin, setOpenModalLogin] = useState(false);
-  const [openModalRegister, setOpenModalRegister] = useState(false);
+const CtaItems = ({ onClickLogin, onClickRegister, className }: TCtaItems) => {
   return (
-    <div className="flex items-center gap-4 max-md:flex-col max-md:w-full max-md:mt-8">
-      <Button className="max-md:w-full" text="Abrir minha conta" onClick={() => setOpenModalLogin(true)} />
+    <div
+      className={`flex items-center gap-4 max-md:flex-col max-md:w-full max-md:mt-8 ${
+        className ? className : ""
+      }`}
+    >
+      <Button
+        className="max-md:w-full"
+        text="Abrir minha conta"
+        typeButton="button"
+        onClick={onClickLogin}
+      />
       <Button
         className="max-md:w-full"
         text="Já tenho conta"
-        typeButton="outline"
-        onClick={() => setOpenModalRegister(true)}
+        styleButton="outline"
+        typeButton="button"
+        onClick={onClickRegister}
       />
-      <CustomModal title="Login"  isOpen={openModalLogin} onClose={() => setOpenModalLogin(false)} typeForm={"login"} pathImage={illustrationLoginModal} />
-      <CustomModal title="Preencha os campos abaixo para criar sua conta corrente!" pathImage={illustrationRegisterModal} isOpen={openModalRegister} onClose={() => setOpenModalRegister(false)} typeForm={"register"} />
     </div>
   );
 };
@@ -122,10 +133,11 @@ const LinkItem = ({
 //                   ))}
 //                 </nav>
 //                 <div className="flex flex-col gap-4 w-full mt-8">
-//                   <Button text="Abrir minha conta" className="w-full" onClick={() => setOpen(false)} />
+//                   <Button  typeButton="button" text="Abrir minha conta" className="w-full" onClick={() => setOpen(false)} />
 //                   <Button
 //                     text="Já tenho conta"
-//                     typeButton="outline"
+//                     typeButton="button"
+//                     styleButton="outline"
 //                     className="w-full" onClick={() => setOpen(false)}
 //                   />
 //                 </div>
@@ -140,6 +152,8 @@ const LinkItem = ({
 
 const MenuMobile = ({ className }: TMenuMobile) => {
   const [open, setOpen] = useState(false);
+  const [openModalLogin, setOpenModalLogin] = useState(false);
+  const [openModalRegister, setOpenModalRegister] = useState(false);
   const handleClose = () => {
     const contentMenuMobile = document.querySelector(".menu-mobile-wrapper");
     contentMenuMobile?.classList.add("animate-slide-out-left");
@@ -162,10 +176,41 @@ const MenuMobile = ({ className }: TMenuMobile) => {
     setOpen(true);
   };
 
+  const handleOpenLoginModal = () => {
+    setTimeout(() => {
+      setOpenModalLogin(true);
+    }, 500);
+  };
+  const handleOpenRegisterModal = () => {
+    setTimeout(() => {
+      setOpenModalRegister(true);
+    }, 500);
+  };
+
+  const handleCloseLoginModal = () => {
+    const modalContainer = document.querySelector(
+      ".menu-mobile #login-modal .modal-container"
+    );
+    modalContainer?.classList.add("animate-scaleOut");
+    setTimeout(() => {
+      setOpenModalLogin(false);
+    }, 210);
+  };
+  const handleCloseRegisterModal = () => {
+    const modalContainer = document.querySelector(
+      ".menu-mobile #register-modal .modal-container"
+    );
+    modalContainer.classList.add("animate-scaleOut");
+    console.log("mobile",modalContainer)
+    setTimeout(() => {
+      setOpenModalRegister(false);
+    }, 210);
+  };
+
   return (
     <>
       <div
-        className={`flex items-center justify-between space-x-4 w-full ${
+        className={`flex items-center justify-between space-x-4 w-full menu-mobile ${
           className ? className : ""
         }`}
       >
@@ -215,7 +260,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                 <img
                   src={closeIcon}
                   alt="Fechar menu"
-                  className="filter-(--filter-link)"
+                  className="filter-(--filter-link) w-4 h-4"
                 />
               </button>
               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
@@ -231,10 +276,37 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                     />
                   ))}
                 </nav>
-                <CtaItems />
+                <CtaItems
+                  onClickLogin={() => {
+                    handleClose();
+                    handleOpenLoginModal();
+                  }}
+                  onClickRegister={() => {
+                    handleOpenRegisterModal();
+                    handleClose();
+                  }}
+                />
               </div>
             </div>
           </div>
+
+          <CustomModal
+            id="login-modal"
+            title="Login"
+            isOpen={openModalLogin}
+            onClose={handleCloseLoginModal}
+            typeForm={"login"}
+            pathImage={illustrationLoginModal}
+          />
+          <CustomModal
+            id="register-modal"
+            title="Cadastre-se"
+            descripption="Preencha os campos abaixo para criar sua conta corrente!"
+            pathImage={illustrationRegisterModal}
+            isOpen={openModalRegister}
+            onClose={handleCloseRegisterModal}
+            typeForm={"register"}
+          />
         </div>
       </div>
     </>
@@ -242,8 +314,38 @@ const MenuMobile = ({ className }: TMenuMobile) => {
 };
 
 const MenuDesktop = ({ className }: TMenuDesktop) => {
+  const [openModalLogin, setOpenModalLogin] = useState(false);
+  const [openModalRegister, setOpenModalRegister] = useState(false);
+  const handleOpenLoginModal = () => {
+    setOpenModalLogin(true);
+  };
+  const handleOpenRegisterModal = () => {
+    setOpenModalRegister(true);
+  };
+  const handleCloseLoginModal = () => {
+    const modalContainer = document.querySelector(
+      "#login-modal .modal-container"
+    );
+    modalContainer?.classList.add("animate-scaleOut");
+    setTimeout(() => {
+      setOpenModalLogin(false);
+    }, 210);
+  };
+  const handleCloseRegisterModal = () => {
+    const modalContainer = document.querySelector(
+      "#register-modal .modal-container"
+    );
+    modalContainer?.classList.add("animate-scaleOut");
+    setTimeout(() => {
+      setOpenModalRegister(false);
+    }, 210);
+  };
   return (
-    <div className="container max-w-290 m-auto flex justify-between items-center">
+    <div
+      className={`container max-w-290 m-auto flex justify-between items-center ${
+        className ? className : ""
+      }`}
+    >
       <div className="flex items-center space-x-4 ">
         <div className="relative">
           <LinkItem
@@ -275,8 +377,28 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
         </nav>
       </div>
       <div className="space-x-4">
-        <CtaItems />
+        <CtaItems
+          onClickLogin={handleOpenLoginModal}
+          onClickRegister={handleOpenRegisterModal}
+        />
       </div>
+      <CustomModal
+        id="login-modal"
+        title="Login"
+        isOpen={openModalLogin}
+        onClose={handleCloseLoginModal}
+        typeForm={"login"}
+        pathImage={illustrationLoginModal}
+      />
+      <CustomModal
+        id="register-modal"
+        title="Cadastre-se"
+        descripption="Preencha os campos abaixo para criar sua conta corrente!"
+        pathImage={illustrationRegisterModal}
+        isOpen={openModalRegister}
+        onClose={handleCloseRegisterModal}
+        typeForm={"register"}
+      />
     </div>
   );
 };
