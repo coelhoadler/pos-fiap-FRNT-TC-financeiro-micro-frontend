@@ -8,4 +8,4 @@ const PrifleSchema = new mongoose.Schema({
     accountNumber: { type: String, required: true },
 },{timestamps: true })
 
-module.exports = mongoose.model('Profile', PrifleSchema);
+module.exports = mongoose.model('Profile', PrifleSchema, 'Profiles');

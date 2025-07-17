@@ -5,4 +5,4 @@ const TypeTransactionSchema = new mongoose.Schema({
     description: { type: String, required: true },
 },{timestamps: true })
 
-module.exports = mongoose.model('TypeTransaction', TypeTransactionSchema);
+module.exports = mongoose.model('TypeTransaction', TypeTransactionSchema, 'TypeTransactions');

@@ -8,4 +8,4 @@ const TransactionSchema = new mongoose.Schema({
     accountNumber: { type: String, required: true },
 },{timestamps: true })
 
-module.exports = mongoose.model('Transaction', TransactionSchema);
+module.exports = mongoose.model('Transaction', TransactionSchema, 'Transactions');

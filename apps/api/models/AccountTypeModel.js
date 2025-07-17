@@ -5,4 +5,4 @@ const AccountTypeSchema = new mongoose.Schema({
     description: { type: String, required: true },
 },{timestamps: true })
 
-module.exports = mongoose.model('AccountType', AccountTypeSchema);
+module.exports = mongoose.model('AccountType', AccountTypeSchema, 'AccountTypes');

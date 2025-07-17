@@ -2,32 +2,64 @@ const transactionModel  = require('../models/TransactionModel');
 
 exports.getTransaction = async () => {
   try {
-    const profile = await transactionModel.find()
+    const transaction = await transactionModel.find()
 
-    if (!profile) {
+    if (!transaction) {
       throw new Error('Type Transaction not found');
     }
 
-    return profile;
+    return transaction;
   } catch (error) {
     throw new Error(`Error fetching type transaction: ${error.message}`);
   }
 }
 
-exports.transaction = async (typeTransaction, amount, date, accountNumber) => {
+exports.create = async (typeTransaction, amount, date, accountNumber) => {
   try {
-    const profile = await transactionModel.create({
+    const createTransaction = await transactionModel.create({
       typeTransaction,
       amount,
       date,
       accountNumber
     })
 
-    if (!profile) {
+    if (!createTransaction) {
       throw new Error('Type Transaction not found');
     }
 
-    return profile;
+    return createTransaction;
+  } catch (error) {
+    throw new Error(`Error fetching type transaction: ${error.message}`);
+  }
+}
+
+exports.edit = async (id, typeTransaction, amount, date, accountNumber) => {
+  try {
+    const payloadUpdate = {
+      typeTransaction, amount, date, accountNumber
+    }
+    const editTransaction = await transactionModel.findByIdAndUpdate(id, payloadUpdate, { new: true } )
+
+    if (!editTransaction) {
+      throw new Error('Type Transaction not found');
+    }
+
+    return editTransaction;
+  } catch (error) {
+    throw new Error(`Error fetching type transaction: ${error.message}`);
+  }
+}
+
+exports.delete = async (id) => {
+  try {
+   
+    const editTransaction = await transactionModel.findByIdAndDelete(id, { new: true })
+
+    if (!editTransaction) {
+      throw new Error('Type Transaction not found');
+    }
+
+    return editTransaction;
   } catch (error) {
     throw new Error(`Error fetching type transaction: ${error.message}`);
   }
