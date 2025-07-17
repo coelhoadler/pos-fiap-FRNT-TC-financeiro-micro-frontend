@@ -30,17 +30,17 @@ services:
     build: ./apps/api
     container_name: api-dev
     ports:
-      - "3001:3001"
+      - "3000:3000"
     volumes:
       - ./apps/api:/app
-      - /app/node_modules
-    depends_on:
-      - mongo
+      - /app/node_modules    
     environment:
-      - MONGO_URI=mongodb://admin:admin123@mongo:27017/
-      - MONGO_DB_NAME=bytebank
+        - MONGO_URI=mongodb://admin:admin123@mongodb:27017/bytebank?authSource=admin
+        - MONGO_DB_NAME=bytebank
+    depends_on:
+      - mongodb
 
-  mongo:
+  mongodb:
     image: mongo
     container_name: mongo-dev
     ports:

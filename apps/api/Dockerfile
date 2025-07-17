@@ -1,12 +1,20 @@
-FROM node:18
+FROM node:22-alpine
 
+# Set the working directory
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+# Copy package.json and package-lock.json
+COPY package.json ./
+COPY package-lock.json ./
 
+# Install dependencies
+RUN npm install -f
+
+# Copy the rest of the application files
 COPY . .
 
-ENV NODE_ENV=production
+# Expose the port the app runs on
+EXPOSE 3000
 
-CMD ["sh", "-c", "cp .env.docker .env && node index.js"]
+# Command to run the application
+CMD ["npm", "run", "start"]
