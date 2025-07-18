@@ -1,3 +1,14 @@
-export default function Root() {
-  return <h1>Login carregado com sucesso!</h1>;
+import "./styles/index.css";
+import Home from "./components/Home";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+
+export default function Root(props) {
+  return (
+    <>
+      <Header />
+      <Home />
+      <Footer />
+    </>
+  );
 }

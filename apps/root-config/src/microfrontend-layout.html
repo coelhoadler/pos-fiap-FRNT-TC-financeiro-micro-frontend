@@ -1,10 +1,24 @@
 <single-spa-router>
   <main>
-    <route path="/login">
+    <route path="/" exact>
       <application name="@financeiro/login"></application>
     </route>
-    <route path="dashboard">
+
+    <route path="/login" exact>
+      <application name="@financeiro/login"></application>
+    </route>
+
+    <route path="/home" exact>
+      <application name="@financeiro/login"></application>
+    </route>      
+
+    <route path="dashboard" exact>
       <application name="@financeiro/dashboard"></application>
     </route>
+
+    <route default>
+      <h1>A rota requerida não existe</h1>
+    </route>    
+
   </main>
 </single-spa-router>

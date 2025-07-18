@@ -9,13 +9,16 @@
     "install:root-config": "cd apps/root-config && npm install",
     "install:dashboard": "cd apps/dashboard && npm install",
     "install:login": "cd apps/login && npm install",
-    "start:docker": "docker compose up -d",
-    "start:test-mongodb": "node scripts/start-mongodb.js",
-    "start": "npm-run-all --parallel start:docker start:*",
-    "start:dashboard": "cd apps/dashboard && npm start",
-    "start:login": "cd apps/login && npm start",
-    "start:root-config": "cd apps/root-config && npm start",
-    "clean": "rimraf dist node_modules/.cache/webpack"
+    "start:micro-dashboard": "cd apps/dashboard && npm start",
+    "start:micro-login": "cd apps/login && npm start",
+    "start:micro-root-config": "cd apps/root-config && npm start",
+    "start": "docker compose -f docker-compose.dev.yml up",
+    "start:dev": "npm-run-all --parallel start:micro-*",
+    "start:prod": "docker compose -f docker-compose.prod.yml up",
+    "build": "npm-run-all --serial build:*",
+    "build:dashboard": "cd apps/dashboard && npm run build",
+    "build:login": "cd apps/login && npm run build",
+    "build:root-config": "cd apps/root-config && npm run build"
   },
   "repository": {
     "type": "git",

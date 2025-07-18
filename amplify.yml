@@ -1,0 +1,20 @@
+version: 1
+frontend:
+    phases:
+        preBuild:
+            commands:
+                - 'nvm install $VERSION_NODE_22'
+                - 'nvm use $VERSION_NODE_22'
+                - 'npm i --force'
+        build:
+            commands:
+                - 'nvm use $VERSION_NODE_22'
+                - 'node -v'
+                - 'npm run build'
+    artifacts:
+        baseDirectory: dist
+        files:
+            - '**/*'
+    cache:
+        paths:
+            - '.npm/**/*'
