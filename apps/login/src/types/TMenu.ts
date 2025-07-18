@@ -12,3 +12,9 @@ export type TMenuLinksItems = {
     isBlank?: boolean;
     onClick?: () => void;
 };
+
+export type TCtaItems = {
+    className?: string;
+    onClickLogin?: () => void;
+    onClickRegister?: () => void;
+};

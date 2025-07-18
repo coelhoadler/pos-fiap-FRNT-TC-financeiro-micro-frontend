@@ -1,0 +1,38 @@
+services:
+  dashboard:
+    image: acoeelho/pos-fiap-frnt-tc-financeiro-micro-frontend-dashboard
+    container_name: dashboard-dev
+    ports:
+      - "8500:8500"
+    volumes:
+      - ./apps/dashboard:/app
+      - /app/node_modules
+  login:
+    image: acoeelho/pos-fiap-frnt-tc-financeiro-micro-frontend-login
+    container_name: login-dev
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./apps/login:/app
+      - /app/node_modules
+  root-config:
+    image: acoeelho/pos-fiap-frnt-tc-financeiro-micro-frontend-root-config
+    container_name: root-config-dev
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./apps/root-config:/app
+      - /app/node_modules
+  mongo:
+    image: mongo
+    container_name: mongo-dev
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
