@@ -2,15 +2,16 @@
 // import AccountStatement from '@/app/components/accountStatement/AccountStatement';
 // import CardBalance from '@/app/components/cardBalance/cardBalance'
 // import FormTransaction from '@/app/components/transaction/transaction'
-// import { IAccount } from '@/app/interfaces/accountModel';
 
 import { useState } from 'react';
 import CardBalance from '../CardBalance';
 import FormTransaction from '../TransactionContainer';
+import AccountStatement from '../AccountStatement';
+import { IAccount } from '../../Models/accountModels';
 // import FormTransaction from '../../FormTransaction';
 
 export default function Home() {
-  // let accountStart: Partial<IAccount>;
+  let accountStart: Partial<IAccount>;
 
   // try {
   //   accountStart = await accountServices.getAccountById("123456789"); // Joana accountNumber is 123456789;
@@ -24,7 +25,9 @@ export default function Home() {
         <CardBalance balance={0} />
         <FormTransaction />
       </div>
-      <div className="min-w-[350px]">{/* <AccountStatement /> */}</div>
+      <div className="min-w-[350px]">
+        <AccountStatement />
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 // import { useForm, SubmitHandler } from "react-hook-form";
 // import Image from "next/image";
 // import { CurrencyInput } from "react-currency-mask";
@@ -22,151 +22,143 @@ import { useState } from "react";
 // import SuccessSnackbar from "../successSnackbar/successSnackbar";
 
 // import { useTransaction } from "../../setup/context/transactionContext";
-import { ITransaction } from "../../Models/transactionModels";
+import { ITransaction } from '../../Models/transactionModels';
 // import { IInputs } from "../../Models/FormModels";
-import { toast } from "react-toastify";
-import { TAlertDialogType } from "../../types/TAlertDialogType";
-import { alertDialogTypes } from "../../enums/alertDialogTypes";
-import Title from "../Title/title";
+import { toast } from 'react-toastify';
+import { TAlertDialogType } from '../../types/TAlertDialogType';
+import { alertDialogTypes } from '../../enums/alertDialogTypes';
 // import CurrencyInput from 'react-currency-input-field';
-import AlertDialog from "../Dialog/dialog";
-import SuccessSnackbar from "../SuccessSnackbar/successSnackbar";
-import Button from "../Button/button";
-import bgCardTransaction from "../../assets/img/bg-card-transaction.png";
-import womanCreditCard from "../../assets/img/woman-credit-card.png";
+import AlertDialog from '../Dialog';
+import SuccessSnackbar from '../SuccessSnackbar';
+import Button from '../Button';
+import bgCardTransaction from '../../assets/img/bg-card-transaction.png';
+import womanCreditCard from '../../assets/img/woman-credit-card.png';
+import Title from '../Title';
 
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
 };
 
-
-
 const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
-//   const {
-//     id,
-//     setId,
-//     typeTransactionEdit,
-//     valueEdit,
-//     setExtract,
-//     typeTransaction,
-//     setTypeTransactionEdit,
-//     setBalance,
-//   } = useTransaction();
-//   const [inputKey, setInputKey] = useState(0);
-//   const [showConfirmDialog, setShowConfirmDialog]=useState(false)
-//   const [dialogType, setDialogType] = useState<TAlertDialogType>({ type: alertDialogTypes.CONFIRM })
-//   const [pendingFormData, setPendingFormData] = useState<ITransaction | null>(null)
-//   const [showSuccess, setShowSuccess] = useState(false);
-//   const [idTemp, setIdTemp] = useState('')
+  //   const {
+  //     id,
+  //     setId,
+  //     typeTransactionEdit,
+  //     valueEdit,
+  //     setExtract,
+  //     typeTransaction,
+  //     setTypeTransactionEdit,
+  //     setBalance,
+  //   } = useTransaction();
+  //   const [inputKey, setInputKey] = useState(0);
+  //   const [showConfirmDialog, setShowConfirmDialog]=useState(false)
+  //   const [dialogType, setDialogType] = useState<TAlertDialogType>({ type: alertDialogTypes.CONFIRM })
+  //   const [pendingFormData, setPendingFormData] = useState<ITransaction | null>(null)
+  //   const [showSuccess, setShowSuccess] = useState(false);
+  //   const [idTemp, setIdTemp] = useState('')
 
-//   const { 
-//     register, 
-//     handleSubmit, 
-//     watch, 
-//     formState: { errors }, 
-//     setValue, 
-//     reset 
-//   } = useForm<IInputs>();
+  //   const {
+  //     register,
+  //     handleSubmit,
+  //     watch,
+  //     formState: { errors },
+  //     setValue,
+  //     reset
+  //   } = useForm<IInputs>();
 
-//   const handleNew = () => {
-//     // reset({ value: "" });
-//     setInputKey((prev) => prev + 1);
-//   };
+  //   const handleNew = () => {
+  //     // reset({ value: "" });
+  //     setInputKey((prev) => prev + 1);
+  //   };
 
-//   const [typeTransactionOptions, setTypeTransactionOptions] = useState<ITypeTransaction[]>([]);
+  //   const [typeTransactionOptions, setTypeTransactionOptions] = useState<ITypeTransaction[]>([]);
 
-//   const [valueWatched, setValueWatched] = useState<string>("");
+  //   const [valueWatched, setValueWatched] = useState<string>("");
 
-//   useEffect(() => {
-//     setTypeTransactionOptions(typeTransaction || []);
-//   }, [typeTransaction, setTypeTransactionOptions]);
+  //   useEffect(() => {
+  //     setTypeTransactionOptions(typeTransaction || []);
+  //   }, [typeTransaction, setTypeTransactionOptions]);
 
-//   useEffect(() => {
-//     if (!typeTransactionOptions || typeTransactionOptions.length === 0) return;
-//     if (id) {
-//       setValueWatched(valueEdit);
-//       setValue("typeTransaction", typeTransactionEdit.id);
-//     }
+  //   useEffect(() => {
+  //     if (!typeTransactionOptions || typeTransactionOptions.length === 0) return;
+  //     if (id) {
+  //       setValueWatched(valueEdit);
+  //       setValue("typeTransaction", typeTransactionEdit.id);
+  //     }
 
-//     if (!id) {
-//       setValueWatched("");
-//       setValue("value", "");
-//       setValue("typeTransaction", "");
-//       setTypeTransactionEdit({ id: "", description: "" });
-//     }
-//   }, [id, typeTransactionOptions]);
+  //     if (!id) {
+  //       setValueWatched("");
+  //       setValue("value", "");
+  //       setValue("typeTransaction", "");
+  //       setTypeTransactionEdit({ id: "", description: "" });
+  //     }
+  //   }, [id, typeTransactionOptions]);
 
-//   const onSubmit: SubmitHandler<IInputs> = async () => {
-//     const optionId = watch("typeTransaction");
-//     const typeDescription =
-//       typeTransactionOptions.find((option) => option.id === optionId)
-//         ?.description || "";
-//     const _valueNew = watch("value");
+  //   const onSubmit: SubmitHandler<IInputs> = async () => {
+  //     const optionId = watch("typeTransaction");
+  //     const typeDescription =
+  //       typeTransactionOptions.find((option) => option.id === optionId)
+  //         ?.description || "";
+  //     const _valueNew = watch("value");
 
-//     const form: ITransaction = {
-//       typeTransaction: { id: optionId, description: typeDescription },
-//     //   amount: id ? valueWatched : _valueNew,
-//     // amount: 0 ? valueWatched : _valueNew,
-//     amount: 0 ? '' : _valueNew,
-//       date: new Date().toISOString(),
-//       accountNumber: "123456789",
-//     };
+  //     const form: ITransaction = {
+  //       typeTransaction: { id: optionId, description: typeDescription },
+  //     //   amount: id ? valueWatched : _valueNew,
+  //     // amount: 0 ? valueWatched : _valueNew,
+  //     amount: 0 ? '' : _valueNew,
+  //       date: new Date().toISOString(),
+  //       accountNumber: "123456789",
+  //     };
 
-//     setPendingFormData(form)
-//     setShowConfirmDialog(true)
-//   };
+  //     setPendingFormData(form)
+  //     setShowConfirmDialog(true)
+  //   };
 
   const handleConfirmSubmit = async () => {
-    
     // if (!pendingFormData) return;
 
     // if (0) {
     // //   await transactionServices.update(id, pendingFormData);
-    // //   setIdTemp(id)      
+    // //   setIdTemp(id)
     // } else {
     // //   await transactionServices.create(pendingFormData);
-    //   handleNew();      
+    //   handleNew();
     //   setIdTemp("")
     // }
 
-    const response = [] //await transactionServices.getAll();
+    const response = []; //await transactionServices.getAll();
     // setExtract(response || []);
     // handlerUpdateAccount(response || []);
 
     // setPendingFormData(null);
     // setShowConfirmDialog(false);
 
-
-    // toast.dismiss(); 
+    // toast.dismiss();
     // setShowSuccess(true);
-    
+
     // setId("")
-    
-    }
-
-
+  };
 
   const calculateTotalAmount = (responseData: ITransaction[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
-        item.amount.replace("R$", "").trim().replace(".", "").replace(",", ".")
+        item.amount.replace('R$', '').trim().replace('.', '').replace(',', '.')
       );
       return total + amount;
     }, 0);
   };
 
-  const handleOnlyTransactionEditing = () => {     
-    
+  const handleOnlyTransactionEditing = () => {
     // if(id){
-    //   setDialogType({ type: alertDialogTypes.EDIT })    
+    //   setDialogType({ type: alertDialogTypes.EDIT })
     // }
 
     // if(!id){
-    //   setDialogType({ type: alertDialogTypes.CONFIRM })    
+    //   setDialogType({ type: alertDialogTypes.CONFIRM })
     // }
 
-    if (onlyTransactionEditing) {    
-        onlyTransactionEditing();
+    if (onlyTransactionEditing) {
+      onlyTransactionEditing();
     }
   };
 
@@ -186,29 +178,30 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     // setId("");
   };
 
-  return (<>
-    <form
-      onSubmit={() => {}}
-      className="relative bg-gray-300 min-h-[633px] w-full min-w-[280px] rounded-[10px] shadow-md p-6 text-tertiary z-2"
-      id="transaction-form"
-    >
-      <img
-        width={146}
-        height={144}
-        src={bgCardTransaction}
-        alt={"Fundo quadriculado do card de transação financeira"}
-        className="absolute top-0 right-0 max-h-[144px] max-w-[146px] z-[-1]"
-      />
-
-      <fieldset className="flex flex-col">
-        <Title
-          text={0 ? "Editar transação" : "Nova transação"}
-          titleForID="type-transaction-option"
-          size="xlarge"
-          otherClasses={["mb-5"]}
+  return (
+    <>
+      <form
+        onSubmit={() => {}}
+        className="relative bg-gray-300 min-h-[633px] w-full min-w-[280px] rounded-[10px] shadow-md p-6 text-tertiary z-2"
+        id="transaction-form"
+      >
+        <img
+          width={146}
+          height={144}
+          src={bgCardTransaction}
+          alt={'Fundo quadriculado do card de transação financeira'}
+          className="absolute top-0 right-0 max-h-[144px] max-w-[146px] z-[-1]"
         />
 
-        {/* <select
+        <fieldset className="flex flex-col">
+          <Title
+            text={0 ? 'Editar transação' : 'Nova transação'}
+            titleForID="type-transaction-option"
+            size="xlarge"
+            otherClasses={['mb-5']}
+          />
+
+          {/* <select
           id="type-transaction-option"
           className="w-full md:w-[355px] h-[48px] border-solid border-1 border-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
           {...register("typeTransaction", { required: true })}
@@ -225,7 +218,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             })}
         </select> */}
 
-        {/* {errors.typeTransaction && (
+          {/* {errors.typeTransaction && (
           <Title
             text="* Campo obrigatório"
             titleForID="type-transaction-option"
@@ -233,17 +226,17 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             otherClasses={["mb-3", "text-red-600", "font-medium"]}
           />
         )} */}
-      </fieldset>
+        </fieldset>
 
-      <fieldset className="flex flex-col mb-6">
-        <Title
-          text="Valor"
-          titleForID="value"
-          size="medium"
-          otherClasses={["mb-3"]}
-        />
+        <fieldset className="flex flex-col mb-6">
+          <Title
+            text="Valor"
+            titleForID="value"
+            size="medium"
+            otherClasses={['mb-3']}
+          />
 
-        {/* <CurrencyInput
+          {/* <CurrencyInput
             id={id ? `edit-${id}` : `create-${inputKey}`}
             name="value"
             defaultValue={id ? valueWatched : 0}
@@ -255,7 +248,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
         /> */}
 
-        {/* {errors.value && (
+          {/* {errors.value && (
           <Title
             text="* Campo obrigatório"
             titleForID="value"
@@ -263,44 +256,44 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             otherClasses={["mb-3", "text-red-600", "font-medium"]}
           />
         )} */}
-      </fieldset>
+        </fieldset>
 
-      <section className="flex gap-2 max-md:flex-wrap">
-        <Button
-          primary
-          type="submit"
-          onClick={() => handleOnlyTransactionEditing()}
-          label={1 ? "Atualizar transação" : "Concluir transação"}
-        />
-        {1 && (
+        <section className="flex gap-2 max-md:flex-wrap">
           <Button
-            type="button"
-            label="Cancelar"
-            onClick={() => {
-              handleCancelTransaction();
-              handleOnlyTransactionEditing();
-            }}
+            primary
+            type="submit"
+            onClick={() => handleOnlyTransactionEditing()}
+            label={1 ? 'Atualizar transação' : 'Concluir transação'}
           />
-        )}
-      </section>
+          {1 && (
+            <Button
+              type="button"
+              label="Cancelar"
+              onClick={() => {
+                handleCancelTransaction();
+                handleOnlyTransactionEditing();
+              }}
+            />
+          )}
+        </section>
 
-      <img
-        width={283}
-        height={228}
-        src={womanCreditCard}
-        alt={"Ícone de mulher com cartão de crédito"}
-        className="absolute bottom-5 right-5 max-h-[228px] max-w-[283px] z-[-1]"
-      />
+        <img
+          width={283}
+          height={228}
+          src={womanCreditCard}
+          alt={'Ícone de mulher com cartão de crédito'}
+          className="absolute bottom-5 right-5 max-h-[228px] max-w-[283px] z-[-1]"
+        />
 
-      <img
-        width={283}
-        height={228}
-        src={bgCardTransaction}
-        alt={"Fundo quadriculado do card de transação financeira"}
-        className="absolute bottom-0 left-0 max-h-[177px] max-w-[180px] rotate-180 z-[-1]"
-      />
-    </form>
-    {/* {
+        <img
+          width={283}
+          height={228}
+          src={bgCardTransaction}
+          alt={'Fundo quadriculado do card de transação financeira'}
+          className="absolute bottom-0 left-0 max-h-[177px] max-w-[180px] rotate-180 z-[-1]"
+        />
+      </form>
+      {/* {
       <AlertDialog 
         type={dialogType.type} 
         open={showConfirmDialog} 
@@ -309,7 +302,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
       />
     } */}
 
-    {/* {
+      {/* {
        <SuccessSnackbar
         open={showSuccess}
         onClose={() => setShowSuccess(false)}
@@ -317,7 +310,6 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
         duration={3000}
       />
     } */}
-
     </>
   );
 };
