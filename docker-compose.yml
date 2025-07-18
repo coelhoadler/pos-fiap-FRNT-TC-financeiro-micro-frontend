@@ -34,11 +34,11 @@ services:
     volumes:
       - ./apps/api:/app
       - /app/node_modules
+    environment:
+        - MONGO_URI=mongodb://admin:admin123@mongodb:27017/bytebank?authSource=admin
+        - MONGO_DB_NAME=bytebank
     depends_on:
       - mongodb
-    environment:
-      - MONGO_URI=mongodb://admin:admin123@mongo:27017/
-      - MONGO_DB_NAME=bytebank
 
   mongodb:
     image: mongo
