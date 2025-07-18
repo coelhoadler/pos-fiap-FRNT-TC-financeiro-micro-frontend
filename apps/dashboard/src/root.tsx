@@ -1,4 +1,4 @@
-import 'regenerator-runtime/runtime';
+
 import Home from './components/Home';
 import { TransactionProvider } from './setup/context/transactionContext';
 

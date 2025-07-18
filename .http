@@ -8,10 +8,11 @@ content-type: application/json
  
 ###
 POST http://localhost:3000/api/accounts/create HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Nzk5M2Q4OTY1MWYyZWZkOWY2N2E2NSIsImlhdCI6MTc1Mjc5ODE3MCwiZXhwIjoxNzUyODAxNzcwfQ.xfeNg13fvD1swovowiMWxLXZy_SwyqKkN3CEhfMq050
 content-type: application/json
  
 {
-    "accountNumber": "123456789",
+    "accountNumber": "12345678w9",
     "balance": 120958.95000000003,
     "currency": "BRL",
     "accountType": "Conta Corrente"
@@ -23,7 +24,7 @@ content-type: application/json
  
 ###
 POST http://localhost:3000/api/transactions/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Nzk4YjBiZGZlZDI1YzcyYjQ1NDJlOSIsImlhdCI6MTc1Mjc5NjAwMCwiZXhwIjoxNzUyNzk5NjAwfQ.7NJzdSROy2lT4O_YlzAg96jwyDTFo9pgEnYxXzWDXBw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Nzk5M2Q4OTY1MWYyZWZkOWY2N2E2NSIsImlhdCI6MTc1Mjc5ODE3MCwiZXhwIjoxNzUyODAxNzcwfQ.xfeNg13fvD1swovowiMWxLXZy_SwyqKkN3CEhfMq050
 content-type: application/json
  
 {
