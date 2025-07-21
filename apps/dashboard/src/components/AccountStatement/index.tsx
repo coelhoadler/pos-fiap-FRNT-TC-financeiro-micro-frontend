@@ -72,36 +72,36 @@ export default function AccountStatement({
     }, 0);
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
-    const accountJoana = {
-      accountNumber: '123456789',
-      balance: calculateTotalAmount(responseData || []),
-      currency: 'BRL',
-      accountType: 'Conta Corrente',
-    };
-    // setBalance(accountJoana.balance);
-    // await accountServices.updateAccountById('123456789', accountJoana);
-  };
+  // const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  //   const accountJoana = {
+  //     accountNumber: '123456789',
+  //     balance: calculateTotalAmount(responseData || []),
+  //     currency: 'BRL',
+  //     accountType: 'Conta Corrente',
+  //   };
+  //   setBalance(accountJoana.balance);
+  //   await accountServices.updateAccountById('123456789', accountJoana);
+  // };
 
-  const handleConfirmSubmit = async (transactionId: string) => {
-    try {
-      // await transactionServices.delete(transactionId);
+  // const handleConfirmSubmit = async (transactionId: string) => {
+  //   try {
+  //     // await transactionServices.delete(transactionId);
 
-      if (updatedTransactions) {
-        const remainingTransactions = updatedTransactions.filter(
-          (transaction) => transaction.id !== transactionId
-        );
+  //     if (updatedTransactions) {
+  //       const remainingTransactions = updatedTransactions.filter(
+  //         (transaction) => transaction.id !== transactionId
+  //       );
 
-        handlerUpdateAccount(remainingTransactions);
-        setUpdatedTransactions(remainingTransactions);
-        toast.dismiss();
-        setShowSuccess(true);
-        setShowConfirmDialog(false);
-      }
-    } catch (error) {
-      console.error('Error deleting transaction:', error);
-    }
-  };
+  //       handlerUpdateAccount(remainingTransactions);
+  //       setUpdatedTransactions(remainingTransactions);
+  //       toast.dismiss();
+  //       setShowSuccess(true);
+  //       setShowConfirmDialog(false);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error deleting transaction:', error);
+  //   }
+  // };
 
   return (
     <div className="bg-gray-100 p-8 rounded-xl w-full max-w-full h-full shadow-md">
@@ -129,14 +129,14 @@ export default function AccountStatement({
           </span>
         )}
       </ul>
-      {
+      {/* {
         <AlertDialog
           open={showConfirmDialog}
           type={dialogType.type}
           setOpen={setShowConfirmDialog}
           handleConfirmSubmit={() => handleConfirmSubmit(id)}
         />
-      }
+      } */}
 
       {
         <SuccessSnackbar

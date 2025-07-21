@@ -114,30 +114,30 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   //     setShowConfirmDialog(true)
   //   };
 
-  const handleConfirmSubmit = async () => {
-    // if (!pendingFormData) return;
+  // const handleConfirmSubmit = async () => {
+  //   if (!pendingFormData) return;
 
-    // if (0) {
-    // //   await transactionServices.update(id, pendingFormData);
-    // //   setIdTemp(id)
-    // } else {
-    // //   await transactionServices.create(pendingFormData);
-    //   handleNew();
-    //   setIdTemp("")
-    // }
+  //   if (0) {
+  //   //   await transactionServices.update(id, pendingFormData);
+  //   //   setIdTemp(id)
+  //   } else {
+  //   //   await transactionServices.create(pendingFormData);
+  //     handleNew();
+  //     setIdTemp("")
+  //   }
 
-    const response = []; //await transactionServices.getAll();
-    // setExtract(response || []);
-    // handlerUpdateAccount(response || []);
+  //   const response = []; //await transactionServices.getAll();
+  //   setExtract(response || []);
+  //   handlerUpdateAccount(response || []);
 
-    // setPendingFormData(null);
-    // setShowConfirmDialog(false);
+  //   setPendingFormData(null);
+  //   setShowConfirmDialog(false);
 
-    // toast.dismiss();
-    // setShowSuccess(true);
+  //   toast.dismiss();
+  //   setShowSuccess(true);
 
-    // setId("")
-  };
+  //   setId("")
+  // };
 
   const calculateTotalAmount = (responseData: ITransaction[]) => {
     return responseData.reduce((total, item) => {
@@ -162,16 +162,16 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     }
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
-    // const accountJoana = {
-    //   accountNumber: "123456789",
-    //   balance: calculateTotalAmount(responseData || []),
-    //   currency: "BRL",
-    //   accountType: "Conta Corrente",
-    // };
-    // setBalance(accountJoana.balance);
-    // await accountServices.updateAccountById("123456789", accountJoana);
-  };
+  // const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  //   const accountJoana = {
+  //     accountNumber: "123456789",
+  //     balance: calculateTotalAmount(responseData || []),
+  //     currency: "BRL",
+  //     accountType: "Conta Corrente",
+  //   };
+  //   setBalance(accountJoana.balance);
+  //   await accountServices.updateAccountById("123456789", accountJoana);
+  // };
 
   const handleCancelTransaction = () => {
     // reset();
