@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import byteBankLogo from "./../../assets/logo-bytebank.svg";
 import byteBankLogoTablet from "./../../assets/logo-bytebank-tablet.svg";
+import userIcon from "./../../assets/user-icon.svg";
+import arrowDown from "./../../assets/arrow-down.svg";
 import closeIcon from "./../../assets/close-icon.svg";
 import hamburgerMenuIcon from "./../../assets/hamburger-menu-icon.svg";
 import illustrationRegisterModal from "./../../assets/ilustration-register-modal.svg";
@@ -11,6 +13,7 @@ import {
   TMenuMobile,
   TMenuDesktop,
   TCtaItems,
+  TMenuLogado,
 } from "../../types/TMenu";
 import { CustomModal } from "../CustomModal";
 
@@ -73,87 +76,93 @@ const LinkItem = ({
   );
 };
 
-// const MenuMobileWithLib = ({ className }: TMenuMobile) => {
-//   const [open, setOpen] = useState(false);
-//   return (
-//     <>
-//       <div
-//         className={`flex items-center justify-between space-x-4 w-full ${
-//           className ? className : ""
-//         }`}
-//       >
-//         <Dialog open={open} onOpenChange={setOpen}>
-//           <div
-//             className={`${
-//               open ? "hidden" : "flex justify-between w-full items-center"
-//             }`}
-//           >
-//             {/* tive que remove a propriedade asChild do DialogTrigger */}
-//             <DialogTrigger onClick={() => setOpen(true)}>
-//               <img
-//                 src={hamburgerMenuIcon}
-//                 alt="Menu"
-//                 className="cursor-pointer filter-(--filter-link)"
-//               />
-//             </DialogTrigger>
-//             <div className="relative">
-//               <LinkItem
-//                 text="Inicio"
-//                 href="/login"
-//                 isBlank={false}
-//                 className="text-zero cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block"
-//               />
-//               <img src={byteBankLogo} alt="Bytebank" className="h-6" />
-//             </div>
-//           </div>
-//           <DialogContent
-//             className={` min-h-screen w-full  fixed top-0 left-0  bg-black ${
-//               open ? "animate-in" : "animate-out"
-//             }`}
-//           >
-//             <div className="container max-w-full pt-5 px-10 m-auto">
-//               <DialogClose className="flex w-full justify-end items-center my-3.5 focus:outline-none focus:border-none focus:shadow-none">
-//                 <img
-//                   src={closeIcon}
-//                   alt="Fechar menu"
-//                   className="filter-(--filter-link)"
-//                 />
-//               </DialogClose>
-//               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
-//                 <nav className="space-x-6 text-green-500 flex flex-col gap-4 w-full">
-//                   {MenulinksItems.map((link) => (
-//                     <LinkItem
-//                       className="border-b border-white pb-3 w-full m-0"
-//                       key={link.text}
-//                       text={link.text}
-//                       href={link.href}
-//                       isBlank={link.isBlank}
-//                       onClick={() => setOpen(false)}
-//                     />
-//                   ))}
-//                 </nav>
-//                 <div className="flex flex-col gap-4 w-full mt-8">
-//                   <Button  typeButton="button" text="Abrir minha conta" className="w-full" onClick={() => setOpen(false)} />
-//                   <Button
-//                     text="Já tenho conta"
-//                     typeButton="button"
-//                     styleButton="outline"
-//                     className="w-full" onClick={() => setOpen(false)}
-//                   />
-//                 </div>
-//               </div>
-//             </div>
-//           </DialogContent>
-//         </Dialog>
-//       </div>
-//     </>
-//   );
-// };
+const MenuLogado = ({ className }: TMenuLogado) => {
+  const [name, setName] = useState("");
+  const [openDropDown, setOpenDropDown] = useState(false);
+
+  useEffect(() => {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      const user = JSON.parse(userString);
+      setName(user.name);
+    }
+  }, []);
+
+  const handleOpenDropDown = () => {
+    setOpenDropDown((state) => !state);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
+  return (
+    <div className={`max-md:w-full ${className ? className : ""}`}>
+      <div className="relative">
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleOpenDropDown();
+          }}
+          className={`flex items-center max-md:flex-wrap max-md:pb-2 max-md:border-b max-md:border-b-white gap-2 relative ${
+            openDropDown ? "max-md:border-none max-md:pb-0" : ""
+          }`}
+        >
+          <img
+            src={userIcon}
+            className="w-4 h-4 object-center object-contain filter-(--filter-link)"
+            alt=""
+          />
+          <p className="text-link capitalize text-md font-family-base font-bold">
+            {name || "Carregando..."}
+          </p>
+          <img
+            src={arrowDown}
+            className={`w-3 h-3 object-center object-contain filter-(--filter-link) mt-[3px] mx-auto max-md:mx-0 transition-transform ${
+              openDropDown ? "rotate-180" : "rotate-0"
+            }`}
+            alt="Seta"
+          />
+        </a>
+
+        <div
+          className={`flex flex-col max-md:p-0 max-md:mt-2 gap-3 max-md:top-0 max-md:relative bg-black rounded-[5px] px-4 py-3 absolute left-0 top-[40px] w-full transition-all ${
+            openDropDown
+              ? "animate-slide-in-top-soft z-[1]"
+              : "animate-slide-out-top-soft z-[-9999999999] hidden"
+          }`}
+        >
+          <LinkItem
+            className="text-link max-md:font-bold font-normal text-sm max-md:pb-2 max-md:border-b max-md:border-b-white"
+            text="Dashboard"
+            href="/dashboard"
+          />
+          <LinkItem
+            className="text-link max-md:font-bold font-normal text-sm max-md:pb-2 max-md:border-b max-md:border-b-white"
+            text="Sair"
+            href="/"
+            onClick={handleLogout}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const MenuMobile = ({ className }: TMenuMobile) => {
   const [open, setOpen] = useState(false);
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
   const handleClose = () => {
     const contentMenuMobile = document.querySelector(".menu-mobile-wrapper");
     contentMenuMobile?.classList.add("animate-slide-out-left");
@@ -201,7 +210,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
       ".menu-mobile #register-modal .modal-container"
     );
     modalContainer.classList.add("animate-scaleOut");
-    console.log("mobile",modalContainer)
+    console.log("mobile", modalContainer);
     setTimeout(() => {
       setOpenModalRegister(false);
     }, 210);
@@ -236,7 +245,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
             <div className="relative">
               <LinkItem
                 text="Inicio"
-                href="/login"
+                href="/"
                 isBlank={false}
                 className="text-zero cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block"
               />
@@ -251,11 +260,11 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                 : "animate-slide-out-left hidden"
             }`}
           >
-            <div className="container max-w-full pt-5 px-10 m-auto">
+            <div className="container max-w-full pt-10 px-10 m-auto">
               <button
                 type="button"
                 onClick={handleClose}
-                className="flex w-full justify-end items-center my-3.5 focus:outline-none focus:border-none focus:shadow-none"
+                className="w-fit absolute top-3 right-10 flex justify-end items-center my-3.5 focus:outline-none focus:border-none focus:shadow-none"
               >
                 <img
                   src={closeIcon}
@@ -265,6 +274,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               </button>
               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
                 <nav className="space-x-6 text-green-500 flex flex-col gap-4 w-full">
+                  {isLoggedIn && <MenuLogado />}
                   {MenulinksItems.map((link) => (
                     <LinkItem
                       className="border-b border-white pb-3 w-full m-0"
@@ -276,37 +286,43 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                     />
                   ))}
                 </nav>
-                <CtaItems
-                  onClickLogin={() => {
-                    handleClose();
-                    handleOpenLoginModal();
-                  }}
-                  onClickRegister={() => {
-                    handleOpenRegisterModal();
-                    handleClose();
-                  }}
-                />
+                {!isLoggedIn && (
+                  <CtaItems
+                    onClickLogin={() => {
+                      handleClose();
+                      handleOpenLoginModal();
+                    }}
+                    onClickRegister={() => {
+                      handleOpenRegisterModal();
+                      handleClose();
+                    }}
+                  />
+                )}
               </div>
             </div>
           </div>
 
-          <CustomModal
-            id="login-modal"
-            title="Login"
-            isOpen={openModalLogin}
-            onClose={handleCloseLoginModal}
-            typeForm={"login"}
-            pathImage={illustrationLoginModal}
-          />
-          <CustomModal
-            id="register-modal"
-            title="Cadastre-se"
-            descripption="Preencha os campos abaixo para criar sua conta corrente!"
-            pathImage={illustrationRegisterModal}
-            isOpen={openModalRegister}
-            onClose={handleCloseRegisterModal}
-            typeForm={"register"}
-          />
+          {!isLoggedIn && (
+            <>
+              <CustomModal
+                id="login-modal"
+                title="Login"
+                isOpen={openModalLogin}
+                onClose={handleCloseLoginModal}
+                typeForm={"login"}
+                pathImage={illustrationLoginModal}
+              />
+              <CustomModal
+                id="register-modal"
+                title="Cadastre-se"
+                descripption="Preencha os campos abaixo para criar sua conta corrente!"
+                pathImage={illustrationRegisterModal}
+                isOpen={openModalRegister}
+                onClose={handleCloseRegisterModal}
+                typeForm={"register"}
+              />
+            </>
+          )}
         </div>
       </div>
     </>
@@ -314,6 +330,11 @@ const MenuMobile = ({ className }: TMenuMobile) => {
 };
 
 const MenuDesktop = ({ className }: TMenuDesktop) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
   const handleOpenLoginModal = () => {
@@ -350,7 +371,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
         <div className="relative">
           <LinkItem
             text="Inicio"
-            href="/login"
+            href="/"
             isBlank={false}
             className="text-zero cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block"
           />
@@ -376,29 +397,40 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           ))}
         </nav>
       </div>
-      <div className="space-x-4">
-        <CtaItems
-          onClickLogin={handleOpenLoginModal}
-          onClickRegister={handleOpenRegisterModal}
-        />
-      </div>
-      <CustomModal
-        id="login-modal"
-        title="Login"
-        isOpen={openModalLogin}
-        onClose={handleCloseLoginModal}
-        typeForm={"login"}
-        pathImage={illustrationLoginModal}
-      />
-      <CustomModal
-        id="register-modal"
-        title="Cadastre-se"
-        descripption="Preencha os campos abaixo para criar sua conta corrente!"
-        pathImage={illustrationRegisterModal}
-        isOpen={openModalRegister}
-        onClose={handleCloseRegisterModal}
-        typeForm={"register"}
-      />
+
+      {isLoggedIn ? (
+        <>
+          <MenuLogado />
+        </>
+      ) : (
+        <div className="space-x-4">
+          <CtaItems
+            onClickLogin={handleOpenLoginModal}
+            onClickRegister={handleOpenRegisterModal}
+          />
+        </div>
+      )}
+      {!isLoggedIn && (
+        <>
+          <CustomModal
+            id="login-modal"
+            title="Login"
+            isOpen={openModalLogin}
+            onClose={handleCloseLoginModal}
+            typeForm={"login"}
+            pathImage={illustrationLoginModal}
+          />
+          <CustomModal
+            id="register-modal"
+            title="Cadastre-se"
+            descripption="Preencha os campos abaixo para criar sua conta corrente!"
+            pathImage={illustrationRegisterModal}
+            isOpen={openModalRegister}
+            onClose={handleCloseRegisterModal}
+            typeForm={"register"}
+          />
+        </>
+      )}
     </div>
   );
 };
@@ -416,4 +448,4 @@ const Header: React.FC = () => {
   );
 };
 
-export { Header, LinkItem, MenuMobile, MenuDesktop, CtaItems };
+export { Header, LinkItem, MenuMobile, MenuDesktop, CtaItems, MenuLogado };
