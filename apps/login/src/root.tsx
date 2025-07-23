@@ -3,7 +3,7 @@ import Home from "./components/Home";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { useEffect } from "react";
-import { isTokenValid } from "./utils/ExpirationToken";
+import { isTokenValid } from "./utils/expirationToken";
 
 export default function Root(props) {
   useEffect(() => {
