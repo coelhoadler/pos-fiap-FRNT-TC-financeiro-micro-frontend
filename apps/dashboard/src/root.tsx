@@ -1,16 +1,27 @@
-
 import Home from './components/Home';
 import { TransactionProvider } from './setup/context/transactionContext';
 
 import Header from './components/Header';
 import { DesktopMenu } from './components/MobileMenu';
 import './styles/globals.css';
+import { useEffect, useState } from 'react';
+import { getUserProfile } from './services/UserProfile/apiEndpoints';
 
 export default function Root() {
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    getUserProfile().then((response) => {
+      if (response && response.data) {
+        setUsername(response.data.name);
+      }
+    });
+  }, []);
+
   return (
     <TransactionProvider>
       {/* O nameUser está hard coded por enquanto */}
-      <Header nameUser="Joana" />
+      <Header nameUser={username} />
 
       <main className="flex justify-center min-w-[320px] pt-[116px] pb-[1rem] max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7">
         <div className="lg:grid-cols-[250px_auto] lg:grid-colums md:grid-cols-1 w-full  grid gap-3 grid-cols-1">
