@@ -41,14 +41,15 @@ const CtaItems = ({ onClickLogin, onClickRegister, className }: TCtaItems) => {
         className="max-md:w-full"
         text="Abrir minha conta"
         typeButton="button"
-        onClick={onClickLogin}
+        onClick={onClickRegister}
       />
       <Button
         className="max-md:w-full"
         text="Já tenho conta"
         styleButton="outline"
         typeButton="button"
-        onClick={onClickRegister}
+        onClick={onClickLogin}
+        
       />
     </div>
   );
