@@ -18,3 +18,6 @@ export type TCtaItems = {
     onClickLogin?: () => void;
     onClickRegister?: () => void;
 };
+export type TMenuLogado = {
+    className?: string;
+};
