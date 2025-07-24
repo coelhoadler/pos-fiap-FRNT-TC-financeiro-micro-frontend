@@ -11,11 +11,16 @@ export default function Root() {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    getUserProfile().then((response) => {
-      if (response && response.data) {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await getUserProfile;
         setUsername(response.data.name);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
       }
-    });
+    };
+
+    fetchUserProfile();
   }, []);
 
   return (
