@@ -68,7 +68,11 @@ const CustomModal = ({
           )}
           {typeForm == "register" && (
             <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
-              <FormRegister action="register" id="register" method="post" />
+              <FormRegister action="register" id="register" method="post" onClose={
+                () => {
+                  onClose && onClose();
+                }
+              } />
             </div>
           )}
         </div>

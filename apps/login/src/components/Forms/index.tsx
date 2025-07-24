@@ -137,6 +137,8 @@ const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
         return;
       }
 
+      console.log("Login bem-sucedido:", data);
+
       const expirationTime = Date.now() + 3600 * 1000;
 
       
@@ -195,16 +197,61 @@ const FormRegister: React.FC<IFormRegister> = ({
   method,
   action,
   id,
+  onClose,
 }) => {
+
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const [emailInvalido, setEmailInvalido] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setErro("");
+
+    try {
+      const response = await fetch("http://localhost:3000/api/user/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: nome, email: email, password: senha}),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErro(data.message || "Erro ao fazer login.");
+        return;
+      }
+
+      console.log("Conta criada com sucesso:", data);
+
+      onClose(true)
+
+      setTimeout(() => {
+        alert("Conta criada com sucesso!");
+      }, 1000);
+
+    } catch (error) {
+      console.error("Erro:", error);
+      setErro("Ocorreu um erro. Tente novamente.");
+    }
+  };
+
   return (
     <div className={className}>
-      <form action={action} method={method} id={id}>
+      <form action={action} method={method} id={id} onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1 w-full">
             <FormLabelItem text="Nome" required={true} />
             <FormInputItem
               required={true}
               id="nome"
+              type="text"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
               placeholder="Digite seu nome"
             />
           </div>
@@ -213,6 +260,12 @@ const FormRegister: React.FC<IFormRegister> = ({
             <FormInputItem
               required={true}
               id="email"
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailInvalido(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value));
+              }}
               placeholder="Digite seu email"
             />
           </div>
@@ -223,6 +276,8 @@ const FormRegister: React.FC<IFormRegister> = ({
               required={true}
               id="email"
               type="password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
               placeholder="Digite sua senha"
             />
           </div>
@@ -235,7 +290,7 @@ const FormRegister: React.FC<IFormRegister> = ({
           />
 
           <FormMessageItem
-            showMessage={true}
+            showMessage={emailInvalido}
             text="Dado incorreto. Revise e digite novamente."
           />
 
