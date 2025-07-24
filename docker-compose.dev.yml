@@ -37,6 +37,9 @@ services:
     environment:
         - MONGO_URI=mongodb://admin:admin123@mongodb:27017/bytebank?authSource=admin
         - MONGO_DB_NAME=bytebank
+        - PORT=3000
+        - JWT_KEY=jnkfdhheoriuoe265565e98e
+        - BCRYPT_COST=10        
     depends_on:
       - mongodb
 
