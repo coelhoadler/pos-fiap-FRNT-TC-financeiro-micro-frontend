@@ -121,9 +121,6 @@ const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
     event.preventDefault();
     setErro("");
 
-    console.log('BASE_PATH ', process?.env?.BASE_PATH, process);
-    return false;
-
     try {
       const response = await fetch("http://localhost:3000/api/user/auth", {
         method: "POST",
