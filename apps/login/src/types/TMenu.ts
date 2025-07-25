@@ -9,6 +9,7 @@ export type TMenuLinksItems = {
     text: string;
     href: string;
     className?: string;
+    style?: React.CSSProperties;
     isBlank?: boolean;
     onClick?: () => void;
 };
@@ -20,4 +21,5 @@ export type TCtaItems = {
 };
 export type TMenuLogado = {
     className?: string;
+    name?:string;
 };

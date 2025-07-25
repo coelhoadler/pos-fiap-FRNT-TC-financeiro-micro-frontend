@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { IFormLogin, IFormRegister } from "../../interfaces/IForm";
+import showPassWordIcon from "./../../assets/show-password-icon.svg";
+import hidePassWordIcon from "./../../assets/hide-password-icon.svg";
 import {
   TFormCheckboxItem,
   TFormInputItem,
@@ -7,6 +9,7 @@ import {
   TFormMessageItem,
 } from "../../types/TForms";
 import Button from "../Button";
+import { login, register } from "../../services/userService";
 
 const FormInputItem = ({
   className,
@@ -16,6 +19,8 @@ const FormInputItem = ({
   required,
   onChange,
   value,
+  onClick,
+  checked,
 }: TFormInputItem) => {
   return (
     <>
@@ -28,6 +33,8 @@ const FormInputItem = ({
         placeholder={placeholder ? placeholder : ""}
         required={required}
         onChange={onChange}
+        onClick={onClick}
+        checked={checked}
         type={
           type === "password"
             ? "password"
@@ -66,6 +73,7 @@ const FormLabelItem = ({
     </label>
   );
 };
+
 const FormCheckboxItem = ({
   className,
   id,
@@ -117,42 +125,20 @@ const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setErro("");
-
-    try {
-      const response = await fetch("http://localhost:3000/api/user/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password: senha }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setErro(data.message || "Erro ao fazer login.");
-        return;
-      }
-
-      console.log("Login bem-sucedido:", data);
-
-      const expirationTime = Date.now() + 3600 * 1000;
-
-      
-      localStorage.setItem("token", data.token);
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ name: data.name, email: data.email })
-      );
-      localStorage.setItem("token_expiration", expirationTime.toString());
-
-      window.location.href = "/dashboard";
-    } catch (error) {
-      console.error("Erro:", error);
-      setErro("Ocorreu um erro. Tente novamente.");
+    const data = await login({
+      email,
+      password: senha,
+      messageError: erro,
+    });
+    if (!data) {
+      setErro("Erro ao fazer login.");
+    } else if (data.messageError) {
+      setErro(data.messageError);
     }
   };
 
@@ -174,14 +160,33 @@ const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
 
           <div className="flex flex-col gap-1 w-full">
             <FormLabelItem text="Senha" required={true} />
-            <FormInputItem
-              required={true}
-              id="senha"
-              placeholder="Digite sua senha"
-              type="password"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-            />
+            <div className="relative">
+              <FormInputItem
+                className="w-full custom-password"
+                required={true}
+                id="senha"
+                placeholder="Digite sua senha"
+                type={showPassword ? "text" : "password"}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
+              <div className="absolute right-4 m-auto top-0 bottom-0 w-5 h-5 flex items-center justify-center">
+                {showPassword ? (
+                  <img src={showPassWordIcon} className="filter-(--filter-gray-300)" alt="Ver Senha" />
+                ) : (
+                  <img src={hidePassWordIcon} className="filter-(--filter-gray-300)" alt="Esconder Senha" />
+                )}
+                <FormInputItem
+                  className="absolute w-full h-full opacity-0 border-none cursor-pointer"
+                  id={"showPassword"}
+                  required={false}
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                  
+                />
+              </div>
+            </div>
           </div>
 
           <FormMessageItem showMessage={!!erro} text={erro} />
@@ -192,6 +197,7 @@ const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
     </div>
   );
 };
+
 const FormRegister: React.FC<IFormRegister> = ({
   className,
   method,
@@ -199,7 +205,6 @@ const FormRegister: React.FC<IFormRegister> = ({
   id,
   onClose,
 }) => {
-
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -209,34 +214,17 @@ const FormRegister: React.FC<IFormRegister> = ({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setErro("");
-
-    try {
-      const response = await fetch("http://localhost:3000/api/user/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: nome, email: email, password: senha}),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setErro(data.message || "Erro ao fazer login.");
-        return;
-      }
-
-      console.log("Conta criada com sucesso:", data);
-
-      onClose(true)
-
-      setTimeout(() => {
-        alert("Conta criada com sucesso!");
-      }, 1000);
-
-    } catch (error) {
-      console.error("Erro:", error);
-      setErro("Ocorreu um erro. Tente novamente.");
+    const data = await register({
+      email: email,
+      name: nome,
+      password: senha,
+      messageError: erro,
+      onClose,
+    });
+    if (!data) {
+      setErro("Erro ao fazer login.");
+    } else if (data.messageError) {
+      setErro(data.messageError);
     }
   };
 
@@ -264,7 +252,9 @@ const FormRegister: React.FC<IFormRegister> = ({
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setEmailInvalido(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value));
+                setEmailInvalido(
+                  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value)
+                );
               }}
               placeholder="Digite seu email"
             />
@@ -304,7 +294,6 @@ const FormRegister: React.FC<IFormRegister> = ({
     </div>
   );
 };
-
 
 export {
   FormLogin,

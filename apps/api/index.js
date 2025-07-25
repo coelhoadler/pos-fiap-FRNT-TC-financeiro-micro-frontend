@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const cookieParser = require("cookie-parser");
 const cors = require('cors');
 const mongooseConnection = require('./database/dbConnection');
 const accountRoutes = require('./routes/AccountRoutes');
@@ -11,8 +12,17 @@ const typeTransactionRoutes = require('./routes/TypeTransactionRoutes');
 const userRoutes = require('./routes/UserRoutes');
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: 'http://localhost:9000', 
+  credentials: true,              
+};
+
+app.use(cors(corsOptions));
+// app.use(cors());
 app.use(express.json());
+app.use(cookieParser(process.env.COOKIE_SECRET)); 
+
 
 app.get('/', (req, res) => {
   res.send('API rodando!');
