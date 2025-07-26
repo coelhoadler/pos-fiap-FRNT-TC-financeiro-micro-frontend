@@ -14,12 +14,13 @@ const userRoutes = require('./routes/UserRoutes');
 const app = express();
 
 const corsOptions = {
-  origin: '*', 
+  origin: [
+    'http://localhost:9000'
+  ], // Adicione o seu domínio frontend
   credentials: true,              
 };
 
 app.use(cors(corsOptions));
-// app.use(cors());
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET)); 
 

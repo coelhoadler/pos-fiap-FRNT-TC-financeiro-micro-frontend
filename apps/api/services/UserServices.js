@@ -2,7 +2,6 @@ const userModel = require('../models/UserModel');
 const { generateHas, compareHash } = require('../utils/HasManager');
 const { generateToken } = require('../utils/TokenGenerator');
 
-
 exports.auth = async (email, password) => {
   try {
     const model = await userModel.find({ email: email })
@@ -13,12 +12,13 @@ exports.auth = async (email, password) => {
       throw new Error('Nenhum usuário localizado')
     }
 
-    const isHasValid = await compareHash(password, model[0].password)
+    const isHasValid = await compareHash(password, model[0].password);
+
     if (!isHasValid) {
       throw new Error('E-mail ou senha invalido!')
     }
 
-    const token = generateToken(model[0].id)
+    const token = generateToken(model[0].id);
 
     return { name: model[0].name, email: model[0].email, token: token }
 

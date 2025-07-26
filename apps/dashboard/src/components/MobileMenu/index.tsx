@@ -3,10 +3,9 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from '@headlessui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import closeIcon from '../../assets/svg/close-icon.svg';
 import hamburgerMenuIcon from '../../assets/svg/hamburger-menu-icon.svg';
-import { useLocation } from 'react-router-dom';
 
 export type TMenu = {
   onClickItem?: () => void;
