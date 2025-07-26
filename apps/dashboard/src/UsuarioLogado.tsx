@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 const UsuarioLogado: React.FC = () => {
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
-  const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState("");
 
   useEffect(() => {
@@ -20,17 +19,15 @@ const UsuarioLogado: React.FC = () => {
         }
       })
       .catch(() => setErro("Erro ao buscar usuário."))
-      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div style={{ color: "yellow" }}>Carregando...</div>;
-  if (erro) return <div style={{ color: "red" }}>{erro}</div>;
-  if (!user) return <div style={{ color: "red" }}>Usuário não autenticado.</div>;
+  if (erro) return <div >{erro}</div>;
+  if (!user) return <div>Usuário não autenticado.</div>;
 
   return (
-    <div style={{ padding: 32 }}>
-      <h2 style={{ color: "blue" }}>Bem-vindo, {user.name}!</h2>
-      <p style={{ color: "green" }}>Você está logado no sistema.</p>
+    <div>
+      <h2>Bem-vindo, {user.name}!</h2>
+      <p >Você está logado no sistema.</p>
       
     </div>
   );
