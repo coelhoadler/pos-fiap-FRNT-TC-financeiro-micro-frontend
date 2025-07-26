@@ -3,9 +3,9 @@ import { TransactionProvider } from './setup/context/transactionContext';
 
 import Header from './components/Header';
 import { DesktopMenu } from './components/MobileMenu';
-import './styles/globals.css';
 import { useEffect, useState } from 'react';
 import { getUserInfo } from './services/UserProfile/apiEndpoints';
+import './styles/globals.css';
 
 export default function Root() {
   const [username, setUsername] = useState('');

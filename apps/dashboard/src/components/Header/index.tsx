@@ -14,14 +14,7 @@ const Header = ({ nameUser }: THeader) => {
           <p className="font-bold text-sm font-family-base text-white hidden md:block">
             {nameUser}
           </p>
-
           <div className="relative">
-            <a
-              className="w-full h-full block left-0 right-0 top-0 bottom-0 m-auto absolute text-[0px]"
-              href="/profile"
-            >
-              Meu Perfil
-            </a>
             <img width={40} height={40} src={profileIcon} alt="Minha conta" />
           </div>
         </div>

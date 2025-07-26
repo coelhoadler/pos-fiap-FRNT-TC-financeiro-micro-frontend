@@ -38,8 +38,6 @@ export const login = async ({ email, password, messageError }): Promise<LoginUse
             return { messageError: data.message || "Erro ao fazer login." };
         }
 
-        console.log("Login bem-sucedido:", data);
-
         window.location.href = "/dashboard";
 
 
