@@ -28,7 +28,6 @@ const UsuarioLogado: React.FC = () => {
     <div>
       <h2>Bem-vindo, {user.name}!</h2>
       <p >Você está logado no sistema.</p>
-      
     </div>
   );
 };

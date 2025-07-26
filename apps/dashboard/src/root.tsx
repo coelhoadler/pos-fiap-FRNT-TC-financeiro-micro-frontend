@@ -7,4 +7,5 @@ export default function Root(props) {
       <UsuarioLogado />
     </>
   );
+  // return <section className="bg-primary text-yellow-600">{props.name} is mounted!</section>;
 }
