@@ -9,8 +9,9 @@ export type TMenuLinksItems = {
     text: string;
     href: string;
     className?: string;
+    style?: React.CSSProperties;
     isBlank?: boolean;
-    onClick?: () => void;
+    onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 };
 
 export type TCtaItems = {
@@ -20,4 +21,6 @@ export type TCtaItems = {
 };
 export type TMenuLogado = {
     className?: string;
+    name?:string;
+     onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 };

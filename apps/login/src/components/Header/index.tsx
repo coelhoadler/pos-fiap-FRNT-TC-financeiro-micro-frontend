@@ -16,6 +16,8 @@ import {
   TMenuLogado,
 } from "../../types/TMenu";
 import { CustomModal } from "../CustomModal";
+import useUserInfo from "../../hooks/useUserInfos";
+import { logout } from "../../services/userService";
 
 const MenulinksItems: TMenuLinksItems[] = [
   {
@@ -49,7 +51,6 @@ const CtaItems = ({ onClickLogin, onClickRegister, className }: TCtaItems) => {
         styleButton="outline"
         typeButton="button"
         onClick={onClickLogin}
-        
       />
     </div>
   );
@@ -60,6 +61,7 @@ const LinkItem = ({
   href,
   isBlank,
   className,
+  style,
   onClick,
 }: TMenuLinksItems) => {
   return (
@@ -70,37 +72,22 @@ const LinkItem = ({
       className={`text-link text-md font-family-base font-bold transition-all hover:underline ${
         className ? className : ""
       }`}
-      onClick={onClick ? () => onClick() : undefined}
+      style={style}
+      onClick={onClick}
     >
       {text}
     </a>
   );
 };
 
-const MenuLogado = ({ className }: TMenuLogado) => {
-  const [name, setName] = useState("");
+const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
   const [openDropDown, setOpenDropDown] = useState(false);
-
-  useEffect(() => {
-    const userString = localStorage.getItem("user");
-    if (userString) {
-      const user = JSON.parse(userString);
-      setName(user.name);
-    }
-  }, []);
-
   const handleOpenDropDown = () => {
     setOpenDropDown((state) => !state);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    window.location.href = "/";
-  };
-
   return (
-    <div className={`max-md:w-full ${className ? className : ""}`}>
+    <div className={`max-md:w-full menu-logado ${className ? className : ""}`}>
       <div className="relative">
         <a
           href="#"
@@ -114,15 +101,13 @@ const MenuLogado = ({ className }: TMenuLogado) => {
         >
           <img
             src={userIcon}
-            className="w-4 h-4 object-center object-contain filter-(--filter-link)"
-            alt=""
+            className="w-4 h-4 object-contain filter-(--filter-link)"
+            alt="Usuário"
           />
-          <p className="text-link capitalize text-md font-family-base font-bold">
-            {name || "Carregando..."}
-          </p>
+          <p className="text-link capitalize text-md font-bold">{name}</p>
           <img
             src={arrowDown}
-            className={`w-3 h-3 object-center object-contain filter-(--filter-link) mt-[3px] mx-auto max-md:mx-0 transition-transform ${
+            className={`w-3 h-3 transition-transform filter-(--filter-link) ${
               openDropDown ? "rotate-180" : "rotate-0"
             }`}
             alt="Seta"
@@ -130,22 +115,28 @@ const MenuLogado = ({ className }: TMenuLogado) => {
         </a>
 
         <div
-          className={`flex flex-col max-md:p-0 max-md:mt-2 gap-3 max-md:top-0 max-md:relative bg-black rounded-[5px] px-4 py-3 absolute left-0 top-[40px] w-full transition-all ${
+          className={`flex flex-col bg-black rounded-[5px] px-4 py-3 absolute left-0 top-[40px] w-full transition-all min-w-40 max-lg:min-w-0 max-md:relative max-md:top-0 max-md:px-0 max-md:pb-0 ${
             openDropDown
               ? "animate-slide-in-top-soft z-[1]"
-              : "animate-slide-out-top-soft z-[-9999999999] hidden"
+              : "animate-slide-out-top-soft z-[-999999] hidden"
           }`}
         >
           <LinkItem
-            className="text-link max-md:font-bold font-normal text-sm max-md:pb-2 max-md:border-b max-md:border-b-white"
+            className="text-sm pb-3 mb-3 border-b border-white"
             text="Dashboard"
             href="/dashboard"
           />
           <LinkItem
-            className="text-link max-md:font-bold font-normal text-sm max-md:pb-2 max-md:border-b max-md:border-b-white"
+            className="text-sm pb-3 mb-3 border-b border-white hover:no-underline no-underline max-md:mb-0"
             text="Sair"
             href="/"
-            onClick={handleLogout}
+            onClick={(e) => {
+              e.preventDefault();
+              setTimeout(() => {
+                setOpenDropDown(false);
+              }, 50);
+              onClick?.(e);
+            }}
           />
         </div>
       </div>
@@ -157,12 +148,9 @@ const MenuMobile = ({ className }: TMenuMobile) => {
   const [open, setOpen] = useState(false);
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
+  const { user } = useUserInfo();
+  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] =
+    useState(false);
 
   const handleClose = () => {
     const contentMenuMobile = document.querySelector(".menu-mobile-wrapper");
@@ -191,11 +179,6 @@ const MenuMobile = ({ className }: TMenuMobile) => {
       setOpenModalLogin(true);
     }, 500);
   };
-  const handleOpenRegisterModal = () => {
-    setTimeout(() => {
-      setOpenModalRegister(true);
-    }, 500);
-  };
 
   const handleCloseLoginModal = () => {
     const modalContainer = document.querySelector(
@@ -206,6 +189,13 @@ const MenuMobile = ({ className }: TMenuMobile) => {
       setOpenModalLogin(false);
     }, 210);
   };
+
+  const handleOpenRegisterModal = () => {
+    setTimeout(() => {
+      setOpenModalRegister(true);
+    }, 500);
+  };
+
   const handleCloseRegisterModal = () => {
     const modalContainer = document.querySelector(
       ".menu-mobile #register-modal .modal-container"
@@ -214,6 +204,24 @@ const MenuMobile = ({ className }: TMenuMobile) => {
     console.log("mobile", modalContainer);
     setTimeout(() => {
       setOpenModalRegister(false);
+    }, 210);
+  };
+
+  const handleLogout = async () => {
+    logout();
+  };
+
+  const handleOpenLogoutConfirmationModal = () => {
+    setOpenModalLogoutConfirmation(true);
+  };
+
+  const handleCloseLogoutConfirmationModal = () => {
+    const modalContainer = document.querySelector(
+      ".menu-mobile #logout-modal .modal-container"
+    );
+    modalContainer?.classList.add("animate-scaleOut");
+    setTimeout(() => {
+      setOpenModalLogoutConfirmation(false);
     }, 210);
   };
 
@@ -275,7 +283,15 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               </button>
               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
                 <nav className="space-x-6 text-green-500 flex flex-col gap-4 w-full">
-                  {isLoggedIn && <MenuLogado />}
+                  {user && (
+                    <MenuLogado
+                      onClick={() => {
+                        handleOpenLogoutConfirmationModal();
+                        handleClose();
+                      }}
+                      name={user.name}
+                    />
+                  )}
                   {MenulinksItems.map((link) => (
                     <LinkItem
                       className="border-b border-white pb-3 w-full m-0"
@@ -287,7 +303,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                     />
                   ))}
                 </nav>
-                {!isLoggedIn && (
+                {!user && (
                   <CtaItems
                     onClickLogin={() => {
                       handleClose();
@@ -303,7 +319,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
             </div>
           </div>
 
-          {!isLoggedIn && (
+          {!user && (
             <>
               <CustomModal
                 id="login-modal"
@@ -324,6 +340,17 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               />
             </>
           )}
+
+          {user && (
+            <CustomModal
+              id="logout-modal"
+              title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
+              isOpen={openModalLogoutConfirmation}
+              onClose={handleCloseLogoutConfirmationModal}
+              typeForm={"logout"}
+              onClickLogout={handleLogout}
+            />
+          )}
         </div>
       </div>
     </>
@@ -331,19 +358,21 @@ const MenuMobile = ({ className }: TMenuMobile) => {
 };
 
 const MenuDesktop = ({ className }: TMenuDesktop) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
+  const { user } = useUserInfo();
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
+
+  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] =
+    useState(false);
+
   const handleOpenLoginModal = () => {
     setOpenModalLogin(true);
   };
+
   const handleOpenRegisterModal = () => {
     setOpenModalRegister(true);
   };
+
   const handleCloseLoginModal = () => {
     const modalContainer = document.querySelector(
       "#login-modal .modal-container"
@@ -353,6 +382,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
       setOpenModalLogin(false);
     }, 210);
   };
+  
   const handleCloseRegisterModal = () => {
     const modalContainer = document.querySelector(
       "#register-modal .modal-container"
@@ -362,6 +392,25 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
       setOpenModalRegister(false);
     }, 210);
   };
+
+  const handleLogout = async () => {
+    logout();
+  };
+
+  const handleOpenLogoutConfirmationModal = () => {
+    setOpenModalLogoutConfirmation(true);
+  };
+
+  const handleCloseLogoutConfirmationModal = () => {
+    const modalContainer = document.querySelector(
+      "#logout-modal .modal-container"
+    );
+    modalContainer?.classList.add("animate-scaleOut");
+    setTimeout(() => {
+      setOpenModalLogoutConfirmation(false);
+    }, 210);
+  };
+
   return (
     <div
       className={`container max-w-290 m-auto flex justify-between items-center ${
@@ -399,10 +448,8 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
         </nav>
       </div>
 
-      {isLoggedIn ? (
-        <>
-          <MenuLogado />
-        </>
+      {user ? (
+        <MenuLogado onClick={handleOpenLogoutConfirmationModal} name={user.name} />
       ) : (
         <div className="space-x-4">
           <CtaItems
@@ -411,7 +458,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           />
         </div>
       )}
-      {!isLoggedIn && (
+      {!user && (
         <>
           <CustomModal
             id="login-modal"
@@ -431,6 +478,17 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
             typeForm={"register"}
           />
         </>
+      )}
+
+      {user && (
+        <CustomModal
+          id="logout-modal"
+          title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
+          isOpen={openModalLogoutConfirmation}
+          onClose={handleCloseLogoutConfirmationModal}
+          typeForm={"logout"}
+          onClickLogout={handleLogout}
+        />
       )}
     </div>
   );

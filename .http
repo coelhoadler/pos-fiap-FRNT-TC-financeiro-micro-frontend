@@ -55,6 +55,16 @@ DELETE http://localhost:3000/api/transactions/delete/6877baa8bd990017ab329c6c HT
 content-type: application/json
  
 ###
+GET http://localhost:3000/api/user/info HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Nzk4YjBiZGZlZDI1YzcyYjQ1NDJlOSIsImlhdCI6MTc1Mjc5NjAwMCwiZXhwIjoxNzUyNzk5NjAwfQ.7NJzdSROy2lT4O_YlzAg96jwyDTFo9pgEnYxXzWDXBw
+content-type: application/json
+ 
+{
+    "name":"administrador",
+    "email":"adm@teste.com.br",
+}
+ 
+###
 POST http://localhost:3000/api/user/auth HTTP/1.1
 content-type: application/json
  

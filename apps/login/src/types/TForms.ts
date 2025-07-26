@@ -6,6 +6,8 @@ export type TFormInputItem = {
     required: boolean;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onClick?:  () => void;
+    checked?: boolean;
 };
 export type TFormLabelItem = {
     className?: string;

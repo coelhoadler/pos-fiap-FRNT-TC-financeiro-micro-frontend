@@ -1,4 +1,5 @@
 import { TCustomModal } from "../../types/TCustomModal";
+import Button from "../Button";
 import { FormLogin, FormRegister } from "../Forms";
 import closeIcon from "./../../assets/close-icon.svg";
 
@@ -10,6 +11,7 @@ const CustomModal = ({
   typeForm,
   id,
   onClose,
+  onClickLogout,
 }: TCustomModal) => {
   return (
     <div
@@ -25,7 +27,7 @@ const CustomModal = ({
       <div
         className={`bg-gray-100 modal-container p-8 flex flex-col items-center justify-center rounded-md transition-all min-w-[40%] max-w-[800px] max-lg:max-w-[80%] max-lg:min-w-[60%] max-md:max-w-[95%] max-2xl:max-h-[800px] max-2xl:overflow-y-auto max-2xl:justify-start max-md:max-h-[750px] max-md:justify-start max-md:overflow-y-auto duration-300 shadow-sm  ${
           isOpen ? "animate-scaleIn" : "animate-scaleOut"
-        }`}
+        } ${typeForm === "logout" ? "min-w-[420px!important] max-w-[420px!important] max-md:min-w-[80%!important] max-md:max-w-[90%!important]" :""} `}
       >
         <div className="w-full relative">
           <button
@@ -50,7 +52,7 @@ const CustomModal = ({
               </div>
             )}
             {title && (
-              <h4 className="font-family-base font-bold text-md text-black">
+              <h4 className={`font-family-base font-bold text-md text-black ${typeForm === "logout" ? "text-center" :""}`}>
                 {title}
               </h4>
             )}
@@ -68,11 +70,20 @@ const CustomModal = ({
           )}
           {typeForm == "register" && (
             <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
-              <FormRegister action="register" id="register" method="post" onClose={
-                () => {
+              <FormRegister
+                action="register"
+                id="register"
+                method="post"
+                onClose={() => {
                   onClose && onClose();
-                }
-              } />
+                }}
+              />
+            </div>
+          )}
+          {typeForm == "logout" && (
+            <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
+              <Button onClick={onClickLogout} text="Sim" />
+              <Button onClick={onClose} styleButton="outline" text="Não" />
             </div>
           )}
         </div>

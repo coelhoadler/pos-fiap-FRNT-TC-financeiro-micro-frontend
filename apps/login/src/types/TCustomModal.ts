@@ -1,7 +1,8 @@
 export type TCustomModal = {
   isOpen: boolean;
   onClose: () => void;
-  typeForm?: | 'login' | 'register';
+  onClickLogout?: () => void;
+  typeForm?: | 'login' | 'register' | 'logout';
   title?: string;
   pathImage?: string;
   descripption?:string;
