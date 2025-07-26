@@ -3,6 +3,7 @@ import byteBankIconWhite from "../../assets/svg/icon-bytebank-white.svg";
 import arrowDown from "../../assets/svg/arrow-down.svg";
 import { MobileMenu } from "../MobileMenu";
 import { useState } from "react";
+import { userLogout } from "../../services/UserProfile/apiEndpoints";
 
 export type THeader = {
   nameUser: string;
@@ -14,6 +15,11 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
   const handleOpenDropDown = () => {
     setOpenDropDown((state) => !state);
   };
+
+  const handleLogout = async () => {
+    userLogout();
+  };
+  
   return (
     <header className="flex justify-between items-center bg-primary h-[96px] p-1.5 fixed w-full z-30 shadow-[0px_2px_10px_1px_rgba(0,0,0,0.75)]">
       <div className="max-w-[80%] m-auto w-full max-lg:max-w-full px-[15px] max-md:flex max-md:items-center">
@@ -57,6 +63,10 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
                     <a
                       className="rounded-md py-1 px-2 font-bold text-sm font-family-base block transition-all text-primary hover:bg-gray-100"
                       href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleLogout();
+                      }}
                     >
                       Sair
                     </a>
