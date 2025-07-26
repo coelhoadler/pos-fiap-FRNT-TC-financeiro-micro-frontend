@@ -1,11 +1,11 @@
-// import { Link } from '@mui/material';
+import { Link } from '@mui/material';
 import React from 'react';
-import { FaTrashAlt } from 'react-icons/fa';
-import { LuPencil } from 'react-icons/lu';
 import { ITransaction } from '../../Models/transactionModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../utils/formatters';
-import { Link } from '@mui/material';
+
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 
 interface TransactionItemProps {
   item: Partial<ITransaction>;
@@ -61,7 +61,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
                 onEdit?.();
               }}
             >
-              {/* <LuPencil size={18} /> */}
+              <DriveFileRenameOutlineIcon style={{ color: 'white' }} />
             </button>
           </Link>
           <button
@@ -69,7 +69,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
             onClick={() => onDelete(item.id || '')}
           >
-            {/* <FaTrashAlt size={18} /> */}
+            <DeleteForeverIcon style={{ color: 'white' }} />
           </button>
         </p>
       </div>

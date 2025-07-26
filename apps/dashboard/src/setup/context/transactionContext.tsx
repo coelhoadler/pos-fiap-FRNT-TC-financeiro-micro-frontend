@@ -1,16 +1,15 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
-
-// import { ApiServices } from '../api/apiServices';
-import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import {
-  ApiServices,
-  transactionServices,
-} from '../../services/Transacoes/apiEndpoints';
-import { typeTransactionService } from '../../services/Transacoes/apiEnpointsTypeTransaction';
-// import { typeTransactionService } from '../api/typeTransactionService/typeTransactionServices';
-// import { transactionServices } from '../api/transactionServices/transactionServices';
-// import { accountServices } from '../api/accountServices/accountServices';
-// import { alertDialogTypes } from '../enums/alertDialogTypes';
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+
+import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
+import { accountServices } from '../../services/Account/apiEndpoint';
+import { ApiServices } from '../../services/apiServices';
+import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 
 type TransactionContextType = {
   id: string;
@@ -20,9 +19,6 @@ type TransactionContextType = {
   extract: any[];
   setExtract: (extract: any[]) => void;
   transactionServices: ApiServices<ITransaction>;
-  typeTransactionService: ApiServices<ITypeTransaction>;
-  typeTransaction: ITypeTransaction[];
-  setTypeTransaction: (typeTransaction: ITypeTransaction[]) => void;
   typeTransactionEdit: ITypeTransaction;
   setTypeTransactionEdit: (typeTransaction: ITypeTransaction) => void;
   balance: number;
@@ -41,28 +37,18 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   const [id, setId] = useState('');
   const [valueEdit, setValueEdit] = useState('');
   const [extract, setExtract] = useState<any[]>([]);
-  const [typeTransaction, setTypeTransaction] = useState<ITypeTransaction[]>(
-    []
-  );
   const [typeTransactionEdit, setTypeTransactionEdit] =
     useState<ITypeTransaction>({} as ITypeTransaction);
   const [balance, setBalance] = useState<number>(0);
 
-  // useEffect(() => {
-  //   const fetchTransaction = async () => {
-  //     const responseData = await transactionServices.getAll();
-  //     setExtract(responseData || []);
-  //     handlerUpdateAccount(responseData || []);
-  //   };
-  //   fetchTransaction();
-
-  //   const fetchTypeTransaction = async () => {
-  //     const responseData = await typeTransactionService.getAll();
-  //     setTypeTransaction(responseData || []);
-  //   };
-
-  //   fetchTypeTransaction();
-  // }, []);
+  useEffect(() => {
+    const fetchTransaction = async () => {
+      const responseData = await transactionServices.getAll();
+      setExtract(responseData || []);
+      handlerUpdateAccount(responseData || []);
+    };
+    fetchTransaction();
+  }, []);
 
   const calculateTotalAmount = (responseData: ITransaction[]) => {
     return responseData.reduce((total, item) => {
@@ -73,16 +59,16 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
     }, 0);
   };
 
-  // const handlerUpdateAccount = async (responseData: ITransaction[]) => {
-  //   const accountJoana = {
-  //     accountNumber: '123456789',
-  //     balance: calculateTotalAmount(responseData || []),
-  //     currency: 'BRL',
-  //     accountType: 'Conta Corrente',
-  //   };
-  //   setBalance(accountJoana.balance);
-  //   // await accountServices.updateAccountById('123456789', accountJoana);
-  // };
+  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+    const accountJoana = {
+      accountNumber: '123456789',
+      balance: calculateTotalAmount(responseData || []),
+      currency: 'BRL',
+      accountType: 'Conta Corrente',
+    };
+    setBalance(accountJoana.balance);
+    await accountServices.updateAccountById('123456789', accountJoana);
+  };
 
   return (
     <TransactionContext.Provider
@@ -94,9 +80,6 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         extract,
         setExtract,
         transactionServices: transactionServices,
-        typeTransactionService: typeTransactionService,
-        typeTransaction,
-        setTypeTransaction,
         typeTransactionEdit,
         setTypeTransactionEdit,
         balance,
