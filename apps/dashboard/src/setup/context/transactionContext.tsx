@@ -2,6 +2,11 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 
 // import { ApiServices } from '../api/apiServices';
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
+import {
+  ApiServices,
+  transactionServices,
+} from '../../services/Transacoes/apiEndpoints';
+import { typeTransactionService } from '../../services/Transacoes/apiEnpointsTypeTransaction';
 // import { typeTransactionService } from '../api/typeTransactionService/typeTransactionServices';
 // import { transactionServices } from '../api/transactionServices/transactionServices';
 // import { accountServices } from '../api/accountServices/accountServices';
@@ -14,8 +19,8 @@ type TransactionContextType = {
   setValueEdit: (value: string) => void;
   extract: any[];
   setExtract: (extract: any[]) => void;
-  // transactionServices: ApiServices<ITransaction>;
-  // typeTransactionService: ApiServices<ITypeTransaction>;
+  transactionServices: ApiServices<ITransaction>;
+  typeTransactionService: ApiServices<ITypeTransaction>;
   typeTransaction: ITypeTransaction[];
   setTypeTransaction: (typeTransaction: ITypeTransaction[]) => void;
   typeTransactionEdit: ITypeTransaction;
@@ -88,8 +93,8 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         setValueEdit,
         extract,
         setExtract,
-        // transactionServices: transactionServices,
-        // typeTransactionService: typeTransactionService,
+        transactionServices: transactionServices,
+        typeTransactionService: typeTransactionService,
         typeTransaction,
         setTypeTransaction,
         typeTransactionEdit,

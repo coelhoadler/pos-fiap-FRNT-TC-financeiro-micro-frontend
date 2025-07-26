@@ -25,7 +25,6 @@ export default function Root() {
 
   return (
     <TransactionProvider>
-      {/* O nameUser está hard coded por enquanto */}
       <Header nameUser={username} />
 
       <main className="flex justify-center min-w-[320px] pt-[116px] pb-[1rem] max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7">
@@ -34,7 +33,7 @@ export default function Root() {
             <DesktopMenu />
           </div>
           <div className="lg:justify-center items-center md:items-start flex grow-3 justify-center max-lg:pt-5">
-            <Home />
+            <Home username={username} />
           </div>
         </div>
       </main>

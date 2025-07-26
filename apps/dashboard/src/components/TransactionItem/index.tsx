@@ -1,10 +1,11 @@
 // import { Link } from '@mui/material';
 import React from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
-// import { LuPencil } from 'react-icons/lu';
+import { LuPencil } from 'react-icons/lu';
 import { ITransaction } from '../../Models/transactionModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../utils/formatters';
+import { Link } from '@mui/material';
 
 interface TransactionItemProps {
   item: Partial<ITransaction>;
@@ -50,7 +51,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
           </p>
         </div>
         <p className={'text-sm flex flex-col gap-3.5 text-white'}>
-          {/* <Link href="#transaction-form" onClick={(e) => e.preventDefault()}>
+          <Link href="#transaction-form" onClick={(e) => e.preventDefault()}>
             <button
               title="Editar"
               className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
@@ -60,9 +61,9 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
                 onEdit?.();
               }}
             >
-              <LuPencil size={18} />
+              {/* <LuPencil size={18} /> */}
             </button>
-          </Link> */}
+          </Link>
           <button
             title="Excluir"
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"

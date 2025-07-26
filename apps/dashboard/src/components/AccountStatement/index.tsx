@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ITransaction } from '../../Models/transactionModels';
 // import { accountServices } from '@/app/api/accountServices/accountServices';
@@ -7,6 +7,8 @@ import { TAlertDialogType } from '../../types/TAlertDialogType';
 import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SuccessSnackbar';
 import TransactionItem from '../TransactionItem';
+import { sortExtractByAscDate } from '../../utils/formatters';
+import { useTransaction } from '../../setup/context/transactionContext';
 
 type TAccountStatement = {
   onEditTransaction?: () => void;
@@ -18,7 +20,7 @@ export default function AccountStatement({
   const [updatedTransactions, setUpdatedTransactions] = useState<
     ITransaction[]
   >([]);
-  // const { extract, transactionServices, setBalance } = useTransaction();
+  const { extract, transactionServices, setBalance } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.DELETE,
   });
@@ -27,40 +29,40 @@ export default function AccountStatement({
   const [showSuccess, setShowSuccess] = useState(false);
   const [idTemp, setIdTemp] = useState('');
 
-  // useEffect(() => {
-  //   const extractOrdered = sortExtractByAscDate(extract || []);
-  //   setUpdatedTransactions(extractOrdered || []);
-  // }, [extract]);
+  useEffect(() => {
+    const extractOrdered = sortExtractByAscDate(extract || []);
+    setUpdatedTransactions(extractOrdered || []);
+  }, [extract]);
 
-  // const handleTransactionDelete = async (transactionId: string) => {
-  //   try {
-  //     await transactionServices.delete(transactionId);
+  const handleTransactionDelete = async (transactionId: string) => {
+    try {
+      await transactionServices.delete(transactionId);
 
-  //     if (updatedTransactions) {
-  //       const remainingTransactions = updatedTransactions.filter(
-  //         (transaction) => transaction.id !== transactionId
-  //       );
+      if (updatedTransactions) {
+        const remainingTransactions = updatedTransactions.filter(
+          (transaction) => transaction.id !== transactionId
+        );
 
-  //       handlerUpdateAccount(remainingTransactions);
-  //       setUpdatedTransactions(remainingTransactions);
+        // handlerUpdateAccount(remainingTransactions);
+        setUpdatedTransactions(remainingTransactions);
 
-  //       toast.success('Transação excluída com sucesso!');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error deleting transaction:', error);
-  //   }
-  // };
+        toast.success('Transação excluída com sucesso!');
+      }
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+    }
+  };
 
   const handleTransactionDeleteConfirmation = (transactionId: string) => {
     setShowConfirmDialog(true);
     setId(transactionId);
-    // const confirmDelete = window.confirm(
-    //   "Você tem certeza que deseja excluir esta transação?"
-    // );
+    const confirmDelete = window.confirm(
+      'Você tem certeza que deseja excluir esta transação?'
+    );
 
-    // if (confirmDelete) {
-    //   handleTransactionDelete(transactionId);
-    // }
+    if (confirmDelete) {
+      handleTransactionDelete(transactionId);
+    }
   };
 
   const calculateTotalAmount = (responseData: ITransaction[]) => {
@@ -83,25 +85,25 @@ export default function AccountStatement({
   //   await accountServices.updateAccountById('123456789', accountJoana);
   // };
 
-  // const handleConfirmSubmit = async (transactionId: string) => {
-  //   try {
-  //     // await transactionServices.delete(transactionId);
+  const handleConfirmSubmit = async (transactionId: string) => {
+    try {
+      // await transactionServices.delete(transactionId);
 
-  //     if (updatedTransactions) {
-  //       const remainingTransactions = updatedTransactions.filter(
-  //         (transaction) => transaction.id !== transactionId
-  //       );
+      if (updatedTransactions) {
+        const remainingTransactions = updatedTransactions.filter(
+          (transaction) => transaction.id !== transactionId
+        );
 
-  //       handlerUpdateAccount(remainingTransactions);
-  //       setUpdatedTransactions(remainingTransactions);
-  //       toast.dismiss();
-  //       setShowSuccess(true);
-  //       setShowConfirmDialog(false);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error deleting transaction:', error);
-  //   }
-  // };
+        // handlerUpdateAccount(remainingTransactions);
+        setUpdatedTransactions(remainingTransactions);
+        toast.dismiss();
+        setShowSuccess(true);
+        setShowConfirmDialog(false);
+      }
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+    }
+  };
 
   return (
     <div className="bg-gray-100 p-8 rounded-xl w-full max-w-full h-full shadow-md">
@@ -129,14 +131,14 @@ export default function AccountStatement({
           </span>
         )}
       </ul>
-      {/* {
+      {
         <AlertDialog
           open={showConfirmDialog}
           type={dialogType.type}
           setOpen={setShowConfirmDialog}
           handleConfirmSubmit={() => handleConfirmSubmit(id)}
         />
-      } */}
+      }
 
       {
         <SuccessSnackbar
