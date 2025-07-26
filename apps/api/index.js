@@ -14,7 +14,7 @@ const userRoutes = require('./routes/UserRoutes');
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:9000', 
+  origin: '*', 
   credentials: true,              
 };
 
