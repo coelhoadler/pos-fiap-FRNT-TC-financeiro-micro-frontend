@@ -4,12 +4,14 @@ import {
   constructRoutes,
   constructLayoutEngine,
 } from "single-spa-layout";
-import microfrontendLayout from "./microfrontend-layout.html";
+
+import microfrontendLayout from './microfrontend-layout.html';
 
 const routes = constructRoutes(microfrontendLayout);
 const applications = constructApplications({
   routes,
   loadApp({ name }) {
+    // return System.import(name);
     return import(/* webpackIgnore: true */ name);
   },
 });

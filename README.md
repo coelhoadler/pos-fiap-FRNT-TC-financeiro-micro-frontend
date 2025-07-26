@@ -20,6 +20,11 @@ Este é um projeto feito com a multifrontend, cujo objetivo é representar as **
   │   ├── /root-config (Orquestração com Single-SPA ::9000)
 ```
 
+## Docker + Mongodb
+1 - Necessário que o Docker esteja rodando na máquina
+2 - Necessário instalar o mongodb **npm install mongodb**
+
+
 - /apps: Contém os microfrontends individuais, cada um com sua própria lógica e dependências.
 
 ## Como Está Sendo Feito o Deploy

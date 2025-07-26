@@ -13,11 +13,11 @@
     "start": "docker compose -f docker-compose.dev.yml up",
     "start:dashboard": "cd apps/dashboard && npm start",
     "start:login": "cd apps/login && npm start",
-    "start:api": "cd apps/api && npm start",
+    "start:micro-api": "cd apps/api && npm run dev",
     "start:root-config": "cd apps/root-config && npm start",
     "start:micro-dashboard": "cd apps/dashboard && npm start",
     "start:micro-login": "cd apps/login && npm start",
-    "start:micro-root-config": "cd apps/root-config && npm start",    
+    "start:micro-root-config": "cd apps/root-config && npm start",
     "start:dev": "npm-run-all --parallel start:micro-*",
     "start:prod": "docker compose -f docker-compose.prod.yml up",
     "build": "npm-run-all --serial build:*",
@@ -38,12 +38,26 @@
   },
   "homepage": "https://github.com/coelhoadler/pos-fiap-FRNT-TC-financeiro-micro-frontend#readme",
   "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "commitizen": "^4.3.1",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "raw-loader": "^4.0.2",
+    "rimraf": "^6.0.1"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "mongodb": "^6.17.0",
+    "react-currency-input-field": "^3.10.0",
+    "react-currency-mask": "^1.3.3",
+    "react-hook-form": "^7.60.0",
+    "react-lazy-load-image-component": "^1.6.3",
+    "react-toastify": "^11.0.5",
+    "regenerator-runtime": "^0.14.1"
   }
 }

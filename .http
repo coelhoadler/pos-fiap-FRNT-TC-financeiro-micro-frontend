@@ -29,7 +29,7 @@ content-type: application/json
  
 ###
 POST http://localhost:3000/api/transactions/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Nzk4YjBiZGZlZDI1YzcyYjQ1NDJlOSIsImlhdCI6MTc1Mjc5NjAwMCwiZXhwIjoxNzUyNzk5NjAwfQ.7NJzdSROy2lT4O_YlzAg96jwyDTFo9pgEnYxXzWDXBw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODE2YWMyODRiMmM0ZDI3MjRlMGE3YSIsImlhdCI6MTc1MzU0MzU0OCwiZXhwIjoxNzUzNTQ3MTQ4fQ.JOVlZ2UqShfZ0l9rzsfRj1t1CdBOB0FyuaH6-2ISua8
 content-type: application/json
  
 {
