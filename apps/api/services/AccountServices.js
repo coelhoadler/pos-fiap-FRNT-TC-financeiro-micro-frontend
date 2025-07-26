@@ -2,13 +2,13 @@ const accountModel  = require('../models/AccountModel');
 
 exports.getAccount = async () => {
   try {
-    const profile = await accountModel.find()
+    const accountAll = await accountModel.find()
 
-    if (!profile) {
+    if (!accountAll) {
       throw new Error('Conta não encontrada');
     }
 
-    return profile;
+    return accountAll;
   } catch (error) {
     throw new Error(`${error.message}`);
   }
@@ -22,13 +22,27 @@ exports.create = async (accountNumber, balance, currency, accountType) => {
       currency, 
       accountType
     }
-    const profile = await accountModel.create(payload)
+    const accountCreate = await accountModel.create(payload)
 
-    if (!profile) {
+    if (!accountCreate) {
       throw new Error('Erro ao criar uma conta!');
     }
 
-    return profile;
+    return accountCreate;
+  } catch (error) {
+    throw new Error(`${error.message}`);
+  }
+}
+
+exports.getAccountById = async (accountNumber) => {
+  try {
+    const accountNumberFind = await accountModel.find({ accountNumber: accountNumber });
+
+    if (!accountNumberFind) {
+      throw new Error('Conta não encontrada');
+    }
+
+    return accountNumberFind;
   } catch (error) {
     throw new Error(`${error.message}`);
   }

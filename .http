@@ -3,15 +3,21 @@ content-type: application/json
  
 ###
 GET http://localhost:3000/api/accounts HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Nzk4YjBiZGZlZDI1YzcyYjQ1NDJlOSIsImlhdCI6MTc1Mjc5NjAwMCwiZXhwIjoxNzUyNzk5NjAwfQ.7NJzdSROy2lT4O_YlzAg96jwyDTFo9pgEnYxXzWDXBw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODRlY2IyNmFmM2Q0ZDgyNTRjMjJlMSIsImlhdCI6MTc1MzU0MTgxNSwiZXhwIjoxNzUzNTQ1NDE1fQ.ISs9Dk0RgRKx2uPmCM31Va5Logua3kWdnsLOQ96YYNk
+content-type: application/json
+
+###
+GET http://localhost:3000/api/accounts/getAccountById/123456789 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODRlY2IyNmFmM2Q0ZDgyNTRjMjJlMSIsImlhdCI6MTc1MzU0MTgxNSwiZXhwIjoxNzUzNTQ1NDE1fQ.ISs9Dk0RgRKx2uPmCM31Va5Logua3kWdnsLOQ96YYNk
 content-type: application/json
  
 ###
 POST http://localhost:3000/api/accounts/create HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODRlY2IyNmFmM2Q0ZDgyNTRjMjJlMSIsImlhdCI6MTc1MzU0MTgxNSwiZXhwIjoxNzUzNTQ1NDE1fQ.ISs9Dk0RgRKx2uPmCM31Va5Logua3kWdnsLOQ96YYNk
 content-type: application/json
  
 {
-    "accountNumber": "123456789",
+    "accountNumber": "1234567893",
     "balance": 120958.95000000003,
     "currency": "BRL",
     "accountType": "Conta Corrente"
