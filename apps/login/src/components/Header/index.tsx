@@ -73,26 +73,21 @@ const LinkItem = ({
         className ? className : ""
       }`}
       style={style}
-      onClick={onClick ? () => onClick() : undefined}
+      onClick={onClick}
     >
       {text}
     </a>
   );
 };
 
-const MenuLogado = ({ name, className }: TMenuLogado) => {
+const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
   const [openDropDown, setOpenDropDown] = useState(false);
-
   const handleOpenDropDown = () => {
     setOpenDropDown((state) => !state);
   };
 
-  const handleLogout = async () => {
-    logout();
-  };
-
   return (
-    <div className={`max-md:w-full ${className ? className : ""}`}>
+    <div className={`max-md:w-full menu-logado ${className ? className : ""}`}>
       <div className="relative">
         <a
           href="#"
@@ -135,7 +130,13 @@ const MenuLogado = ({ name, className }: TMenuLogado) => {
             className="text-sm pb-3 mb-3 border-b border-white hover:no-underline no-underline max-md:mb-0"
             text="Sair"
             href="/"
-            onClick={handleLogout}
+            onClick={(e) => {
+              e.preventDefault();
+              setTimeout(() => {
+                setOpenDropDown(false);
+              }, 50);
+              onClick?.(e);
+            }}
           />
         </div>
       </div>
@@ -148,6 +149,8 @@ const MenuMobile = ({ className }: TMenuMobile) => {
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
   const { user } = useUserInfo();
+  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] =
+    useState(false);
 
   const handleClose = () => {
     const contentMenuMobile = document.querySelector(".menu-mobile-wrapper");
@@ -176,11 +179,6 @@ const MenuMobile = ({ className }: TMenuMobile) => {
       setOpenModalLogin(true);
     }, 500);
   };
-  const handleOpenRegisterModal = () => {
-    setTimeout(() => {
-      setOpenModalRegister(true);
-    }, 500);
-  };
 
   const handleCloseLoginModal = () => {
     const modalContainer = document.querySelector(
@@ -191,6 +189,13 @@ const MenuMobile = ({ className }: TMenuMobile) => {
       setOpenModalLogin(false);
     }, 210);
   };
+
+  const handleOpenRegisterModal = () => {
+    setTimeout(() => {
+      setOpenModalRegister(true);
+    }, 500);
+  };
+
   const handleCloseRegisterModal = () => {
     const modalContainer = document.querySelector(
       ".menu-mobile #register-modal .modal-container"
@@ -199,6 +204,24 @@ const MenuMobile = ({ className }: TMenuMobile) => {
     console.log("mobile", modalContainer);
     setTimeout(() => {
       setOpenModalRegister(false);
+    }, 210);
+  };
+
+  const handleLogout = async () => {
+    logout();
+  };
+
+  const handleOpenLogoutConfirmationModal = () => {
+    setOpenModalLogoutConfirmation(true);
+  };
+
+  const handleCloseLogoutConfirmationModal = () => {
+    const modalContainer = document.querySelector(
+      ".menu-mobile #logout-modal .modal-container"
+    );
+    modalContainer?.classList.add("animate-scaleOut");
+    setTimeout(() => {
+      setOpenModalLogoutConfirmation(false);
     }, 210);
   };
 
@@ -260,7 +283,15 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               </button>
               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
                 <nav className="space-x-6 text-green-500 flex flex-col gap-4 w-full">
-                  {user && <MenuLogado name={user.name} />}
+                  {user && (
+                    <MenuLogado
+                      onClick={() => {
+                        handleOpenLogoutConfirmationModal();
+                        handleClose();
+                      }}
+                      name={user.name}
+                    />
+                  )}
                   {MenulinksItems.map((link) => (
                     <LinkItem
                       className="border-b border-white pb-3 w-full m-0"
@@ -309,6 +340,17 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               />
             </>
           )}
+
+          {user && (
+            <CustomModal
+              id="logout-modal"
+              title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
+              isOpen={openModalLogoutConfirmation}
+              onClose={handleCloseLogoutConfirmationModal}
+              typeForm={"logout"}
+              onClickLogout={handleLogout}
+            />
+          )}
         </div>
       </div>
     </>
@@ -319,12 +361,18 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
   const { user } = useUserInfo();
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
+
+  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] =
+    useState(false);
+
   const handleOpenLoginModal = () => {
     setOpenModalLogin(true);
   };
+
   const handleOpenRegisterModal = () => {
     setOpenModalRegister(true);
   };
+
   const handleCloseLoginModal = () => {
     const modalContainer = document.querySelector(
       "#login-modal .modal-container"
@@ -334,6 +382,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
       setOpenModalLogin(false);
     }, 210);
   };
+  
   const handleCloseRegisterModal = () => {
     const modalContainer = document.querySelector(
       "#register-modal .modal-container"
@@ -343,6 +392,25 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
       setOpenModalRegister(false);
     }, 210);
   };
+
+  const handleLogout = async () => {
+    logout();
+  };
+
+  const handleOpenLogoutConfirmationModal = () => {
+    setOpenModalLogoutConfirmation(true);
+  };
+
+  const handleCloseLogoutConfirmationModal = () => {
+    const modalContainer = document.querySelector(
+      "#logout-modal .modal-container"
+    );
+    modalContainer?.classList.add("animate-scaleOut");
+    setTimeout(() => {
+      setOpenModalLogoutConfirmation(false);
+    }, 210);
+  };
+
   return (
     <div
       className={`container max-w-290 m-auto flex justify-between items-center ${
@@ -381,7 +449,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
       </div>
 
       {user ? (
-        <MenuLogado name={user.name} />
+        <MenuLogado onClick={handleOpenLogoutConfirmationModal} name={user.name} />
       ) : (
         <div className="space-x-4">
           <CtaItems
@@ -410,6 +478,17 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
             typeForm={"register"}
           />
         </>
+      )}
+
+      {user && (
+        <CustomModal
+          id="logout-modal"
+          title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
+          isOpen={openModalLogoutConfirmation}
+          onClose={handleCloseLogoutConfirmationModal}
+          typeForm={"logout"}
+          onClickLogout={handleLogout}
+        />
       )}
     </div>
   );

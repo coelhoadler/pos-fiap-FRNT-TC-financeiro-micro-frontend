@@ -162,7 +162,7 @@ const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
             <FormLabelItem text="Senha" required={true} />
             <div className="relative">
               <FormInputItem
-                className="w-full custom-password"
+                className="w-full"
                 required={true}
                 id="senha"
                 placeholder="Digite sua senha"
@@ -191,7 +191,7 @@ const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
 
           <FormMessageItem showMessage={!!erro} text={erro} />
 
-          <Button className="w-fit m-auto" typeButton="submit" text="Acessar" />
+          <Button className="w-fit m-auto mt-6" typeButton="submit" text="Acessar" />
         </div>
       </form>
     </div>
@@ -210,6 +210,8 @@ const FormRegister: React.FC<IFormRegister> = ({
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const [emailInvalido, setEmailInvalido] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -262,14 +264,34 @@ const FormRegister: React.FC<IFormRegister> = ({
 
           <div className="flex flex-col gap-1 w-full">
             <FormLabelItem text="Senha" required={true} />
-            <FormInputItem
-              required={true}
-              id="email"
-              type="password"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              placeholder="Digite sua senha"
-            />
+            <div className="relative">
+              <FormInputItem
+              className="w-full"
+                required={true}
+                id="email"
+                type={showPassword ? "text" : "password"}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                placeholder="Digite sua senha"
+              />
+              <div className="absolute right-4 m-auto top-0 bottom-0 w-5 h-5 flex items-center justify-center">
+                {showPassword ? (
+                  <img src={showPassWordIcon} className="filter-(--filter-gray-300)" alt="Ver Senha" />
+                ) : (
+                  <img src={hidePassWordIcon} className="filter-(--filter-gray-300)" alt="Esconder Senha" />
+                )}
+                <FormInputItem
+                  className="absolute w-full h-full opacity-0 border-none cursor-pointer"
+                  id={"showPassword"}
+                  required={false}
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                  
+                />
+              </div>
+
+            </div>
           </div>
 
           <FormCheckboxItem
@@ -285,7 +307,7 @@ const FormRegister: React.FC<IFormRegister> = ({
           />
 
           <Button
-            className="w-fit mx-auto my-4"
+            className="w-fit mx-auto mb-4 mt-6"
             typeButton="submit"
             text="Criar Conta"
           />
