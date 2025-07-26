@@ -4,7 +4,7 @@ import { TransactionProvider } from './setup/context/transactionContext';
 import Header from './components/Header';
 import { DesktopMenu } from './components/MobileMenu';
 import { useEffect, useState } from 'react';
-import { getUserInfo } from './services/UserProfile/apiEndpoints';
+import { getUserProfile } from './services/UserProfile/apiEndpoints';
 import './styles/globals.css';
 
 export default function Root() {
@@ -12,9 +12,9 @@ export default function Root() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const userInfo = async () => {
+    async function getUserInfo() {
       try {
-        const response = await getUserInfo;
+        const response = await getUserProfile();
 
         if (response) {
           setUsername(response.data.name);
@@ -26,7 +26,8 @@ export default function Root() {
       }
     };
 
-    userInfo();
+    getUserInfo();
+
   }, []);
 
   return (
