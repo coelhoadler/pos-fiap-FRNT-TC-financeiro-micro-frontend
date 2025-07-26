@@ -10,6 +10,7 @@ import './styles/globals.css';
 export default function Root() {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     async function getUserInfo() {
@@ -18,8 +19,10 @@ export default function Root() {
 
         if (response) {
           setUsername(response.data.name);
+          setIsLoggedIn(true);
         } else {
           setError("Usuário não autenticado.");
+          setIsLoggedIn(false);
         }
       } catch (error) {
         setError("Erro ao buscar informações do usuário.");
@@ -32,7 +35,7 @@ export default function Root() {
 
   return (
     <TransactionProvider>
-      <Header nameUser={username} />
+      <Header isLoggedIn={isLoggedIn} nameUser={username} />
       <main className="flex justify-center min-w-[320px] pt-[116px] pb-[1rem] max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7">
         { 
         error ? 
