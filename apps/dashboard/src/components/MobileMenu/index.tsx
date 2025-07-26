@@ -22,7 +22,7 @@ const menuItems: TMenuItem[] = [
   },
   {
     title: 'Transferências',
-    path: '#extract',
+    path: '/transferencias',
   },
   {
     title: 'Investimentos',
