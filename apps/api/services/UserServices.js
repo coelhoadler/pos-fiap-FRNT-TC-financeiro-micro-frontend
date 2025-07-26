@@ -18,9 +18,15 @@ exports.auth = async (email, password) => {
       throw new Error('E-mail ou senha invalido!')
     }
 
-    const token = generateToken(model[0].id)
+    const token = generateToken(model[0].id);
+    const { id, name, email } = model[0];
 
-    return { name: model[0].name, email: model[0].email, token: token }
+    return {
+      id,
+      name,
+      email,
+      token
+    }
 
   } catch (error) {
     throw new Error(error.message)
