@@ -31,6 +31,7 @@
     "concurrently": "^6.2.1",
     "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
+    "dotenv": "^17.2.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-ts-react-important-stuff": "^3.0.0",

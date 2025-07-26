@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { IFormLogin, IFormRegister } from "../../interfaces/IForm";
+import showPassWordIcon from "./../../assets/show-password-icon.svg";
+import hidePassWordIcon from "./../../assets/hide-password-icon.svg";
 import {
   TFormCheckboxItem,
   TFormInputItem,
@@ -6,6 +9,7 @@ import {
   TFormMessageItem,
 } from "../../types/TForms";
 import Button from "../Button";
+import { login, register } from "../../services/userService";
 
 const FormInputItem = ({
   className,
@@ -13,6 +17,10 @@ const FormInputItem = ({
   type,
   id,
   required,
+  onChange,
+  value,
+  onClick,
+  checked,
 }: TFormInputItem) => {
   return (
     <>
@@ -21,8 +29,12 @@ const FormInputItem = ({
         className={`min-h-10 bg-white focus:border-primary/50 text-md placeholder:font-normal focus:outline-none focus:shadow-none border-inactive rounded-sm border py-0 px-2.5   font-family-base font-medium text-text-primary  ${
           className ? className : ""
         } `}
+        value={value ? value : ""}
         placeholder={placeholder ? placeholder : ""}
         required={required}
+        onChange={onChange}
+        onClick={onClick}
+        checked={checked}
         type={
           type === "password"
             ? "password"
@@ -34,6 +46,8 @@ const FormInputItem = ({
             ? "checkbox"
             : type === "radio"
             ? "radio"
+            : type === "email"
+            ? "email"
             : "text"
         }
       />
@@ -41,7 +55,12 @@ const FormInputItem = ({
   );
 };
 
-const FormLabelItem = ({ className, htmlFor, text, required }: TFormLabelItem) => {
+const FormLabelItem = ({
+  className,
+  htmlFor,
+  text,
+  required,
+}: TFormLabelItem) => {
   return (
     <label
       className={` font-bold font-family-base text-black text-md ${
@@ -54,6 +73,7 @@ const FormLabelItem = ({ className, htmlFor, text, required }: TFormLabelItem) =
     </label>
   );
 };
+
 const FormCheckboxItem = ({
   className,
   id,
@@ -101,9 +121,30 @@ const FormMessageItem = ({
 };
 
 const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setErro("");
+    const data = await login({
+      email,
+      password: senha,
+      messageError: erro,
+    });
+    if (!data) {
+      setErro("Erro ao fazer login.");
+    } else if (data.messageError) {
+      setErro(data.messageError);
+    }
+  };
+
   return (
     <div className={className}>
-      <form action={action} method={method} id={id}>
+      <form onSubmit={handleSubmit} method={method} id={id}>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1 w-full">
             <FormLabelItem text="Email" required={true} />
@@ -111,44 +152,96 @@ const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
               required={true}
               id="email"
               placeholder="Digite seu email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
           <div className="flex flex-col gap-1 w-full">
             <FormLabelItem text="Senha" required={true} />
-            <FormInputItem
-              required={true}
-              id="email"
-              placeholder="Digite sua senha"
-            />
+            <div className="relative">
+              <FormInputItem
+                className="w-full"
+                required={true}
+                id="senha"
+                placeholder="Digite sua senha"
+                type={showPassword ? "text" : "password"}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
+              <div className="absolute right-4 m-auto top-0 bottom-0 w-5 h-5 flex items-center justify-center">
+                {showPassword ? (
+                  <img src={showPassWordIcon} className="filter-(--filter-gray-300)" alt="Ver Senha" />
+                ) : (
+                  <img src={hidePassWordIcon} className="filter-(--filter-gray-300)" alt="Esconder Senha" />
+                )}
+                <FormInputItem
+                  className="absolute w-full h-full opacity-0 border-none cursor-pointer"
+                  id={"showPassword"}
+                  required={false}
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                  
+                />
+              </div>
+            </div>
           </div>
 
-          <FormMessageItem
-            showMessage={true}
-            text="Dado incorreto. Revise e digite novamente."
-          />
+          <FormMessageItem showMessage={!!erro} text={erro} />
 
-          <Button className="w-fit m-auto" typeButton="submit" text="Acessar" />
+          <Button className="w-fit m-auto mt-6" typeButton="submit" text="Acessar" />
         </div>
       </form>
     </div>
   );
 };
+
 const FormRegister: React.FC<IFormRegister> = ({
   className,
   method,
   action,
   id,
+  onClose,
 }) => {
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const [emailInvalido, setEmailInvalido] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setErro("");
+    const data = await register({
+      email: email,
+      name: nome,
+      password: senha,
+      messageError: erro,
+      onClose,
+    });
+    if (!data) {
+      setErro("Erro ao fazer login.");
+    } else if (data.messageError) {
+      setErro(data.messageError);
+    }
+  };
+
   return (
     <div className={className}>
-      <form action={action} method={method} id={id}>
+      <form action={action} method={method} id={id} onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1 w-full">
             <FormLabelItem text="Nome" required={true} />
             <FormInputItem
               required={true}
               id="nome"
+              type="text"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
               placeholder="Digite seu nome"
             />
           </div>
@@ -157,18 +250,48 @@ const FormRegister: React.FC<IFormRegister> = ({
             <FormInputItem
               required={true}
               id="email"
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailInvalido(
+                  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value)
+                );
+              }}
               placeholder="Digite seu email"
             />
           </div>
 
           <div className="flex flex-col gap-1 w-full">
             <FormLabelItem text="Senha" required={true} />
-            <FormInputItem
-              required={true}
-              id="email"
-              type="password"
-              placeholder="Digite sua senha"
-            />
+            <div className="relative">
+              <FormInputItem
+              className="w-full"
+                required={true}
+                id="email"
+                type={showPassword ? "text" : "password"}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                placeholder="Digite sua senha"
+              />
+              <div className="absolute right-4 m-auto top-0 bottom-0 w-5 h-5 flex items-center justify-center">
+                {showPassword ? (
+                  <img src={showPassWordIcon} className="filter-(--filter-gray-300)" alt="Ver Senha" />
+                ) : (
+                  <img src={hidePassWordIcon} className="filter-(--filter-gray-300)" alt="Esconder Senha" />
+                )}
+                <FormInputItem
+                  className="absolute w-full h-full opacity-0 border-none cursor-pointer"
+                  id={"showPassword"}
+                  required={false}
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                  
+                />
+              </div>
+
+            </div>
           </div>
 
           <FormCheckboxItem
@@ -179,12 +302,12 @@ const FormRegister: React.FC<IFormRegister> = ({
           />
 
           <FormMessageItem
-            showMessage={true}
+            showMessage={emailInvalido}
             text="Dado incorreto. Revise e digite novamente."
           />
 
           <Button
-            className="w-fit mx-auto my-4"
+            className="w-fit mx-auto mb-4 mt-6"
             typeButton="submit"
             text="Criar Conta"
           />

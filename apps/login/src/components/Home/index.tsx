@@ -7,15 +7,15 @@ import vantagem4Image from "./../../assets/vantagem4.svg";
 
 const Home: React.FC = () => {
   return (
-    <div className="flex flex-col bg-gradient-to-b  from-primary to-white py-28 min-h-screen">
+    <div className="flex flex-col bg-gradient-to-b  from-primary to-white py-28 min-h-screen px-10">
       {/* Incio Conteúdo principal */}
       <div className="container m-auto max-w-290">
         <section className="flex flex-col md:flex-row justify-between items-center">
           <div className=" flex flex-col items-center justify-center w-full h-full ">
             <div className=" pt-6 flex flex-col items-center ">
-              <div className="flex flex-col items-center justify-center md:flex-row gap-15">
+              <div className="flex  items-center justify-center max-lg:flex-col gap-15 ">
                 <div>
-                  <h1 className="text-3xl pt-10 font-semibold text-verde">
+                  <h1 className="text-3xl pt-10 font-semibold text-verde max-md:pt-0">
                     Experimente mais liberdade no controle da sua vida
                     financeira. Crie sua conta com a gente!
                   </h1>

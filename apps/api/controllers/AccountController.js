@@ -23,4 +23,16 @@ exports.create = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}   
+}
+
+exports.getAccountById = async (req, res) => {
+  const { accountNumber } = req.params;
+  try {
+        const token = await getHeaderToken(req.headers);
+        await tokenExpired(token);
+    const account = await accountServices.getAccountById(accountNumber)
+    res.status(200).json(account);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}

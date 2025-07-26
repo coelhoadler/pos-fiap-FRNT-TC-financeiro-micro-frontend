@@ -1,9 +1,10 @@
 const transactionServices = require('../services/TransactionServices');
+const { getHeaderToken, tokenExpired } = require('../utils/TokenGenerator');
 
 exports.getTransaction = async (req, res) => {
   try {
-         const token = await getHeaderToken(req.headers);
-            await tokenExpired(token);
+        const token = await getHeaderToken(req.headers);
+        await tokenExpired(token);
     const profile = await transactionServices.getTransaction()
     res.status(200).json(profile);
   } catch (error) {
