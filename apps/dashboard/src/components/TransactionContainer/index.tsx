@@ -1,8 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-// import Image from "next/image";
 // import { CurrencyInput } from 'react-currency-mask';
 import CurrencyInput from 'react-currency-input-field';
+import Button from '../Button';
+import bgCardTransaction from '../../assets/img/bg-card-transaction.png';
+import womanCreditCard from '../../assets/img/woman-credit-card.png';
+import Title from '../Title';
+import SuccessSnackbar from '../SuccessSnackbar';
+import AlertDialog from '../Dialog';
+import { alertDialogTypes } from '../../enums/alertDialogTypes';
+import { toast } from 'react-toastify';
+
+import { TAlertDialogType } from '../../types/TAlertDialogType';
+import { useTransaction } from '../../setup/context/transactionContext';
+import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
+import { IInputs } from '../../Models/FormModels';
 
 // import { transactionServices } from "@/app/api/transactionServices/transactionServices";
 // import { accountServices } from "@/app/api/accountServices/accountServices";
@@ -14,7 +26,6 @@ import CurrencyInput from 'react-currency-input-field';
 //   ITypeTransaction,
 // } from "@/app/interfaces/transactionModels";
 // import { useTransaction } from "@/app/context/TransactionContext";
-// import { IInputs } from "@/app/interfaces/Form";
 // import { toast } from "react-toastify";
 // import AlertDialog from "../dialog/dialog";
 // import * as React from 'react';
@@ -23,25 +34,11 @@ import CurrencyInput from 'react-currency-input-field';
 // import SuccessSnackbar from "../successSnackbar/successSnackbar";
 
 // import { useTransaction } from "../../setup/context/transactionContext";
-import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
-// import { IInputs } from "../../Models/FormModels";
 // import { toast } from 'react-toastify';
 // import { TAlertDialogType } from '../../types/TAlertDialogType';
 // import { alertDialogTypes } from '../../enums/alertDialogTypes';
-// import CurrencyInput from 'react-currency-input-field';
 // import AlertDialog from '../Dialog';
 // import SuccessSnackbar from '../SuccessSnackbar';
-import Button from '../Button';
-import bgCardTransaction from '../../assets/img/bg-card-transaction.png';
-import womanCreditCard from '../../assets/img/woman-credit-card.png';
-import Title from '../Title';
-import SuccessSnackbar from '../SuccessSnackbar';
-import AlertDialog from '../Dialog';
-import { alertDialogTypes } from '../../enums/alertDialogTypes';
-import { toast } from 'react-toastify';
-import { IInputs } from '../../Models/formModels';
-import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { useTransaction } from '../../setup/context/transactionContext';
 
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
