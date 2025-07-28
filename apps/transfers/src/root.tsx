@@ -35,16 +35,21 @@ export default function Root() {
   return (
     <TransactionProvider>
       <Header isLoggedIn={isLoggedIn} nameUser={username} />
-      <main className="flex justify-center min-w-[320px] pt-[116px] pb-[1rem] max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7">
+      <main className={`flex justify-center min-w-[320px] pt-[116px] pb-[1rem] max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7 ${
+        error ? "h-screen" : ""
+      }`}>
         { 
-        error ? 
-        <div className="text-red-500">
-            <div className="error flex flex-col items-center justify-center h-screen">
-              <h1>{error}</h1>
-              <p>Por favor, faça login novamente.</p>
-              <a href="/login" className="text-blue-500 hover:underline">Ir para a página de login</a>
+        error ? (
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center shadow-lg py-6 px-10 bg-white rounded-md">
+              <h1 className="text-primary text-center font-family-base text-lg font-bold mb-5">{error}</h1>
+              <p className="font-family-base text-md mb-4">Por favor, faça login novamente.</p>
+              <a href="/" className="font-family-base text-md border border-primary rounded-sm py-2 px-4 text-primary hover:bg-primary transition-all hover:text-white ">
+                Ir para a página de login
+              </a>
             </div>
-        </div> : 
+          </div>
+        ) : 
         <div className="lg:grid-cols-[250px_auto] lg:grid-colums md:grid-cols-1 w-full  grid gap-3 grid-cols-1">
           <div className="lg:justify-center lg:items-start max-sm:hidden flex justify-center items-center box-content grow-1">
             <DesktopMenu />
