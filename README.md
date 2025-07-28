@@ -17,6 +17,7 @@ Este é um projeto feito com a multifrontend, cujo objetivo é representar as **
   ├── /apps
   │   ├── /login (React ::8501)
   │   ├── /dashboard (React ::8500)
+  │   ├── /transfers (React ::8502)
   │   ├── /root-config (Orquestração com Single-SPA ::9000)
 ```
 

@@ -8,6 +8,15 @@ services:
       - ./apps/dashboard:/app
       - /app/node_modules
 
+  transfers:
+    build: ./apps/transfers
+    container_name: transfers-dev
+    ports:
+      - "8502:8502"
+    volumes:
+      - ./apps/transfers:/app
+      - /app/node_modules      
+
   login:
     build: ./apps/login
     container_name: login-dev

@@ -35,11 +35,11 @@ const menuItems: TMenuItem[] = [
 ];
 
 const MenuItens = ({ onClickItem }: TMenu) => {
-  // const pathname = useLocation();
+  // const pathname = usePathname();
   const [activeItem, setActiveItem] = useState<string>('Inicio');
 
   // useEffect(() => {
-  //   const match = menuItems.find((item) => item.path === pathname.pathname);
+  //   const match = menuItems.find((item) => item.path === pathname);
   //   if (match) {
   //     setActiveItem(match.title);
   //   }
