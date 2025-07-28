@@ -3,21 +3,18 @@ content-type: application/json
  
 ###
 GET http://localhost:3000/api/accounts HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODRlY2IyNmFmM2Q0ZDgyNTRjMjJlMSIsImlhdCI6MTc1MzU0MTgxNSwiZXhwIjoxNzUzNTQ1NDE1fQ.ISs9Dk0RgRKx2uPmCM31Va5Logua3kWdnsLOQ96YYNk
 content-type: application/json
 
 ###
 GET http://localhost:3000/api/accounts/getAccountById/123456789 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODRlY2IyNmFmM2Q0ZDgyNTRjMjJlMSIsImlhdCI6MTc1MzU0MTgxNSwiZXhwIjoxNzUzNTQ1NDE1fQ.ISs9Dk0RgRKx2uPmCM31Va5Logua3kWdnsLOQ96YYNk
 content-type: application/json
  
 ###
-POST http://localhost:3000/api/accounts/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODRlY2IyNmFmM2Q0ZDgyNTRjMjJlMSIsImlhdCI6MTc1MzU0MTgxNSwiZXhwIjoxNzUzNTQ1NDE1fQ.ISs9Dk0RgRKx2uPmCM31Va5Logua3kWdnsLOQ96YYNk
+POST http://localhost:3000/api/accounts HTTP/1.1
 content-type: application/json
  
 {
-    "accountNumber": "1234567893",
+    "accountNumber": "123456789",
     "balance": 120958.95000000003,
     "currency": "BRL",
     "accountType": "Conta Corrente"
@@ -28,8 +25,7 @@ GET http://localhost:3000/api/transactions HTTP/1.1
 content-type: application/json
  
 ###
-POST http://localhost:3000/api/transactions/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODE2YWMyODRiMmM0ZDI3MjRlMGE3YSIsImlhdCI6MTc1MzU0MzU0OCwiZXhwIjoxNzUzNTQ3MTQ4fQ.JOVlZ2UqShfZ0l9rzsfRj1t1CdBOB0FyuaH6-2ISua8
+POST http://localhost:3000/api/transactions HTTP/1.1
 content-type: application/json
  
 {
@@ -57,12 +53,11 @@ content-type: application/json
 }
  
 ###
-DELETE http://localhost:3000/api/transactions/delete/6877baa8bd990017ab329c6c HTTP/1.1
+DELETE http://localhost:3000/api/transactions/6877baa8bd990017ab329c6c HTTP/1.1
 content-type: application/json
  
 ###
 GET http://localhost:3000/api/user/info HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Nzk4YjBiZGZlZDI1YzcyYjQ1NDJlOSIsImlhdCI6MTc1Mjc5NjAwMCwiZXhwIjoxNzUyNzk5NjAwfQ.7NJzdSROy2lT4O_YlzAg96jwyDTFo9pgEnYxXzWDXBw
 content-type: application/json
  
 {

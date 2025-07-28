@@ -22,7 +22,7 @@ const menuItems: TMenuItem[] = [
   },
   {
     title: 'Transferências',
-    path: '/transferencias',
+    path: '#transferencias',
   },
   {
     title: 'Investimentos',
@@ -35,11 +35,11 @@ const menuItems: TMenuItem[] = [
 ];
 
 const MenuItens = ({ onClickItem }: TMenu) => {
-  // const pathname = usePathname();
+  // const pathname = useLocation();
   const [activeItem, setActiveItem] = useState<string>('Inicio');
 
   // useEffect(() => {
-  //   const match = menuItems.find((item) => item.path === pathname);
+  //   const match = menuItems.find((item) => item.path === pathname.pathname);
   //   if (match) {
   //     setActiveItem(match.title);
   //   }

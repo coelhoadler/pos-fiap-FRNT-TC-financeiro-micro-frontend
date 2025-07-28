@@ -3,8 +3,8 @@ const routes = express.Router();
 const controller = require('../controllers/TransactionController');
 
 routes.get('/', controller.getTransaction);
-routes.post('/create', controller.create);
-routes.put('/edit/:id', controller.edit);
-routes.delete('/delete/:id', controller.delete);
+routes.post('/', controller.create);
+routes.put('/:id', controller.edit);
+routes.delete('/:id', controller.delete);
 
 module.exports = routes;

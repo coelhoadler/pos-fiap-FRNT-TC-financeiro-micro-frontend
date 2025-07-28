@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ITransaction } from '../../Models/transactionModels';
-// import { accountServices } from '@/app/api/accountServices/accountServices';
 import { alertDialogTypes } from '../../enums/alertDialogTypes';
+import { accountServices } from '../../services/Account/apiEndpoint';
+import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
+import { sortExtractByAscDate } from '../../utils/formatters';
 import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SuccessSnackbar';
 import TransactionItem from '../TransactionItem';
-import { sortExtractByAscDate } from '../../utils/formatters';
-import { useTransaction } from '../../setup/context/transactionContext';
 
 type TAccountStatement = {
   onEditTransaction?: () => void;
@@ -43,7 +43,7 @@ export default function AccountStatement({
           (transaction) => transaction.id !== transactionId
         );
 
-        // handlerUpdateAccount(remainingTransactions);
+        handlerUpdateAccount(remainingTransactions);
         setUpdatedTransactions(remainingTransactions);
 
         toast.success('Transação excluída com sucesso!');
@@ -56,13 +56,6 @@ export default function AccountStatement({
   const handleTransactionDeleteConfirmation = (transactionId: string) => {
     setShowConfirmDialog(true);
     setId(transactionId);
-    const confirmDelete = window.confirm(
-      'Você tem certeza que deseja excluir esta transação?'
-    );
-
-    if (confirmDelete) {
-      handleTransactionDelete(transactionId);
-    }
   };
 
   const calculateTotalAmount = (responseData: ITransaction[]) => {
@@ -74,27 +67,27 @@ export default function AccountStatement({
     }, 0);
   };
 
-  // const handlerUpdateAccount = async (responseData: ITransaction[]) => {
-  //   const accountJoana = {
-  //     accountNumber: '123456789',
-  //     balance: calculateTotalAmount(responseData || []),
-  //     currency: 'BRL',
-  //     accountType: 'Conta Corrente',
-  //   };
-  //   setBalance(accountJoana.balance);
-  //   await accountServices.updateAccountById('123456789', accountJoana);
-  // };
+  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+    const accountJoana = {
+      accountNumber: '123456789',
+      balance: calculateTotalAmount(responseData || []),
+      currency: 'BRL',
+      accountType: 'Conta Corrente',
+    };
+    setBalance(accountJoana.balance);
+    await accountServices.updateAccountById('123456789', accountJoana);
+  };
 
   const handleConfirmSubmit = async (transactionId: string) => {
     try {
-      // await transactionServices.delete(transactionId);
+      await transactionServices.delete(transactionId);
 
       if (updatedTransactions) {
         const remainingTransactions = updatedTransactions.filter(
           (transaction) => transaction.id !== transactionId
         );
 
-        // handlerUpdateAccount(remainingTransactions);
+        handlerUpdateAccount(remainingTransactions);
         setUpdatedTransactions(remainingTransactions);
         toast.dismiss();
         setShowSuccess(true);

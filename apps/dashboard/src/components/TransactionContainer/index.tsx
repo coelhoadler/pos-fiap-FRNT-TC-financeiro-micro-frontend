@@ -1,44 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-// import { CurrencyInput } from 'react-currency-mask';
-import CurrencyInput from 'react-currency-input-field';
-import Button from '../Button';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import bgCardTransaction from '../../assets/img/bg-card-transaction.png';
 import womanCreditCard from '../../assets/img/woman-credit-card.png';
-import Title from '../Title';
-import SuccessSnackbar from '../SuccessSnackbar';
-import AlertDialog from '../Dialog';
 import { alertDialogTypes } from '../../enums/alertDialogTypes';
-import { toast } from 'react-toastify';
+import Button from '../Button';
+import AlertDialog from '../Dialog';
+import SuccessSnackbar from '../SuccessSnackbar';
+import Title from '../Title';
 
-import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { useTransaction } from '../../setup/context/transactionContext';
+
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
+import { accountServices } from '../../services/Account/apiEndpoint';
+import { transactionServices } from '../../services/Transacoes/apiEndpoints';
+import { useTransaction } from '../../setup/context/transactionContext';
+import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { IInputs } from '../../Models/FormModels';
-
-// import { transactionServices } from "@/app/api/transactionServices/transactionServices";
-// import { accountServices } from "@/app/api/accountServices/accountServices";
-// import Button from "@/app/components/button/button";
-// import Title from "../title/title";
-
-// import {
-//   ITransaction,
-//   ITypeTransaction,
-// } from "@/app/interfaces/transactionModels";
-// import { useTransaction } from "@/app/context/TransactionContext";
-// import { toast } from "react-toastify";
-// import AlertDialog from "../dialog/dialog";
-// import * as React from 'react';
-// import { alertDialogTypes } from "@/app/enums/alertDialogTypes";
-// import { TAlertDialogType } from "@/app/types/TAlertDialogType";
-// import SuccessSnackbar from "../successSnackbar/successSnackbar";
-
-// import { useTransaction } from "../../setup/context/transactionContext";
-// import { toast } from 'react-toastify';
-// import { TAlertDialogType } from '../../types/TAlertDialogType';
-// import { alertDialogTypes } from '../../enums/alertDialogTypes';
-// import AlertDialog from '../Dialog';
-// import SuccessSnackbar from '../SuccessSnackbar';
 
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
@@ -51,7 +28,6 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     typeTransactionEdit,
     valueEdit,
     setExtract,
-    typeTransaction,
     setTypeTransactionEdit,
     setBalance,
   } = useTransaction();
@@ -66,6 +42,18 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [idTemp, setIdTemp] = useState('');
 
+  const [typeTransactionOptions, setTypeTransactionOptions] = useState<
+    ITypeTransaction[]
+  >(() => {
+    return [
+      { id: '1', description: 'Câmbio e Moedas' },
+      { id: '2', description: 'DOC/TED' },
+      { id: '3', description: 'Empréstimo e Financiamento' },
+    ];
+  });
+
+  const [valueWatched, setValueWatched] = useState<string>('');
+
   const {
     register,
     handleSubmit,
@@ -79,16 +67,6 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     // reset({ value: "" });
     setInputKey((prev) => prev + 1);
   };
-
-  const [typeTransactionOptions, setTypeTransactionOptions] = useState<
-    ITypeTransaction[]
-  >([]);
-
-  const [valueWatched, setValueWatched] = useState<string>('');
-
-  useEffect(() => {
-    setTypeTransactionOptions(typeTransaction || []);
-  }, [typeTransaction, setTypeTransactionOptions]);
 
   useEffect(() => {
     if (!typeTransactionOptions || typeTransactionOptions.length === 0) return;
@@ -120,7 +98,6 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
       date: new Date().toISOString(),
       accountNumber: '123456789',
     };
-
     setPendingFormData(form);
     setShowConfirmDialog(true);
   };
@@ -128,18 +105,18 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const handleConfirmSubmit = async () => {
     if (!pendingFormData) return;
 
-    if (0) {
-      //   await transactionServices.update(id, pendingFormData);
-      //   setIdTemp(id)
+    if (id) {
+      await transactionServices.update(id, pendingFormData);
+      setIdTemp(id);
     } else {
-      //   await transactionServices.create(pendingFormData);
+      await transactionServices.create(pendingFormData);
       handleNew();
       setIdTemp('');
     }
 
-    const response = []; //await transactionServices.getAll();
+    const response = await transactionServices.getAll();
     setExtract(response || []);
-    // handlerUpdateAccount(response || []);
+    handlerUpdateAccount(response || []);
 
     setPendingFormData(null);
     setShowConfirmDialog(false);
@@ -148,6 +125,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     setShowSuccess(true);
 
     setId('');
+    reset();
   };
 
   const calculateTotalAmount = (responseData: ITransaction[]) => {
@@ -173,16 +151,16 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     }
   };
 
-  // const handlerUpdateAccount = async (responseData: ITransaction[]) => {
-  //   const accountJoana = {
-  //     accountNumber: '123456789',
-  //     balance: calculateTotalAmount(responseData || []),
-  //     currency: 'BRL',
-  //     accountType: 'Conta Corrente',
-  //   };
-  //   setBalance(accountJoana.balance);
-  //   await accountServices.updateAccountById('123456789', accountJoana);
-  // };
+  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+    const accountJoana = {
+      accountNumber: '123456789',
+      balance: calculateTotalAmount(responseData || []),
+      currency: 'BRL',
+      accountType: 'Conta Corrente',
+    };
+    setBalance(accountJoana.balance);
+    await accountServices.updateAccountById('123456789', accountJoana);
+  };
 
   const handleCancelTransaction = () => {
     reset();
@@ -218,9 +196,6 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             {...register('typeTransaction', { required: true })}
           >
             <option value="">Selecione uma opção</option>
-            <option value="1">Depósito</option>
-            <option value="2">Saque</option>
-            <option value="3">Transferência</option>
             {typeTransactionOptions &&
               typeTransactionOptions.length > 0 &&
               typeTransactionOptions.map((option) => {
@@ -280,9 +255,9 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             primary
             type="submit"
             onClick={() => handleOnlyTransactionEditing()}
-            label={1 ? 'Atualizar transação' : 'Concluir transação'}
+            label={id ? 'Atualizar transação' : 'Concluir transação'}
           />
-          {1 && (
+          {id && (
             <Button
               type="button"
               label="Cancelar"

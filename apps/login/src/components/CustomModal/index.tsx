@@ -82,8 +82,8 @@ const CustomModal = ({
           )}
           {typeForm == "logout" && (
             <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
-              <Button onClick={onClickLogout} text="Sim" />
-              <Button onClick={onClose} styleButton="outline" text="Não" />
+              <Button onClick={onClickLogout} styleButton="outline" text="Sim" />
+              <Button onClick={onClose} text="Não" />
             </div>
           )}
         </div>
