@@ -39,8 +39,6 @@ export const login = async ({ email, password, messageError }): Promise<LoginUse
         }
 
         window.location.href = "/dashboard";
-
-
     } catch (error) {
         console.error("Erro:", error);
         return { messageError: "Erro inesperado ao tentar logar." };
