@@ -9,12 +9,13 @@ import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SuccessSnackbar';
 import Title from '../Title';
 
-import { IInputs } from '../../Models/formModels';
+
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import { accountServices } from '../../services/Account/apiEndpoint';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
+import { IInputs } from '../../Models/FormModels';
 
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
