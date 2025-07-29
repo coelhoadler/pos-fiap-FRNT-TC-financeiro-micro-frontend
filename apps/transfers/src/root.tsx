@@ -4,6 +4,7 @@ import Header from './components/Header';
 import { DesktopMenu } from './components/MobileMenu';
 import { useEffect, useState } from 'react';
 import { getUserProfile } from './services/UserProfile/apiEndpoints';
+import MyTransfers from './components/MyTransfers';
 import './styles/globals.css';
 
 export default function Root() {
@@ -55,7 +56,7 @@ export default function Root() {
             <DesktopMenu />
           </div>
           <div className="lg:justify-center items-center md:items-start flex grow-3 justify-center max-lg:pt-5">
-            listar transferências
+            <MyTransfers />
           </div>
         </div>
       }
