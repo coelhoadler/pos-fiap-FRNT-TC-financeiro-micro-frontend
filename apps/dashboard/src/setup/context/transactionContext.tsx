@@ -45,6 +45,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
     const fetchTransaction = async () => {
       const responseData = await transactionServices.getAll();
       setExtract(responseData || []);
+      console.log('>>> caindo aqui', responseData);
       handlerUpdateAccount(responseData || []);
     };
     fetchTransaction();
@@ -93,6 +94,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
 
 export const useTransaction = () => {
   const context = useContext(TransactionContext);
+
   if (!context) {
     throw new Error('useTransaction must be used within a TransactionProvider');
   }

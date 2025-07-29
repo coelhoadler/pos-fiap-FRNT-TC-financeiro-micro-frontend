@@ -130,14 +130,14 @@ const FormLogin: React.FC<IFormLogin> = ({ className, method, action, id }) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setErro("");
+
     const data = await login({
       email,
       password: senha,
       messageError: erro,
     });
-    if (!data) {
-      setErro("Erro ao fazer login.");
-    } else if (data.messageError) {
+
+    if (data?.messageError) {
       setErro(data.messageError);
     }
   };
