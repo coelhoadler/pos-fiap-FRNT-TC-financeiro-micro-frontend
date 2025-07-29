@@ -10,6 +10,7 @@ const profileRoutes = require('./routes/ProfileRoutes');
 const transactionRoutes = require('./routes/TransactionRoutes');
 const typeTransactionRoutes = require('./routes/TypeTransactionRoutes');
 const userRoutes = require('./routes/UserRoutes');
+const authenticateToken = require('./middleware/autenticateToken');
 
 const app = express();
 
@@ -29,11 +30,11 @@ app.get('/', (req, res) => {
   res.send('API rodando!');
 });
 
-app.use('/api/accounts', accountRoutes);
-app.use('/api/account-types', AccountTypeRoutes); 
-app.use('/api/profiles', profileRoutes);
-app.use('/api/transactions', transactionRoutes);
-app.use('/api/type-transactions', typeTransactionRoutes);
+app.use('/api/accounts', authenticateToken, accountRoutes);
+app.use('/api/account-types',authenticateToken, AccountTypeRoutes); 
+app.use('/api/profiles', authenticateToken, profileRoutes);
+app.use('/api/transactions', authenticateToken, transactionRoutes);
+app.use('/api/type-transactions', authenticateToken, typeTransactionRoutes);
 app.use('/api/user', userRoutes);
 
 mongooseConnection.mongooseConnection()
