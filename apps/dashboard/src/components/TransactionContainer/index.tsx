@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import CurrencyInput from 'react-currency-input-field';
 import { toast } from 'react-toastify';
 import bgCardTransaction from '../../assets/img/bg-card-transaction.png';
 import womanCreditCard from '../../assets/img/woman-credit-card.png';
@@ -225,19 +226,21 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             otherClasses={['mb-3']}
           />
 
-          <input
-            id={id ? `edit-${id}` : `create-${inputKey}`}
-            name="value"
+          <CurrencyInput
+            key={id ? `edit-${id}` : `create-${inputKey}`}
             defaultValue={id ? valueWatched : 0}
-            max={2}
-            prefix="R$ "
-            onChange={(value) => {
-              setValue(
-                'value',
-                typeof value === 'string' ? value : value?.target?.value || '0'
-              ); // atualiza o valor no react-hook-form
-            }}
             className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+            onChangeValue={(event, originalValue, maskedValue) => {
+            console.log(event, originalValue, maskedValue);
+            setValueWatched(maskedValue as string);
+            }}
+            {...(register("value", { required: true }) as any)}
+            InputElement={
+              <input
+                type="text"
+                placeholder="R$ 0,00"
+              />
+            }
           />
 
           {errors.value && (
