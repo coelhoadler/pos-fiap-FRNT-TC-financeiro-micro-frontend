@@ -51,19 +51,17 @@ const TransferItem: React.FC<TransactionItemProps> = ({
           </p>
         </div>
         <p className={'text-sm flex flex-col gap-3.5 text-white'}>
-          <Link href="#transaction-form" onClick={(e) => e.preventDefault()}>
-            <button
-              title="Editar"
-              className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleEditTransaction(item as ITransaction);
-                onEdit?.();
-              }}
-            >
-              <DriveFileRenameOutlineIcon style={{ color: 'white' }} />
-            </button>
-          </Link>
+          <button
+            title="Editar"
+            className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEditTransaction(item as ITransaction);
+              onEdit?.();
+            }}
+          >
+            <DriveFileRenameOutlineIcon style={{ color: 'white' }} />
+          </button>
           <button
             title="Excluir"
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
