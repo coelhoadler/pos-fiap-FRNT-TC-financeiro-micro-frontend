@@ -27,7 +27,6 @@ export default function AccountStatement({
   const [id, setId] = useState<string>('');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [idTemp, setIdTemp] = useState('');
 
   useEffect(() => {
     const extractOrdered = sortExtractByAscDate(extract || []);

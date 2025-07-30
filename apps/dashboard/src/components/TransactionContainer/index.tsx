@@ -10,13 +10,12 @@ import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SuccessSnackbar';
 import Title from '../Title';
 
-
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import { accountServices } from '../../services/Account/apiEndpoint';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { IInputs } from '../../Models/FormModels';
+import { IInputs } from '../../Models/formModels';
 
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
@@ -231,16 +230,11 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             defaultValue={id ? valueWatched : 0}
             className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
             onChangeValue={(event, originalValue, maskedValue) => {
-            console.log(event, originalValue, maskedValue);
-            setValueWatched(maskedValue as string);
+              console.log(event, originalValue, maskedValue);
+              setValueWatched(maskedValue as string);
             }}
-            {...(register("value", { required: true }) as any)}
-            InputElement={
-              <input
-                type="text"
-                placeholder="R$ 0,00"
-              />
-            }
+            {...(register('value', { required: true }) as any)}
+            InputElement={<input type="text" placeholder="R$ 0,00" />}
           />
 
           {errors.value && (
