@@ -6,9 +6,7 @@ import { sortExtractByAscDate } from "../../utils/formatters";
 
 const MyTransfers = () => {
   const [myTransactions, setMyTransactions] = useState<ITransaction[]>([]);
-  const [filteredTransactions, setFilteredTransactions] = useState<
-    ITransaction[]
-  >([]);
+  const [filteredTransactions, setFilteredTransactions] = useState<ITransaction[]>([]);
   const [filterError, setFilterError] = useState("");
 
   const [filters, setFilters] = useState({
@@ -18,6 +16,21 @@ const MyTransfers = () => {
     startDate: "",
     endDate: "",
   });
+
+  
+  const normalizeStartDate = (dateStr: string) => {
+    const [year, month, day] = dateStr.split("-");
+    const date = new Date(Number(year), Number(month) - 1, Number(day));
+    date.setHours(0, 0, 0, 0); 
+    return date;
+  };
+
+  const normalizeEndDate = (dateStr: string) => {
+    const [year, month, day] = dateStr.split("-");
+    const date = new Date(Number(year), Number(month) - 1, Number(day));
+    date.setHours(23, 59, 59, 999);
+    return date;
+  };
 
   useEffect(() => {
     const fetchTransaction = async () => {
@@ -35,6 +48,7 @@ const MyTransfers = () => {
         const typeTransaction = filters.typeTransaction
           ? item.typeTransaction?.description === filters.typeTransaction
           : true;
+
         const value = Number(item.amount);
         const minimumValue = filters.minimumValue
           ? value >= Number(filters.minimumValue)
@@ -42,34 +56,46 @@ const MyTransfers = () => {
         const maximumValue = filters.maximumValue
           ? value <= Number(filters.maximumValue)
           : true;
-        const data = new Date(item.date);
+
+        const itemDate = new Date(item.date);
+
         const matchStartDate = filters.startDate
-          ? data >= new Date(filters.startDate)
-          : true;
-        const matchEndDate = filters.endDate
-          ? data <= new Date(filters.endDate)
+          ? itemDate >= normalizeStartDate(filters.startDate)
           : true;
 
-        if (matchStartDate > matchEndDate) {
-          setFilterError(
-            "A data de início não pode ser posterior à data de fim."
-          );
-          return;
+        const matchEndDate = filters.endDate
+          ? itemDate <= normalizeEndDate(filters.endDate)
+          : true;
+
+        // Validações
+        if (filters.startDate && filters.endDate) {
+          const start = normalizeStartDate(filters.startDate);
+          const end = normalizeEndDate(filters.endDate);
+          if (start > end) {
+            setFilterError("A data de início não pode ser maior que a data de fim.");
+            return false;
+          }
         }
-        if (parseFloat(filters.minimumValue) < 0) {
-          setFilterError("O valor mínimo não pode ser negativo. ");
-          return;
+
+        if (Number(filters.minimumValue) < 0) {
+          setFilterError("O valor mínimo não pode ser negativo.");
+          return false;
         }
-        if (parseFloat(filters.maximumValue) < 0) {
-          setFilterError("O valor máximo não pode ser negativo. ");
-          return;
+
+        if (Number(filters.maximumValue) < 0) {
+          setFilterError("O valor máximo não pode ser negativo.");
+          return false;
         }
-        if (parseFloat(filters.minimumValue) > parseFloat(filters.maximumValue)) {
-          setFilterError(
-            "O valor mínimo não pode ser maior que o valor máximo."
-          );
-          return;
+
+        if (
+          filters.minimumValue &&
+          filters.maximumValue &&
+          Number(filters.minimumValue) > Number(filters.maximumValue)
+        ) {
+          setFilterError("O valor mínimo não pode ser maior que o valor máximo.");
+          return false;
         }
+
         setFilterError("");
 
         return (
@@ -97,6 +123,7 @@ const MyTransfers = () => {
   return (
     <div className="w-full bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Minhas Transferências</h2>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <select
           name="typeTransaction"
@@ -107,14 +134,13 @@ const MyTransfers = () => {
           <option value="">Todos os Tipos</option>
           <option value="Câmbio e Moedas">Câmbio e Moedas</option>
           <option value="DOC/TED">DOC/TED</option>
-          <option value="Empréstimo e Financiamento">
-            Empréstimo e Financiamento
-          </option>
+          <option value="Empréstimo e Financiamento">Empréstimo e Financiamento</option>
         </select>
 
         <input
           type="number"
           name="minimumValue"
+          min={0}
           placeholder="Valor mínimo"
           value={filters.minimumValue}
           onChange={handleFilterChange}
@@ -123,6 +149,7 @@ const MyTransfers = () => {
 
         <input
           type="number"
+          min={0}
           name="maximumValue"
           placeholder="Valor máximo"
           value={filters.maximumValue}
@@ -146,13 +173,7 @@ const MyTransfers = () => {
           className="border p-2 rounded"
         />
       </div>
-      {/* {myTransactions.length > 0 ? (
-        myTransactions.map((transaction, index) => (
-          <TransferItem key={index} item={transaction} onDelete={() => {}} />
-        ))
-      ) : (
-        <p>Nenhuma transação encontrada.</p>
-      )} */}
+
       {filterError ? (
         <p className="text-red-500 mb-4">{filterError}</p>
       ) : (
