@@ -78,8 +78,8 @@ const AlertDialog = ({
             minWidth: '250px',
             fontSize: '16px',
             '&:hover': {
-             backgroundColor: '#ff5031',
-             color: 'white',
+              backgroundColor: '#ff5031',
+              color: 'white',
               fontWeight: 400,
             },
           }}
