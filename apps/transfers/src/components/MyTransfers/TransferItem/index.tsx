@@ -47,7 +47,7 @@ const TransferItem: React.FC<TransactionItemProps> = ({
               parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
             }`}
           >
-            {parseFloat(item.amount || '0') < 0 ? '-' : ''} {item.amount || '0'}
+            R$ {parseFloat(item.amount || '0') < 0 ? '-' : ''} {item.amount || '0'}
           </p>
         </div>
         <p className={'text-sm flex flex-col gap-3.5 text-white'}>
