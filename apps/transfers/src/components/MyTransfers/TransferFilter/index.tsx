@@ -188,7 +188,7 @@ const TransfersFilters = ({
           value={filters.minimumValue}
           onChange={onChange}
           onKeyDown={onKeyDown}
-          typeItem={"input"}
+          typeItem={"currency"}
         />
       </TransfersFiltersItemContainer>
 
@@ -202,7 +202,7 @@ const TransfersFilters = ({
           value={filters.maximumValue}
           onChange={onChange}
           onKeyDown={onKeyDown}
-          typeItem={"input"}
+          typeItem={"currency"}
         />
       </TransfersFiltersItemContainer>
 
