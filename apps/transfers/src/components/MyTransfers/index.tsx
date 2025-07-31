@@ -102,8 +102,8 @@ const MyTransfers = ({ onEditTransaction }: TAccountStatement) => {
           : true;
 
         const value = parseFloat(item.amount.replace("R$", "").trim().replace(/\./g, "").replace(",", "."));
-        const min = filters.minimumValue ? parseFloat(filters.minimumValue) : undefined;
-        const max = filters.maximumValue ? parseFloat(filters.maximumValue) : undefined;
+        const min = filters.minimumValue ? parseFloat(filters.minimumValue.replace(/\./g, "").replace(",", ".")) : undefined;
+        const max = filters.maximumValue ? parseFloat(filters.maximumValue.replace(/\./g, "").replace(",", ".")) : undefined;
         
 
         if (min !== undefined && isNaN(min)) return false;
