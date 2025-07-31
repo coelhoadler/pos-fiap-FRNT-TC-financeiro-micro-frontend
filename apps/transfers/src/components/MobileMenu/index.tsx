@@ -6,6 +6,7 @@ import {
 import { useState } from 'react';
 import closeIcon from '../../assets/svg/close-icon.svg';
 import hamburgerMenuIcon from '../../assets/svg/hamburger-menu-icon.svg';
+import { useEffect } from 'react';
 
 export type TMenu = {
   onClickItem?: () => void;
@@ -35,15 +36,15 @@ const menuItems: TMenuItem[] = [
 ];
 
 const MenuItens = ({ onClickItem }: TMenu) => {
-  // const pathname = usePathname();
+  const pathname = window.location.pathname;
   const [activeItem, setActiveItem] = useState<string>('Inicio');
 
-  // useEffect(() => {
-  //   const match = menuItems.find((item) => item.path === pathname);
-  //   if (match) {
-  //     setActiveItem(match.title);
-  //   }
-  // }, [pathname]);
+  useEffect(() => {
+    const match = menuItems.find((item) => item.path === pathname);
+    if (match) {
+      setActiveItem(match.title);
+    }
+  }, [pathname]);
 
   const handleClick = (item: TMenuItem) => {
     if (item.path.startsWith('#')) {
