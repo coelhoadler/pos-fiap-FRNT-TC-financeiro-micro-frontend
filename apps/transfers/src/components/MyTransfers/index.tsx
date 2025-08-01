@@ -11,6 +11,9 @@ import { useTransaction } from "../../setup/context/transactionContext";
 import { accountServices } from "../../services/Account/apiEndpoint";
 import { toast } from "react-toastify";
 import { TransfersFilters } from "./TransferFilter";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { Tooltip } from "@mui/material";
 
 type TAccountStatement = {
   onEditTransaction?: () => void;
@@ -33,6 +36,8 @@ const MyTransfers = ({ onEditTransaction }: TAccountStatement) => {
   const [id, setId] = useState<string>("");
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 3; // Número de itens por página
 
   useEffect(() => {
     const fetchTransaction = async () => {
@@ -183,14 +188,47 @@ const MyTransfers = ({ onEditTransaction }: TAccountStatement) => {
       />
 
       {filteredTransactions.length > 0 ? (
-        filteredTransactions.map((transaction, index) => (
-          <TransferItem
-            key={transaction.id || index}
-            item={transaction}
-            onDelete={() => handleTransactionDeleteConfirmation(transaction.id!)}
-            onEdit={onEditTransaction}
-          />
-        ))
+        <>
+          {filteredTransactions
+            .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+            .map((transaction, index) => (
+              <TransferItem
+                key={transaction.id || index}
+                item={transaction}
+                onDelete={() => handleTransactionDeleteConfirmation(transaction.id!)}
+                onEdit={onEditTransaction}
+              />
+            ))}
+          {filteredTransactions.length > itemsPerPage && (
+            <div className="flex justify-center mt-4 gap-2 items-center">
+              {filteredTransactions.length > itemsPerPage && currentPage > 0 && (
+                <Tooltip title="Página anterior">
+                  <button
+                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+                  >
+                    <ChevronLeftIcon style={{ color: 'white' }}/>
+                  </button>
+                </Tooltip>
+              )}
+
+              {filteredTransactions.length > (currentPage + 1) * itemsPerPage && (
+                <Tooltip title="Próxima página">
+                  <button
+                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                    onClick={() =>
+                      setCurrentPage((prev) =>
+                        Math.min(prev + 1, Math.floor(filteredTransactions.length / itemsPerPage))
+                      )
+                    }
+                  >
+                    <ChevronRightIcon style={{ color: 'white' }}/>
+                  </button>
+                </Tooltip>
+              )}
+            </div>
+          )}
+        </>
       ) : (
         <p>Nenhuma transação encontrada.</p>
       )}
