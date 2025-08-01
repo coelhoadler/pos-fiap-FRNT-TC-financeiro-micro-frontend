@@ -9,6 +9,9 @@ import { sortExtractByAscDate } from '../../utils/formatters';
 import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SuccessSnackbar';
 import TransactionItem from '../TransactionItem';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Tooltip from '@mui/material/Tooltip';
 
 type TAccountStatement = {
   onEditTransaction?: () => void;
@@ -27,6 +30,8 @@ export default function AccountStatement({
   const [id, setId] = useState<string>('');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5; // Número de itens por página
 
   useEffect(() => {
     const extractOrdered = sortExtractByAscDate(extract || []);
@@ -105,18 +110,41 @@ export default function AccountStatement({
 
       <ul className="flex flex-col gap-5 text-left pt-5">
         {updatedTransactions.length > 0 ? (
-          updatedTransactions.map((transaction, index) => (
-            <>
-              <TransactionItem
-                item={transaction}
-                key={index}
-                onDelete={() =>
-                  handleTransactionDeleteConfirmation(transaction.id!)
-                }
-                onEdit={onEditTransaction}
-              />
-            </>
-          ))
+          <>
+            {updatedTransactions
+              .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+              .map((transaction, index) => (
+                <TransactionItem
+                  item={transaction}
+                  key={index}
+                  onDelete={() => handleTransactionDeleteConfirmation(transaction.id!)}
+                  onEdit={onEditTransaction}
+                />
+              ))}
+            <div className="flex justify-center mt-4 gap-2 items-center">
+              {currentPage > 0 && (
+                <Tooltip title="Página anterior">
+                  <button
+                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                    disabled={currentPage === 0}
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+                  >
+                    <ChevronLeftIcon style={{ color: 'white' }} />
+                  </button>
+                </Tooltip>
+              )}
+              {((currentPage + 1) * itemsPerPage < updatedTransactions.length) && (
+                <Tooltip title="Próxima página">
+                  <button
+                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                    onClick={() => setCurrentPage((prev) => prev + 1)}
+                  >
+                    <ChevronRightIcon style={{ color: 'white' }}/>
+                  </button>
+                </Tooltip>
+              )}
+            </div>
+          </>
         ) : (
           <span className="text-gray-500 text-center">
             Nenhuma transação encontrada.
