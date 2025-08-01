@@ -105,7 +105,7 @@ export default function AccountStatement({
 
       <ul className="flex flex-col gap-5 text-left pt-5">
         {updatedTransactions.length > 0 ? (
-          updatedTransactions.map((transaction, index) => (
+          updatedTransactions.slice(0, 4).map((transaction, index) => (
             <>
               <TransactionItem
                 item={transaction}

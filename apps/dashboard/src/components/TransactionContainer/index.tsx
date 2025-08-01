@@ -15,7 +15,8 @@ import { accountServices } from '../../services/Account/apiEndpoint';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { IInputs } from '../../Models/formModels';
+import { IInputs } from '../../Models/FormModels';
+
 
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
@@ -171,7 +172,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="relative bg-gray-300 min-h-[633px] w-full min-w-[280px] rounded-[10px] shadow-md p-6 text-tertiary z-2"
+        className="relative bg-gray-300 w-full min-w-[280px] rounded-[10px] shadow-md p-6 text-tertiary z-2"
         id="transaction-form"
       >
         <img
