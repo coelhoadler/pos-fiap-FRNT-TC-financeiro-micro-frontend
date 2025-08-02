@@ -23,7 +23,7 @@ export default function AccountStatement({
   const [updatedTransactions, setUpdatedTransactions] = useState<
     ITransaction[]
   >([]);
-  const { extract, transactionServices, setBalance } = useTransaction();
+  const { extract, transactionServices, setBalance, setExtract } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.DELETE,
   });
@@ -49,6 +49,7 @@ export default function AccountStatement({
 
         handlerUpdateAccount(remainingTransactions);
         setUpdatedTransactions(remainingTransactions);
+        setExtract(remainingTransactions); // <-- Atualiza o contexto global
 
         toast.success('Transação excluída com sucesso!');
       }
@@ -93,6 +94,7 @@ export default function AccountStatement({
 
         handlerUpdateAccount(remainingTransactions);
         setUpdatedTransactions(remainingTransactions);
+        setExtract(remainingTransactions); // <-- Atualiza o contexto global
         toast.dismiss();
         setShowSuccess(true);
         setShowConfirmDialog(false);

@@ -54,7 +54,6 @@ export default function CardBalance({
       <div className="flex flex-col justify-between max-sm:text-center max-sm:p-12 max-sm:pb-1 max-sm:w-full w-1/2 z-20">
         <div className="flex flex-col sm:pt-8 sm:pl-10 max-sm:pt-0 max-sm:pl-0">
           <span className="pb-5 text-[24px] font-semibold">
-            {' '}
             Olá, {username}!
           </span>
           <span className="text-sm">{date}</span>
