@@ -48,8 +48,10 @@ exports.info = async (req, res) => {
         return res.status(200).json({
             name: user.name,
             email: user.email,
+            token: token,
         });
     } catch (error) {
+        res.clearCookie('token');
         res.status(401).json({ message: 'Token inválido ou expirado' })
     }
 };
