@@ -38,6 +38,7 @@ export const login = async ({ email, password, messageError }): Promise<LoginUse
             return { messageError: data.message || "Erro ao fazer login." };
         }
 
+        sessionStorage.setItem('token', data?.token);
         window.location.href = "/dashboard";
     } catch (error) {
         console.error("Erro:", error);
