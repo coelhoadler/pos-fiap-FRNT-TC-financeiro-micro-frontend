@@ -15,7 +15,7 @@ import { accountServices } from '../../services/Account/apiEndpoint';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { IInputs } from '../../Models/FormModels';
+import { IInputs } from '../../Models/formModels';
 
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;

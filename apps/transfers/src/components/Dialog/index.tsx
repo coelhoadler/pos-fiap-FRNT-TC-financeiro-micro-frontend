@@ -3,13 +3,16 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import { DialogContent } from '@mui/material';
 
 const AlertDialog = ({
+  children,
   type,
   open,
   setOpen,
   handleConfirmSubmit,
 }: {
+  children?: React.ReactNode;
   type?: string;
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -63,6 +66,8 @@ const AlertDialog = ({
       >
         {getDialogMessage()}
       </DialogTitle>
+
+      <DialogContent>{children}</DialogContent>
 
       <DialogActions sx={{ justifyContent: 'center', mt: 2 }}>
         <Button
