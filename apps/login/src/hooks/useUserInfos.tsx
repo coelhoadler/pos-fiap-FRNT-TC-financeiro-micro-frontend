@@ -8,9 +8,27 @@ function useUserInfo() {
 
   useEffect(() => {
     const getUserData = async () => {
-      const data = await userInfos();
-      setUser(data);
+
+      try {
+        
+        const data = await userInfos();
+
+        if(data.messageError){
+          setUser(null)
+        }      
+
+        if(!data.messageError){
+          setUser(data);
+          console.log("Dados do usuário:", data);
+        }   
+      } catch (error) {
+        setUser(null);
+        console.error("Erro ao buscar informações do usuário getUserData:", error);        
+      }
+      
     };
+
+      
 
     getUserData();
   }, []);

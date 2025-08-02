@@ -17,6 +17,7 @@ import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { IInputs } from '../../Models/formModels';
 
+
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
 };
@@ -105,27 +106,38 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const handleConfirmSubmit = async () => {
     if (!pendingFormData) return;
 
-    if (id) {
-      await transactionServices.update(id, pendingFormData);
-      setIdTemp(id);
-    } else {
-      await transactionServices.create(pendingFormData);
-      handleNew();
-      setIdTemp('');
+    try {
+      
+      if (id) {
+        await transactionServices.update(id, pendingFormData);
+        setIdTemp(id);
+      } else {
+        await transactionServices.create(pendingFormData);
+        handleNew();
+        setIdTemp('');
+      }
+
+      const response = await transactionServices.getAll();
+      setExtract(response || []);
+      handlerUpdateAccount(response || []);
+
+      setPendingFormData(null);
+      setShowConfirmDialog(false);
+
+      toast.dismiss();
+      setShowSuccess(true);
+
+      setId('');
+      reset()  
+    } catch (error) {
+      if(error.status === 401) {
+        toast.error("Sessão expirada, por favor faça login novamente.");
+        window.location.href = "/login";
+      }
+      console.error('Erro ao enviar o formulário:', error);
     }
 
-    const response = await transactionServices.getAll();
-    setExtract(response || []);
-    handlerUpdateAccount(response || []);
-
-    setPendingFormData(null);
-    setShowConfirmDialog(false);
-
-    toast.dismiss();
-    setShowSuccess(true);
-
-    setId('');
-    reset();
+    
   };
 
   const calculateTotalAmount = (responseData: ITransaction[]) => {
