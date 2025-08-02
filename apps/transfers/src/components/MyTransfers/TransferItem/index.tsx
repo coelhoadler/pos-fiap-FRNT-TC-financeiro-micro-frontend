@@ -12,7 +12,7 @@ import axios from 'axios';
 interface TransactionItemProps {
   item: Partial<ITransaction>;
   onDelete: (transactionId: string) => void;
-  onEdit?: () => void;
+  onEdit: (transactionItem: ITransaction) => void;
 }
 
 const TransferItem: React.FC<TransactionItemProps> = ({
@@ -90,17 +90,17 @@ const TransferItem: React.FC<TransactionItemProps> = ({
             className={`text-md font-bold ${parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
               }`}
           >
-            R$ {parseFloat(item.amount || '0') < 0 ? '-' : ''} {item.amount || '0'}
+            R$ {parseFloat(item.amount || '0') < 0 ? '-' : ''}{' '}
+            {item.amount || '0'}
           </p>
         </div>
         <p className={'text-sm flex flex-col gap-3.5 text-white'}>
           <button
             title="Editar"
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               handleEditTransaction(item as ITransaction);
-              onEdit?.();
+              onEdit(item as ITransaction);
             }}
           >
             <DriveFileRenameOutlineIcon style={{ color: 'white' }} />
