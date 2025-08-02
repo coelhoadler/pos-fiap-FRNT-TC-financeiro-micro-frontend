@@ -227,6 +227,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
           <CurrencyInput
             key={id ? `edit-${id}` : `create-${inputKey}`}
+            fixedDecimalLength={2}
             defaultValue={id ? valueWatched : 0}
             className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
             onChangeValue={(event, originalValue, maskedValue) => {

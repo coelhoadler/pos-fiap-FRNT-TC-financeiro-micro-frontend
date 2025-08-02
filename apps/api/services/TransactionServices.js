@@ -21,7 +21,7 @@ exports.getTransaction = async () => {
 
     return _transaction;
   } catch (error) {
-    throw new Error(`Error fetching type transaction: ${error.message}`);
+    throw new Error(`Error uploading image: ${error.message}`);
   }
 };
 
@@ -62,6 +62,15 @@ exports.edit = async (id, typeTransaction, amount, date, accountNumber) => {
       throw new Error('Type Transaction not found');
     }
 
+    return editTransaction;
+  } catch (error) {
+    throw new Error(`Error fetching type transaction: ${error.message}`);
+  }
+};
+
+exports.uploadImage = async (id, base64Image) => {
+  try {
+    const editTransaction = await transactionModel.findByIdAndUpdate(id, { base64Image });
     return editTransaction;
   } catch (error) {
     throw new Error(`Error fetching type transaction: ${error.message}`);
