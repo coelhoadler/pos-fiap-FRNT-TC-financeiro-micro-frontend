@@ -7,16 +7,23 @@ export const userInfos = async (): Promise<UserInfo | null> => {
             credentials: "include",
         });
 
+        
         if (response.ok) {
             const data = await response.json();
-            return { name: data.name, email: data.email };
-        } else {
-            console.error("Erro na resposta da API:", response.status);
-            return null;
+            console.log("Dados do usuário response-->:", data);
+            localStorage.setItem("token", data.token);
+            return { name: data.name, email: data.email, token: data.token };
         }
+        
+        if(response.status === 401) {
+            console.error("Usuário não autenticado ou sessão expirada.");
+            return { messageError: "Token inválido ou expirado" }
+        }
+       
     } catch (error) {
-        console.error("Erro ao buscar informações do usuário:", error);
-        return null;
+        
+        console.log("Erro ao buscar informações do usuário:", error);        
+        return { messageError: error }
     }
 };
 
