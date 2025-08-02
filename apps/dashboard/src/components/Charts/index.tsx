@@ -76,8 +76,8 @@ const Charts = ({ data, hasNoTransactions, error, startDate, endDate, onStartDat
                 data,
               },
             ]}
-            width={250}
             height={250}
+            width={250}
             slotProps={{
               legend: {
                 direction: "horizontal",
