@@ -9,6 +9,7 @@ exports.getTransaction = async () => {
     }
 
     const _transaction = [];
+
     for (let i = 0; i < transaction.length; i++) {
       _transaction.push({
         id: transaction[i]._id,
@@ -16,6 +17,8 @@ exports.getTransaction = async () => {
         amount: transaction[i].amount,
         date: transaction[i].date,
         accountNumber: transaction[i].accountNumber,
+        base64Image: transaction[i].base64Image || null,
+        fileMimetype: transaction[i].fileMimetype || null,
       });
     }
 
@@ -68,9 +71,9 @@ exports.edit = async (id, typeTransaction, amount, date, accountNumber) => {
   }
 };
 
-exports.uploadImage = async (id, base64Image) => {
+exports.uploadImage = async (id, base64Image, fileMimetype) => {
   try {
-    const editTransaction = await transactionModel.findByIdAndUpdate(id, { base64Image });
+    const editTransaction = await transactionModel.findByIdAndUpdate(id, { base64Image, fileMimetype });
     return editTransaction;
   } catch (error) {
     throw new Error(`Error fetching type transaction: ${error.message}`);

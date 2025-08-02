@@ -2,11 +2,12 @@ import React from 'react';
 import { ITransaction } from '../../../Models/transactionModels';
 import { useTransaction } from '../../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../../utils/formatters';
+import { toast } from 'react-toastify';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FilePresentIcon from '@mui/icons-material/FilePresent';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 interface TransactionItemProps {
   item: Partial<ITransaction>;
@@ -36,6 +37,13 @@ const TransferItem: React.FC<TransactionItemProps> = ({
     const file = event.target.files?.[0];
 
     if (file) {
+      const sizeAllowed = file.size < 1 * 1024 * 1024; // 1MB
+
+      if (!sizeAllowed) {
+        console.error('File size exceeds 1MB limit.');
+        return false
+      }
+
       try {
         const formData = new FormData();
         const API_BASE_URL = 'http://localhost:3000';
@@ -49,13 +57,22 @@ const TransferItem: React.FC<TransactionItemProps> = ({
           },
         });
 
+        toast.success('File uploaded successfully.', { position: 'bottom-center' });
         console.log('File uploaded successfully:', response.data);
-        toast.success('File uploaded successfully.');
       } catch (error) {
         console.error('Error uploading file:', error);
         toast.error('Error uploading file.');
       }
     }
+  };
+
+  const handleDownloadBase64 = (base64: string, mimeType: string) => {
+    const link = document.createElement('a');
+    link.href = `data:${mimeType};base64,${base64}`;
+    link.download = 'comprovante_' + new Date().getTime() + '.' + mimeType.split('/')[1];
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -96,20 +113,33 @@ const TransferItem: React.FC<TransactionItemProps> = ({
             <DeleteForeverIcon style={{ color: 'white' }} />
           </button>
 
-          <input
-            type='file'
-            className='hidden'
-            id={`file-${item.id}`}
-            accept='image/*'
-            onChange={(event) => handleFileChange(event, item.id)}
-          />
-          <label
-            htmlFor={`file-${item.id}`}
-            className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
-            title='Anexar comprovante'
-          >
-            <FilePresentIcon style={{ color: 'white' }} />
-          </label>
+          {item.base64Image ? (
+            <label
+              htmlFor={`file-${item.id}`}
+              className="bg-green-600 rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+              title='Baixar comprovante'
+              onClick={() => handleDownloadBase64(item.base64Image!, item.fileMimetype!)}
+            >
+              <FileDownloadIcon style={{ color: 'white' }} />
+            </label>
+          ) : (
+            <>
+              <input
+                type='file'
+                className='hidden'
+                id={`file-${item.id}`}
+                accept='image/*'
+                onChange={(event) => handleFileChange(event, item.id)}
+              />
+              <label
+                htmlFor={`file-${item.id}`}
+                className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                title='Anexar comprovantedd'
+              >
+                <FilePresentIcon style={{ color: 'white' }} />
+              </label>
+            </>
+          )}
         </p>
       </div>
     </div>

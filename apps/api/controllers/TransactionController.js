@@ -56,7 +56,7 @@ exports.uploadImage = async (req, res) => {
     return res.status(400).json({ message: 'No file uploaded.' });
   }
 
-  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
   if (!allowedMimeTypes.includes(file.mimetype)) {
     return res.status(400).json({ message: 'Invalid file type. Only image files are allowed.' });
@@ -67,7 +67,8 @@ exports.uploadImage = async (req, res) => {
   try {
     const profile = await transactionServices.uploadImage(
       id,
-      base64Image
+      base64Image,
+      file.mimetype
     );
     res.status(200).json(profile);
   } catch (error) {
