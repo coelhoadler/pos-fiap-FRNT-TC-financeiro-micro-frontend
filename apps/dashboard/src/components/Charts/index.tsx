@@ -18,7 +18,7 @@ type TCharts = {
 const Charts = ({ data, hasNoTransactions, error, startDate, endDate, onStartDateChange, onEndDateChange }: TCharts) => {
   return (
     <>
-      <h2 className="text-center text-lg font-family-base text-primary font-bold mb-4">
+      <h2 className="text-center text-xl font-family-base text-primary font-bold mb-4">
         Gráfico de transações
       </h2>
 
