@@ -9,4 +9,6 @@ export interface ITransaction {
   amount: string;
   date: string;
   accountNumber: string;
+  base64Image?: string;
+  fileMimetype?: string;
 }
