@@ -44,8 +44,9 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   useEffect(() => {
     const fetchTransaction = async () => {
       const responseData = await transactionServices.getAll();
+
       setExtract(responseData || []);
-      console.log('>>> caindo aqui', responseData);
+
       handlerUpdateAccount(responseData || []);
     };
     fetchTransaction();

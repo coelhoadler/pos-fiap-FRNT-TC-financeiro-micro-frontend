@@ -16,7 +16,8 @@ const app = express();
 
 const corsOptions = {
   origin: [
-    'http://localhost:9000'
+    'http://localhost:9000',
+    'https://main.d25xvicp4sjatv.amplifyapp.com'    
   ], // Adicione o seu domínio frontend
   credentials: true,              
 };
