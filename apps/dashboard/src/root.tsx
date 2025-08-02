@@ -15,7 +15,6 @@ export default function Root() {
   useEffect(() => {
     async function getUserInfo() {
       try {
-        debugger
         const response = await getUserProfile();
 
         if (response) {
