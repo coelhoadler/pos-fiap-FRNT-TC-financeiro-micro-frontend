@@ -12,9 +12,7 @@ export default function Home({ username }: { username: string }) {
   let accountStart: Partial<IAccount>;
   const { extract } = useTransaction();
 
-  const [typeTransactionOptions, setTypeTransactionOptions] = useState<
-    ITypeTransaction[]
-  >(() => {
+  const [typeTransactionOptions, setTypeTransactionOptions] = useState<ITypeTransaction[]>(() => {
     return [
       { id: "1", description: "Câmbio e Moedas" },
       { id: "2", description: "DOC/TED" },
@@ -74,14 +72,15 @@ export default function Home({ username }: { username: string }) {
         return sum + (isNaN(value) ? 0 : value);
       }, 0);
   }
+  const chartData = typeTransactionOptions
+    .map((type) => ({
+      label: (location: string) =>
+        location === "tooltip" ? "" : type.description,
+      value: getSumByType(type.id),
+    }))
+    .filter((item) => item.value > 0); 
 
-  const chartData = typeTransactionOptions.map((type) => ({
-    label: (location: string) =>
-      location === "tooltip" ? "" : type.description,
-    value: getSumByType(type.id),
-  }));
-
-  const hasData = chartData.some((item) => item.value > 0);
+  const hasData = chartData.length > 0;
 
   useEffect(() => {
     const fetchAccountStart = async () => {

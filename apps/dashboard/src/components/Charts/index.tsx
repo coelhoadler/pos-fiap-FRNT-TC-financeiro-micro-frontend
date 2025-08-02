@@ -65,7 +65,6 @@ const Charts = ({ data, hasNoTransactions, error, startDate, endDate, onStartDat
             colors={["#004d61", "#47a138", "#ff5031"]}
             series={[
               {
-                paddingAngle: 3,
                 innerRadius: 70,
                 outerRadius: 100,
                 valueFormatter: ({ value }) =>
