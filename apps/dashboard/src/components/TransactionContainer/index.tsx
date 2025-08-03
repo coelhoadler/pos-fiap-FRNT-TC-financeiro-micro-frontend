@@ -15,7 +15,8 @@ import { accountServices } from '../../services/Account/apiEndpoint';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { IInputs } from '../../Models/formModels';
+import { IInputs } from '../../Models/FormModels';
+
 
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
@@ -41,6 +42,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   );
   const [showSuccess, setShowSuccess] = useState(false);
   const [idTemp, setIdTemp] = useState('');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   const [typeTransactionOptions, setTypeTransactionOptions] = useState<
     ITypeTransaction[]
@@ -88,7 +90,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     const typeDescription =
       typeTransactionOptions.find((option) => option.id === optionId)
         ?.description || '';
-    const _valueNew = watch('value');
+    const _valueNew = watch('value');    
 
     const form: ITransaction = {
       typeTransaction: { id: optionId, description: typeDescription },
@@ -96,7 +98,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
       // amount: 0 ? valueWatched : _valueNew,
       amount: 0 ? '' : _valueNew,
       date: new Date().toISOString(),
-      accountNumber: '123456789',
+      accountNumber: user.accountNumber,
     };
     setPendingFormData(form);
     setShowConfirmDialog(true);
@@ -137,7 +139,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   };
 
   const calculateTotalAmount = (responseData: ITransaction[]) => {
-    return responseData.reduce((total, item) => {
+    return responseData?.reduce((total, item) => {
       const amount = parseFloat(
         item.amount
           .replace('R$', '')
@@ -150,6 +152,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
       return (total + amount) as number;
     }, 0);
+
   };
 
   const handleOnlyTransactionEditing = () => {
@@ -168,13 +171,13 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
   const handlerUpdateAccount = async (responseData: ITransaction[]) => {
     const accountJoana = {
-      accountNumber: '123456789',
+      accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
       currency: 'BRL',
       accountType: 'Conta Corrente',
     };
     setBalance(accountJoana.balance);
-    await accountServices.updateAccountById('123456789', accountJoana);
+    await accountServices.updateAccountById(user.accountNumber, accountJoana);
   };
 
   const handleCancelTransaction = () => {

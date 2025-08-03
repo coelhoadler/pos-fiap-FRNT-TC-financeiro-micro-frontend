@@ -32,6 +32,7 @@ export default function AccountStatement({
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5; // Número de itens por página
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   useEffect(() => {
     const extractOrdered = sortExtractByAscDate(extract || []);
@@ -74,13 +75,13 @@ export default function AccountStatement({
 
   const handlerUpdateAccount = async (responseData: ITransaction[]) => {
     const accountJoana = {
-      accountNumber: '123456789',
+      accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
       currency: 'BRL',
       accountType: 'Conta Corrente',
     };
     setBalance(accountJoana.balance);
-    await accountServices.updateAccountById('123456789', accountJoana);
+    await accountServices.updateAccountById(user.accountNumber , accountJoana);
   };
 
   const handleConfirmSubmit = async (transactionId: string) => {
@@ -100,7 +101,11 @@ export default function AccountStatement({
         setShowConfirmDialog(false);
       }
     } catch (error) {
-      console.error('Error deleting transaction:', error);
+     if (error.status === 401) {
+        toast.error('Sessão expirada, por favor faça login novamente.');
+        window.location.href = '/login';
+      }
+      console.error('Erro ao enviar o formulário:', error);
     }
   };
 

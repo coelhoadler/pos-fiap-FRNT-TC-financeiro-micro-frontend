@@ -2,7 +2,14 @@
   "extends": "ts-config-single-spa",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "declarationDir": "dist"
+    "declarationDir": "dist",
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    "inlineSources": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "removeComments": false
   },
   "files": ["src/financeiro-dashboard.tsx"],
   "include": ["src/**/*"],
