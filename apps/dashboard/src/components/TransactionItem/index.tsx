@@ -72,7 +72,15 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
               onEdit?.();
             }}
           >
-            <DriveFileRenameOutlineIcon style={{ color: 'white' }} />
+            <DriveFileRenameOutlineIcon sx={{
+              color: 'white',
+              cursor: 'pointer',
+              transition: 'color 0.3s',
+              '&:hover': {
+                color: '#8aec49',
+              },
+            }} />
+
           </button>
 
           <button
@@ -80,7 +88,14 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
             onClick={() => onDelete(item.id || '')}
           >
-            <DeleteForeverIcon style={{ color: 'white' }} />
+            <DeleteForeverIcon sx={{
+              color: 'white',
+              cursor: 'pointer',
+              transition: 'color 0.3s',
+              '&:hover': {
+                color: '#8d4d48', 
+              },
+             }} />
           </button>
         </p>
       </div>
