@@ -137,7 +137,7 @@ const TransferItem: React.FC<TransactionItemProps> = ({
                 cursor: 'pointer',
                 transition: 'color 0.3s',
                 '&:hover': {
-                  color: '#8aec49', // exemplo: azul claro ao passar o mouse
+                  color: '#8aec49',
                 },
               }} />
           </button>
@@ -152,7 +152,7 @@ const TransferItem: React.FC<TransactionItemProps> = ({
                   cursor: 'pointer',
                   transition: 'color 0.3s',
                   '&:hover': {
-                    color: '#8d4d48', // exemplo: azul claro ao passar o mouse
+                    color: '#8d4d48', 
                   },
                 }} />
           </button>
