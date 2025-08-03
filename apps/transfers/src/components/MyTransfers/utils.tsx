@@ -66,18 +66,25 @@ export const buildTransactionEditForm = (transactionItem: ITransaction) => {
           size="small"
           otherClasses={['mb-3', 'text-red-600', 'font-medium', 'self-start']}
         />
-        
+
         <CurrencyInput
           key={`edit-${transactionItem.id}`}
           className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
-          defaultValue={transactionItem.amount.replace('R$', '').replace('.', '')}
-          intlConfig={{ locale: "pt-BR", currency: "BRL" }}
+          defaultValue={transactionItem.amount
+            .replace('R$', '')
+            .trim()
+            .replace(/\./g, '')
+            .replace(',', '.')}
+          intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
           decimalsLimit={2}
           decimalSeparator=","
           groupSeparator="."
           placeholder="R$ 0,00"
           onValueChange={(event, originalValue, maskedValue) => {
-            const valueWithoutCurrencySymbol = maskedValue.formatted.replace('R$', '');
+            const valueWithoutCurrencySymbol = maskedValue.formatted.replace(
+              'R$',
+              ''
+            );
             handleEditAmountTransaction(valueWithoutCurrencySymbol);
           }}
         />

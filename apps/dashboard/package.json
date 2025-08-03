@@ -71,6 +71,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.60.0",
     "react-icons": "^5.5.0",
+    "react-intl-currency-input": "^0.2.6",
     "react-router-dom": "^7.7.1",
     "react-toastify": "^11.0.5",
     "single-spa": "^5.9.3",

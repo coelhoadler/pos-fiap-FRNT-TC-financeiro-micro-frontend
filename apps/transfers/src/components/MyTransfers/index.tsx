@@ -1,24 +1,20 @@
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
-import { transactionServices } from '../../services/Transacoes/apiEndpoints';
-import TransferItem from './TransferItem';
+import { toast } from 'react-toastify';
+import { alertDialogTypes } from '../../enums/alertDialogTypes';
+import { ITransaction } from '../../Models/transactionModels';
+import { accountServices } from '../../services/Account/apiEndpoint';
+import { useTransaction } from '../../setup/context/transactionContext';
+import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { sortExtractByAscDate } from '../../utils/formatters';
 import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SucessSnackBar';
-import { alertDialogTypes } from '../../enums/alertDialogTypes';
-import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { useTransaction } from '../../setup/context/transactionContext';
-import { accountServices } from '../../services/Account/apiEndpoint';
-import { toast } from 'react-toastify';
 import { TransfersFilters } from './TransferFilter';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Tooltip } from '@mui/material';
+import TransferItem from './TransferItem';
 import { buildTransactionEditForm } from './utils';
-
-type TAccountStatement = {
-  onEditTransaction?: () => void;
-};
+import { jsx } from 'react/jsx-runtime';
 
 const MyTransfers = () => {
   const [myTransactions, setMyTransactions] = useState<ITransaction[]>([]);
@@ -67,7 +63,10 @@ const MyTransfers = () => {
           .replace(/\./g, '')
           .replace(',', '.')
       );
-      return total + amount;
+
+      setBalance((total + amount) as number);
+
+      return (total + amount) as number;
     }, 0);
   };
 
@@ -131,9 +130,23 @@ const MyTransfers = () => {
   };
 
   const handleEditTransaction = (transactionItem: ITransaction) => {
+    localStorage.setItem('transactionItem', JSON.stringify(transactionItem));
+
     setDialogType({ type: alertDialogTypes.EDIT });
     setShowConfirmDialog(true);
     setEdit(transactionItem);
+  };
+
+  const handleCancelEdit = () => {
+    const backupData = JSON.parse(localStorage.getItem('transactionItem'));
+
+    setShowConfirmDialog(false);
+
+    setMyTransactions(
+      myTransactions.map((item) =>
+        item.id === backupData.id ? backupData : item
+      )
+    );
   };
 
   const normalizeStartDate = (dateStr: string) => {
@@ -352,6 +365,7 @@ const MyTransfers = () => {
               if (!edit.amount) return;
               handleConfirmEditSubmit(edit);
             }}
+            handleCancelSubmit={() => handleCancelEdit()}
             children={buildTransactionEditForm(edit)}
           />
 

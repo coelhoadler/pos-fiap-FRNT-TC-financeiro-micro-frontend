@@ -31,6 +31,17 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
     setValueEdit(amount);
   };
 
+  const handleValueFormat = (value: string) => {
+    return parseFloat(
+      value.replace('R$', '').trim().replace(/\./g, '').replace(',', '.')
+    ).toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
   return (
     <div className="mb-4 pb-4 border-b border-link" {...props}>
       <span className="text-link font-semibold">
@@ -47,23 +58,23 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
               parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
             }`}
           >
-            {parseFloat(item.amount || '0') < 0 ? '-' : ''} {item.amount || '0'}
+            {parseFloat(item.amount || '0') < 0 ? '-' : ''}{' '}
+            {handleValueFormat(item.amount) || '0'}
           </p>
         </div>
         <p className={'text-sm flex flex-col gap-3.5 text-white'}>
-          <Link href="#transaction-form" onClick={(e) => e.preventDefault()}>
-            <button
-              title="Editar"
-              className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleEditTransaction(item as ITransaction);
-                onEdit?.();
-              }}
-            >
-              <DriveFileRenameOutlineIcon style={{ color: 'white' }} />
-            </button>
-          </Link>
+          <button
+            title="Editar"
+            className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEditTransaction(item as ITransaction);
+              onEdit?.();
+            }}
+          >
+            <DriveFileRenameOutlineIcon style={{ color: 'white' }} />
+          </button>
+
           <button
             title="Excluir"
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
