@@ -17,6 +17,9 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
   };
 
   const handleLogout = async () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('token_expiration');
     userLogout();
   };
   

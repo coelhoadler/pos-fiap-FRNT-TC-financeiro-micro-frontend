@@ -225,7 +225,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
   const handleLogout = async () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    localStorage.removeItem('token_expiration')
+    localStorage.removeItem('token_expiration');
     store.dispatch(logoutRequest());
     logout();
   };
