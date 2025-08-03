@@ -21,7 +21,10 @@ export const userInfos = async (): Promise<UserInfo | null> => {
             return { messageError: "Token inválido ou expirado" }
         }
        
-    } catch (error) {        
+    } catch (error) {   
+        if (error?.status === 401) {
+          window.location.href = '/login';
+        }     
         console.log("Erro ao buscar informações do usuário:", error);        
         return { messageError: error }
     }
@@ -50,6 +53,9 @@ export const login = async ({ email, password, messageError }): Promise<LoginUse
         window.location.href = "/dashboard";
     } catch (error) {
         console.error("Erro:", error);
+        if (error?.status === 401) {
+          window.location.href = '/login';
+        }
         return { messageError: "Erro inesperado ao tentar logar." };
     }
 };
@@ -81,6 +87,9 @@ export const register = async ({ email, password, name, messageError,onClose }):
 
     } catch (error) {
       console.error("Erro:", error);
+      if (error?.status === 401) {
+          window.location.href = '/login';
+        }
       return { messageError: "Erro inesperado ao tentar criar a conta." };
     }
 };

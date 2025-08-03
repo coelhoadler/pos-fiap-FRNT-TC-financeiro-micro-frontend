@@ -14,6 +14,7 @@
     "docker:reset": "docker compose -f docker-compose.dev.yml down --rmi all --volumes --remove-orphans",
     "docker:start": "docker compose -f docker-compose.dev.yml up --build",
     "start": "npm run docker:reset && npm run docker:start",
+    "dev": "npm run docker:start",
     "start:dashboard": "cd apps/dashboard && npm start",
     "start:login": "cd apps/login && npm start",
     "start:micro-api": "cd apps/api && npm run dev",

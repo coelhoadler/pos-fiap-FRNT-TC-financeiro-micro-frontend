@@ -54,6 +54,9 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         setExtract(responseData || []);
         handlerUpdateAccount(responseData || []);
       } catch (error) {
+        if (error?.status === 401) {
+          window.location.href = '/login';
+        }
         console.error('Erro ao buscar transações:', error);
       }
 
