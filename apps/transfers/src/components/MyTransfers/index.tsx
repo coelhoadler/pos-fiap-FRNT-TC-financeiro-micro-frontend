@@ -14,7 +14,6 @@ import SuccessSnackbar from '../SucessSnackBar';
 import { TransfersFilters } from './TransferFilter';
 import TransferItem from './TransferItem';
 import { buildTransactionEditForm } from './utils';
-import { jsx } from 'react/jsx-runtime';
 
 const MyTransfers = () => {
   const [myTransactions, setMyTransactions] = useState<ITransaction[]>([]);
@@ -30,23 +29,31 @@ const MyTransfers = () => {
     endDate: '',
   });
 
-  const { transactionServices, setBalance } = useTransaction();
+  const { transactionServices, setBalance, extract } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>();
   const [id, setId] = useState<string>('');
   const [edit, setEdit] = useState<ITransaction>({} as ITransaction);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 3; // Número de itens por página
+  const itemsPerPage = 3;
+  const user = JSON.parse(localStorage.getItem('user')) || '';
 
   useEffect(() => {
     const fetchTransaction = async () => {
-      const responseData = await transactionServices.getAll();
-      const extractOrdered = sortExtractByAscDate(responseData || []);
-      setMyTransactions(extractOrdered);
+      try {
+        const responseData = await transactionServices.getAll();
+        const extractOrdered = sortExtractByAscDate(responseData || []);
+        setMyTransactions(extractOrdered);  
+      } catch (error) {
+        if (error.status === 401) {
+          window.location.href = '/login';
+          console.error('Erro ao enviar o formulário:', error);
+        }      
+      }      
     };
     fetchTransaction();
-  }, []);
+  }, [extract]);
 
   const handleTransactionDeleteConfirmation = (transactionId: string) => {
     setDialogType({ type: alertDialogTypes.DELETE });
@@ -71,14 +78,14 @@ const MyTransfers = () => {
   };
 
   const handlerUpdateAccount = async (responseData: ITransaction[]) => {
-    const accountJoana = {
-      accountNumber: '123456789',
+    const account = {
+      accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
       currency: 'BRL',
       accountType: 'Conta Corrente',
     };
-    setBalance(accountJoana.balance);
-    await accountServices.updateAccountById('123456789', accountJoana);
+    
+    await accountServices.updateAccountById(user.accountNumber, account);
   };
 
   const handleConfirmSubmit = async (transactionId: string) => {
@@ -93,7 +100,10 @@ const MyTransfers = () => {
       setShowConfirmDialog(false);
       toast.dismiss();
     } catch (error) {
-      console.error('Erro ao deletar:', error);
+        if (error?.status === 401) {
+          window.location.href = '/login';
+          console.error('Erro ao enviar o formulário:', error);
+        } 
     }
   };
 
@@ -121,11 +131,11 @@ const MyTransfers = () => {
       setShowConfirmDialog(false);
       toast.dismiss();
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 4000);
     } catch (error) {
-      console.error('Erro ao editar:', error);
+        if (error.status === 401) {
+          window.location.href = '/login';
+          console.error('Erro ao enviar o formulário:', error);
+        } 
     }
   };
 
@@ -148,6 +158,10 @@ const MyTransfers = () => {
       )
     );
   };
+
+  const handleCancelSubmit = () => {
+    setShowConfirmDialog
+  }
 
   const normalizeStartDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split('-');
@@ -344,6 +358,8 @@ const MyTransfers = () => {
             type={'Delete'}
             setOpen={setShowConfirmDialog}
             handleConfirmSubmit={() => handleConfirmSubmit(id)}
+            handleCancelSubmit={handleCancelSubmit}
+            
           />
 
           <SuccessSnackbar

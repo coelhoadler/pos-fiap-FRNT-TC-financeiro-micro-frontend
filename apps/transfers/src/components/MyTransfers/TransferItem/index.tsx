@@ -9,7 +9,6 @@ import { ITransaction } from '../../../Models/transactionModels';
 import { useTransaction } from '../../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../../utils/formatters';
 import SuccessSnackbar from '../../SucessSnackBar';
-
 interface TransactionItemProps {
   item: Partial<ITransaction>;
   onDelete: (transactionId: string) => void;
@@ -22,8 +21,9 @@ const TransferItem: React.FC<TransactionItemProps> = ({
   onEdit,
   ...props
 }) => {
-  const { setId, setTypeTransactionEdit, setValueEdit } = useTransaction();
+  const { setId, setTypeTransactionEdit, setValueEdit, setExtract, extract } = useTransaction();
   const [showSuccess, setShowSuccess] = useState(false);
+  
 
   const handleEditTransaction = ({
     id,
@@ -66,18 +66,20 @@ const TransferItem: React.FC<TransactionItemProps> = ({
         const url = `${API_BASE_URL}/api/transactions/${id}/upload-image`;
         formData.append('file', file);
 
-        const response = await axios.patch(url, formData, {
+        const responseFile = await axios.patch(url, formData, {
           withCredentials: true,
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
 
-        setShowSuccess(true);
+        if(responseFile.status !== 200) {
+          throw new Error('Failed to upload file');
+        }
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 4000);
+        setShowSuccess(true);
+        setExtract([]);        
+
       } catch (error) {
         if (error.status === 401) {
           toast.error('Sessão expirada, por favor faça login novamente.');
@@ -129,14 +131,30 @@ const TransferItem: React.FC<TransactionItemProps> = ({
               onEdit(item as ITransaction);
             }}
           >
-            <DriveFileRenameOutlineIcon style={{ color: 'white' }} />
+            <DriveFileRenameOutlineIcon 
+              sx={{
+                color: 'white',
+                cursor: 'pointer',
+                transition: 'color 0.3s',
+                '&:hover': {
+                  color: '#8aec49', // exemplo: azul claro ao passar o mouse
+                },
+              }} />
           </button>
           <button
             title="Excluir"
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
             onClick={() => onDelete(item.id || '')}
           >
-            <DeleteForeverIcon style={{ color: 'white' }} />
+            <DeleteForeverIcon 
+              sx={{
+                  color: 'white',
+                  cursor: 'pointer',
+                  transition: 'color 0.3s',
+                  '&:hover': {
+                    color: '#8d4d48', // exemplo: azul claro ao passar o mouse
+                  },
+                }} />
           </button>
 
           {item.base64Image ? (
@@ -148,7 +166,15 @@ const TransferItem: React.FC<TransactionItemProps> = ({
                 handleDownloadBase64(item.base64Image!, item.fileMimetype!)
               }
             >
-              <FileDownloadIcon style={{ color: 'white' }} />
+              <FileDownloadIcon  
+                sx={{
+                    color: 'white',
+                    cursor: 'pointer',
+                    transition: 'color 0.3s',
+                    '&:hover': {
+                      color: '#8aec49', // exemplo: azul claro ao passar o mouse
+                    },
+                  }} />
             </label>
           ) : (
             <>
