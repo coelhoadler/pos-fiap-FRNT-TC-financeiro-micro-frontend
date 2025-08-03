@@ -25,6 +25,9 @@ export default function Root() {
           setIsLoggedIn(false);
         }
       } catch (error) {
+        if (error?.status === 401) {
+          window.location.href = '/login';
+        }
         setError("Erro ao buscar informações do usuário.");
       }
     }

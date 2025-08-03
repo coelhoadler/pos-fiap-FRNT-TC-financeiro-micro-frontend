@@ -23,6 +23,9 @@ function useUserInfo() {
         }   
       } catch (error) {
         setUser(null);
+        if (error?.status === 401) {
+          window.location.href = '/login';
+        }
         console.error("Erro ao buscar informações do usuário getUserData:", error);        
       }
       

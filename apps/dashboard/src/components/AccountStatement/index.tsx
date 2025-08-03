@@ -55,6 +55,9 @@ export default function AccountStatement({
         toast.success('Transação excluída com sucesso!');
       }
     } catch (error) {
+      if (error?.status === 401) {
+          window.location.href = '/login';
+      }
       console.error('Error deleting transaction:', error);
     }
   };
@@ -101,7 +104,7 @@ export default function AccountStatement({
         setShowConfirmDialog(false);
       }
     } catch (error) {
-     if (error.status === 401) {
+     if (error?.status === 401) {
         toast.error('Sessão expirada, por favor faça login novamente.');
         window.location.href = '/login';
       }
