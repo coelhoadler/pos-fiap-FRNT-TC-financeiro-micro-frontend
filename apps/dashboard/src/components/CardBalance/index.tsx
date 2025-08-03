@@ -24,7 +24,6 @@ export default function CardBalance({
    * balance: Value of the updated statement total.
    */
   useEffect(() => {
-    console.log('Balance:', balance, 'Amount:', amount);
     if (balance > 0) {
       setBalanceFormatted(
         (balance || 0).toLocaleString('pt-br', {
