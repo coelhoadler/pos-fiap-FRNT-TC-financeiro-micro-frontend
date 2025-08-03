@@ -40,6 +40,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   const [typeTransactionEdit, setTypeTransactionEdit] =
     useState<ITypeTransaction>({} as ITypeTransaction);
   const [balance, setBalance] = useState<number>(0);
+  const user = JSON.parse(localStorage.getItem('user')) || {};
 
   useEffect(() => {
     const fetchTransaction = async () => {
@@ -59,10 +60,6 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         }
         console.error('Erro ao buscar transações:', error);
       }
-
-      
-
-      
     };
     fetchTransaction();
   }, []);
@@ -84,14 +81,13 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   };
 
   const handlerUpdateAccount = async (responseData: ITransaction[]) => {
-    const accountJoana = {
-      accountNumber: '123456789',
+    const account = {
+      accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
       currency: 'BRL',
       accountType: 'Conta Corrente',
-    };
-    setBalance(accountJoana.balance)
-    await accountServices.updateAccountById('123456789', accountJoana);
+    };    
+    await accountServices.updateAccountById(user.accountNumber, account);
   };
 
   return (

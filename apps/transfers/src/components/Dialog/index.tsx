@@ -18,7 +18,7 @@ const AlertDialog = ({
   open: boolean;
   setOpen: (open: boolean) => void;
   handleConfirmSubmit: (event?: object) => void;
-  handleCancelSubmit?: () => void;
+  handleCancelSubmit: () => void;
 }) => {
   const handleClose = () => {
     setOpen(false);
