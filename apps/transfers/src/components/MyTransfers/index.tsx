@@ -29,7 +29,7 @@ const MyTransfers = () => {
     endDate: '',
   });
 
-  const { transactionServices, setBalance, extract } = useTransaction();
+  const { transactionServices, setBalance, extract, setExtract } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>();
   const [id, setId] = useState<string>('');
   const [edit, setEdit] = useState<ITransaction>({} as ITransaction);
@@ -130,6 +130,7 @@ const MyTransfers = () => {
       setShowSuccess(true);
       setShowConfirmDialog(false);
       toast.dismiss();
+      setExtract([])
 
     } catch (error) {
         if (error.status === 401) {
