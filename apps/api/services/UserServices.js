@@ -1,6 +1,7 @@
 const userModel = require('../models/UserModel');
 const { generateHas, compareHash } = require('../utils/HasManager');
 const { generateToken } = require('../utils/TokenGenerator');
+const CustomError = require('../validator/CustomError');
 
 exports.auth = async (email, password) => {
   try {
@@ -20,7 +21,7 @@ exports.auth = async (email, password) => {
 
     const token = generateToken(model[0].id);
 
-    return { name: model[0].name, email: model[0].email, token: token }
+    return { name: model[0].name, email: model[0].email, token: token, accountNumber: model[0].accountNumber }; 
 
   } catch (error) {
     throw new Error(error.message)
@@ -34,7 +35,8 @@ exports.create = async (name, email, password) => {
     const payload = {
       name,
       email,
-      password: passwordHas
+      password: passwordHas,
+      accountNumber: `AC-${Math.floor(Math.random() * 1000000)}` 
     }
 
     const model = await userModel.create(payload)
@@ -47,22 +49,26 @@ exports.create = async (name, email, password) => {
 
 };
 
-exports.info = async (req, res) => {
+
+exports.getUserById = async (id) => {
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      return res.status(401).json({ message: 'Token não fornecido' });
+    
+    if (!id) {
+      throw new CustomError(400,'Id do usuário não fornecido');      
     }
-    const { id } = tokenData(token);
+    
     const user = await userModel.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: 'Usuário não encontrado' });
+
+    if(user.length === 0) {
+      throw new CustomError(404, 'Usuário não encontrado');
     }
-    return res.status(200).json({
-      name: user.name,
-      email: user.email,
-    });
+
+    return user;
+
   } catch (error) {
-    res.status(401).json({ message: 'Token inválido ou expirado' });
+    if (error instanceof CustomError) {
+      throw error;
+    }
+    throw new CustomError(500, error.message);
   }
 };

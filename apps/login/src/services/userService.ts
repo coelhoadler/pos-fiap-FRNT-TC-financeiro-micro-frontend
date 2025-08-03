@@ -2,6 +2,7 @@ import { UserInfo, LoginUser, RegisterUser } from "../interfaces/IUser";
 
 export const userInfos = async (): Promise<UserInfo | null> => {
     try {
+        
         const response = await fetch("http://localhost:3000/api/user/info", {
             method: "GET",
             credentials: "include",
@@ -20,8 +21,7 @@ export const userInfos = async (): Promise<UserInfo | null> => {
             return { messageError: "Token inválido ou expirado" }
         }
        
-    } catch (error) {
-        
+    } catch (error) {        
         console.log("Erro ao buscar informações do usuário:", error);        
         return { messageError: error }
     }
@@ -45,7 +45,8 @@ export const login = async ({ email, password, messageError }): Promise<LoginUse
             return { messageError: data.message || "Erro ao fazer login." };
         }
 
-        sessionStorage.setItem('token', data?.token);
+        localStorage.setItem('token', data?.token);
+        localStorage.setItem('user', JSON.stringify(data))
         window.location.href = "/dashboard";
     } catch (error) {
         console.error("Erro:", error);

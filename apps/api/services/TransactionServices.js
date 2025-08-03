@@ -1,11 +1,12 @@
 const transactionModel = require('../models/TransactionModel');
+const CustomError = require('../validator/CustomError');
 
-exports.getTransaction = async () => {
+exports.getTransactionByAccountNumber = async (accountNumber) => {
   try {
-    const transaction = await transactionModel.find();
+    const transaction = await transactionModel.find({ accountNumber: accountNumber });
 
     if (!transaction) {
-      throw new Error('Type Transaction not found');
+      throw new CustomError(200, 'Nenhum registro encontrado');
     }
 
     const _transaction = [];

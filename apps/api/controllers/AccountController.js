@@ -2,6 +2,7 @@ const accountServices = require('../services/AccountServices');
 const { getHeaderToken, tokenExpired } = require('../utils/TokenGenerator');
 
 exports.getAccount = async (req, res) => {
+  cons
   try {
     // const token = await getHeaderToken(req.headers);
     // await tokenExpired(token);

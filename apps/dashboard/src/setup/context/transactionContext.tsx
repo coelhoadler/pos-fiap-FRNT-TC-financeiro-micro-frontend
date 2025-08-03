@@ -43,11 +43,23 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
 
   useEffect(() => {
     const fetchTransaction = async () => {
-      const responseData = await transactionServices.getAll();
+      try {
+        const responseData: any = await transactionServices.getAll() 
+        if (responseData?.message === "Nenhuma transação encontrada.") {
+            setExtract([]);  
+            handlerUpdateAccount([]);
+            return;
+        }
+        
+        setExtract(responseData || []);
+        handlerUpdateAccount(responseData || []);
+      } catch (error) {
+        console.error('Erro ao buscar transações:', error);
+      }
 
-      setExtract(responseData || []);
+      
 
-      handlerUpdateAccount(responseData || []);
+      
     };
     fetchTransaction();
   }, []);
@@ -75,7 +87,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
       currency: 'BRL',
       accountType: 'Conta Corrente',
     };
-    setBalance(accountJoana.balance);
+    setBalance(accountJoana.balance)
     await accountServices.updateAccountById('123456789', accountJoana);
   };
 

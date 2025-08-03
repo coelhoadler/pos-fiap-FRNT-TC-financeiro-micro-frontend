@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 
 exports.mongooseConnection = () => {
-  const mongoURI =
-    process.env.MONGO_URI ||
-    'mongodb://admin:admin123@localhost:27017/bytebank?authSource=admin';
+  const mongoURI = "mongodb+srv://tecon:123Asyst100@tecon.uw9fw3a.mongodb.net/bytebank"
 
   mongoose.Promise = global.Promise;
 

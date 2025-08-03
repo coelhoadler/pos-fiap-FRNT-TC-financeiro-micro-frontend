@@ -35,14 +35,15 @@ exports.info = async (req, res) => {
         const token = req.cookies.token
 
         if (!token) {
-            return res.status(401).json({ message: 'Token não fornecido' })
+            throw new Error('Token não fornecido')            
         }
 
         const { id } = tokenData(token);
         const user = await userModel.findById(id)
 
         if (!user) {
-            return res.status(404).json({ message: 'Usuário não encontrado' })
+            throw new Error('Usuário não encontrado')
+            // return res.status(404).json({ message: 'Usuário não encontrado' })
         }
 
         return res.status(200).json({

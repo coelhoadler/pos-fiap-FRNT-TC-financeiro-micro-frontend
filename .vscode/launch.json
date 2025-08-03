@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug root-config (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:9000/",
+      "webRoot": "${workspaceFolder}/apps/root-config", // PONTO CRÍTICO
+      "sourceMaps": true,
+      "trace": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/apps/root-config/*"
+      }
+    },
+
+    {
+      "name": "Debug api (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000/",
+      "webRoot": "${workspaceFolder}/apps/api", // PONTO CRÍTICO
+      "sourceMaps": true,
+      "trace": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/apps/api/*"
+      }
+    }
+
+
+  ]
+}

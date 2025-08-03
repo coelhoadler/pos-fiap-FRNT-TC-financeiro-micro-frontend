@@ -1,14 +1,26 @@
 const transactionServices = require('../services/TransactionServices');
-const { getHeaderToken, tokenExpired } = require('../utils/TokenGenerator');
+const { getUserById } = require('../services/UserServices');
+const { getHeaderToken, tokenExpired, tokenData } = require('../utils/TokenGenerator');
+const CustomError = require('../validator/CustomError');
 
-exports.getTransaction = async (req, res) => {
+exports.getTransaction = async (req, res) => {    
   try {
-    // const token = await getHeaderToken(req.headers);
-    // await tokenExpired(token);
-    const profile = await transactionServices.getTransaction();
-    res.status(200).json(profile);
+    const token = req.cookies.token  
+     
+    await tokenExpired(token);
+    const { id } = tokenData(token);
+    const user = await getUserById(id)
+    
+    const transactions = await transactionServices.getTransactionByAccountNumber(user.accountNumber);
+    
+    if (transactions.length === 0) {
+      throw new CustomError(200, 'Nenhuma transação encontrada.');
+    }
+
+    res.status(200).json(transactions);
+
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(error.statusCode || 500 ).json({ status: error.statusCode, message: error.message || 'Internal Server Error' });
   }
 };
 

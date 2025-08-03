@@ -1,4 +1,5 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const CustomError = require('../validator/CustomError');
 
 exports.generateToken = (id) => {
     const token = jwt.sign({ id }, process.env.JWT_KEY, { expiresIn: '8h' });
@@ -15,10 +16,7 @@ exports.tokenExpired = async (token) => {
         jwt.verify(token, process.env.JWT_KEY);
     } catch (error) {
         if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
-            const authError = new Error('Token inválido ou expirado');
-            authError.status = 401;
-            authError.error = 'Token inválido ou expirado';
-            throw authError;
+            new CustomError(401, 'Token inválido ou expirado');
         }
         throw error;
     }
