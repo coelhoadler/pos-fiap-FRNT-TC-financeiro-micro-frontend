@@ -11,12 +11,14 @@ const AlertDialog = ({
   open,
   setOpen,
   handleConfirmSubmit,
+  handleCancelSubmit,
 }: {
   children?: React.ReactNode;
   type?: string;
   open: boolean;
   setOpen: (open: boolean) => void;
   handleConfirmSubmit: (event?: object) => void;
+  handleCancelSubmit?: () => void;
 }) => {
   const handleClose = () => {
     setOpen(false);
@@ -71,7 +73,9 @@ const AlertDialog = ({
 
       <DialogActions sx={{ justifyContent: 'center', mt: 2 }}>
         <Button
-          onClick={handleClose}
+          onClick={(e) => {
+            e.stopPropagation(), handleClose(), handleCancelSubmit();
+          }}
           variant="contained"
           sx={{
             backgroundColor: '#dee9ea',
@@ -91,6 +95,7 @@ const AlertDialog = ({
         >
           Cancelar
         </Button>
+
         <Button
           onClick={handleConfirmSubmit}
           autoFocus

@@ -55,9 +55,16 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   const calculateTotalAmount = (responseData: ITransaction[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
-        item.amount.replace('R$', '').trim().replace('.', '').replace(',', '.')
+        item.amount
+          .replace('R$', '')
+          .trim()
+          .replace(/\./g, '')
+          .replace(',', '.')
       );
-      return total + amount;
+
+      setBalance((total + amount) as number);
+
+      return (total + amount) as number;
     }, 0);
   };
 

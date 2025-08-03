@@ -1,13 +1,14 @@
-import React from 'react';
-import { ITransaction } from '../../../Models/transactionModels';
-import { useTransaction } from '../../../setup/context/transactionContext';
-import { formatDate, formatTime } from '../../../utils/formatters';
-import { toast } from 'react-toastify';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FilePresentIcon from '@mui/icons-material/FilePresent';
 import axios from 'axios';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import { ITransaction } from '../../../Models/transactionModels';
+import { useTransaction } from '../../../setup/context/transactionContext';
+import { formatDate, formatTime } from '../../../utils/formatters';
+import SuccessSnackbar from '../../SucessSnackBar';
 
 interface TransactionItemProps {
   item: Partial<ITransaction>;
@@ -22,6 +23,7 @@ const TransferItem: React.FC<TransactionItemProps> = ({
   ...props
 }) => {
   const { setId, setTypeTransactionEdit, setValueEdit } = useTransaction();
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleEditTransaction = ({
     id,
@@ -33,7 +35,21 @@ const TransferItem: React.FC<TransactionItemProps> = ({
     setValueEdit(amount);
   };
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
+  const handleValueFormat = (value: string) => {
+    return parseFloat(
+      value.replace('R$', '').trim().replace(/\./g, '').replace(',', '.')
+    ).toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => {
     const file = event.target.files?.[0];
 
     if (file) {
@@ -41,7 +57,7 @@ const TransferItem: React.FC<TransactionItemProps> = ({
 
       if (!sizeAllowed) {
         console.error('File size exceeds 1MB limit.');
-        return false
+        return false;
       }
 
       try {
@@ -57,9 +73,17 @@ const TransferItem: React.FC<TransactionItemProps> = ({
           },
         });
 
-        toast.success('File uploaded successfully.', { position: 'bottom-center' });
-        console.log('File uploaded successfully:', response.data);
+        setShowSuccess(true);
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 4000);
       } catch (error) {
+        if (error.status === 401) {
+          toast.error('Sessão expirada, por favor faça login novamente.');
+          window.location.href = '/login';
+        }
+
         console.error('Error uploading file:', error);
         toast.error('Error uploading file.');
       }
@@ -69,7 +93,8 @@ const TransferItem: React.FC<TransactionItemProps> = ({
   const handleDownloadBase64 = (base64: string, mimeType: string) => {
     const link = document.createElement('a');
     link.href = `data:${mimeType};base64,${base64}`;
-    link.download = 'comprovante_' + new Date().getTime() + '.' + mimeType.split('/')[1];
+    link.download =
+      'comprovante_' + new Date().getTime() + '.' + mimeType.split('/')[1];
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -87,11 +112,12 @@ const TransferItem: React.FC<TransactionItemProps> = ({
         <div>
           <p className="text-md">{item.typeTransaction?.description}</p>
           <p
-            className={`text-md font-bold ${parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
-              }`}
+            className={`text-md font-bold ${
+              parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
+            }`}
           >
-            R$ {parseFloat(item.amount || '0') < 0 ? '-' : ''}{' '}
-            {item.amount || '0'}
+            {parseFloat(item.amount || '0') < 0 ? '-' : ''}{' '}
+            {handleValueFormat(item.amount) || '0'}
           </p>
         </div>
         <p className={'text-sm flex flex-col gap-3.5 text-white'}>
@@ -117,24 +143,26 @@ const TransferItem: React.FC<TransactionItemProps> = ({
             <label
               htmlFor={`file-${item.id}`}
               className="bg-green-600 rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
-              title='Baixar comprovante'
-              onClick={() => handleDownloadBase64(item.base64Image!, item.fileMimetype!)}
+              title="Baixar comprovante"
+              onClick={() =>
+                handleDownloadBase64(item.base64Image!, item.fileMimetype!)
+              }
             >
               <FileDownloadIcon style={{ color: 'white' }} />
             </label>
           ) : (
             <>
               <input
-                type='file'
-                className='hidden'
+                type="file"
+                className="hidden"
                 id={`file-${item.id}`}
-                accept='image/*'
+                accept="image/*"
                 onChange={(event) => handleFileChange(event, item.id)}
               />
               <label
                 htmlFor={`file-${item.id}`}
                 className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
-                title='Anexar comprovantedd'
+                title="Anexar comprovante"
               >
                 <FilePresentIcon style={{ color: 'white' }} />
               </label>
@@ -142,6 +170,13 @@ const TransferItem: React.FC<TransactionItemProps> = ({
           )}
         </p>
       </div>
+
+      <SuccessSnackbar
+        open={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        message={'Arquivo adicionado com sucesso!'}
+        duration={3000}
+      />
     </div>
   );
 };

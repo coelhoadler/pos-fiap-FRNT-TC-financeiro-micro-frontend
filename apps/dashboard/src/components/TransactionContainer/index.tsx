@@ -15,8 +15,7 @@ import { accountServices } from '../../services/Account/apiEndpoint';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { IInputs } from '../../Models/FormModels';
-
+import { IInputs } from '../../Models/formModels';
 
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
@@ -107,7 +106,6 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     if (!pendingFormData) return;
 
     try {
-      
       if (id) {
         await transactionServices.update(id, pendingFormData);
         setIdTemp(id);
@@ -128,24 +126,29 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
       setShowSuccess(true);
 
       setId('');
-      reset()  
+      reset();
     } catch (error) {
-      if(error.status === 401) {
-        toast.error("Sessão expirada, por favor faça login novamente.");
-        window.location.href = "/login";
+      if (error.status === 401) {
+        toast.error('Sessão expirada, por favor faça login novamente.');
+        window.location.href = '/login';
       }
       console.error('Erro ao enviar o formulário:', error);
     }
-
-    
   };
 
   const calculateTotalAmount = (responseData: ITransaction[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
-        item.amount.replace('R$', '').trim().replace('.', '').replace(',', '.')
+        item.amount
+          .replace('R$', '')
+          .trim()
+          .replace(/\./g, '')
+          .replace(',', '.')
       );
-      return total + amount;
+
+      setBalance((total + amount) as number);
+
+      return (total + amount) as number;
     }, 0);
   };
 
@@ -239,15 +242,23 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
           <CurrencyInput
             key={id ? `edit-${id}` : `create-${inputKey}`}
-            fixedDecimalLength={2}
-            defaultValue={id ? valueWatched : 0}
+            decimalScale={2}
+            decimalSeparator=","
+            groupSeparator="."
+            intlConfig={{
+              locale: 'pt-BR',
+              currency: 'BRL',
+            }}
             className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
-            onChangeValue={(event, originalValue, maskedValue) => {
-              console.log(event, originalValue, maskedValue);
-              setValueWatched(maskedValue as string);
+            onValueChange={(event, originalValue, maskedValue) => {
+              const valueWithoutCurrencySymbol = maskedValue.formatted.replace(
+                'R$',
+                ''
+              );
+              setValueWatched(valueWithoutCurrencySymbol as string);
             }}
             {...(register('value', { required: true }) as any)}
-            InputElement={<input type="text" placeholder="R$ 0,00" />}
+            placeholder="R$ 0,00"
           />
 
           {errors.value && (
