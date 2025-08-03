@@ -16,8 +16,10 @@ import {
   TMenuLogado,
 } from "../../types/TMenu";
 import { CustomModal } from "../CustomModal";
-import useUserInfo from "../../hooks/useUserInfos";
 import { logout } from "../../services/userService";
+import store from "../../store";
+import { UserInfo } from "../../interfaces/IUser";
+import { logoutRequest } from "../../features/slice";
 
 const MenulinksItems: TMenuLinksItems[] = [
   {
@@ -145,12 +147,25 @@ const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
 };
 
 const MenuMobile = ({ className }: TMenuMobile) => {
+  const [user, setUser] = useState<UserInfo>({});
+  const [authenticated, setAuthenticated] = useState<boolean>(false);  
   const [open, setOpen] = useState(false);
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
-  const { user } = useUserInfo();
-  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] =
-    useState(false);
+  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] = useState(false);
+
+  useEffect(() => {
+    const userLocalStorage = localStorage.getItem('user');
+    const userInfo = userLocalStorage ? JSON.parse(userLocalStorage) : {};    
+    setUser(userInfo);
+    setAuthenticated(!!userInfo.email);
+  }, []);
+
+  store.subscribe(() =>{
+    const state = store.getState()['userInfo'];
+    setUser(state);
+    setAuthenticated(state.isAuthenticated);
+  });  
 
   const handleClose = () => {
     const contentMenuMobile = document.querySelector(".menu-mobile-wrapper");
@@ -208,6 +223,10 @@ const MenuMobile = ({ className }: TMenuMobile) => {
   };
 
   const handleLogout = async () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('token_expiration');
+    store.dispatch(logoutRequest());
     logout();
   };
 
@@ -283,7 +302,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               </button>
               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
                 <nav className="space-x-6 text-green-500 flex flex-col gap-4 w-full">
-                  {user && (
+                  {authenticated && (
                     <MenuLogado
                       onClick={() => {
                         handleOpenLogoutConfirmationModal();
@@ -303,7 +322,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                     />
                   ))}
                 </nav>
-                {!user && (
+                {!authenticated && (
                   <CtaItems
                     onClickLogin={() => {
                       handleClose();
@@ -319,7 +338,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
             </div>
           </div>
 
-          {!user && (
+          {!authenticated && (
             <>
               <CustomModal
                 id="login-modal"
@@ -341,7 +360,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
             </>
           )}
 
-          {user && (
+          {authenticated && (
             <CustomModal
               id="logout-modal"
               title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
@@ -358,12 +377,24 @@ const MenuMobile = ({ className }: TMenuMobile) => {
 };
 
 const MenuDesktop = ({ className }: TMenuDesktop) => {
-  const { user } = useUserInfo();
+  const [user, setUser] = useState<UserInfo>({});
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
+  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] = useState(false);
 
-  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] =
-    useState(false);
+  useEffect(() => {
+    const userLocalStorage = localStorage.getItem('user');
+    const userInfo = userLocalStorage ? JSON.parse(userLocalStorage) : {};    
+    setUser(userInfo);
+    setAuthenticated(!!userInfo.email);
+  }, []);
+
+  store.subscribe(() => {
+    const state = store.getState()['userInfo'];
+    setUser(state);
+    setAuthenticated(state.isAuthenticated);
+  });
 
   const handleOpenLoginModal = () => {
     setOpenModalLogin(true);
@@ -395,6 +426,10 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
 
   const handleLogout = async () => {
     logout();
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('token_expiration')
+    store.dispatch(logoutRequest());
   };
 
   const handleOpenLogoutConfirmationModal = () => {
@@ -448,7 +483,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
         </nav>
       </div>
 
-      {user ? (
+      {authenticated ? (
         <MenuLogado onClick={handleOpenLogoutConfirmationModal} name={user.name} />
       ) : (
         <div className="space-x-4">
@@ -458,7 +493,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           />
         </div>
       )}
-      {!user && (
+      {!authenticated && (
         <>
           <CustomModal
             id="login-modal"
@@ -480,7 +515,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
         </>
       )}
 
-      {user && (
+      {authenticated && (
         <CustomModal
           id="logout-modal"
           title="Ao sair, você precisará fazer login novamente. Deseja continuar?"

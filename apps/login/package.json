@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
+    "@reduxjs/toolkit": "^2.8.2",
     "@types/jest": "^27.0.1",
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9",
@@ -62,6 +63,7 @@
     "@types/webpack-env": "^1.16.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "single-spa": "^5.9.3",
     "single-spa-react": "^6.0.2"
   },
