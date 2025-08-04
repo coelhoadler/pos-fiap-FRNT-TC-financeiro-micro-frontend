@@ -224,6 +224,7 @@ const FormRegister: React.FC<IFormRegister> = ({
       messageError: erro,
       onClose,
     });
+    onClose(true);
     if (!data) {
       setErro("Erro ao fazer login.");
     } else if (data.messageError) {

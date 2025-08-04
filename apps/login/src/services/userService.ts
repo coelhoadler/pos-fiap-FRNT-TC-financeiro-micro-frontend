@@ -77,13 +77,7 @@ export const register = async ({ email, password, name, messageError,onClose }):
         return { messageError: data.message || "Erro ao criar a conta." };
       }
 
-      console.log("Conta criada com sucesso:", data);
-
       onClose(true);
-
-      setTimeout(() => {
-        alert("Conta criada com sucesso!");
-      }, 1000);
 
     } catch (error) {
       console.error("Erro:", error);
