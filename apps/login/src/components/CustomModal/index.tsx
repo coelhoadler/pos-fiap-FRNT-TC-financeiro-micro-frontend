@@ -74,8 +74,8 @@ const CustomModal = ({
                 action="register"
                 id="register"
                 method="post"
-                onClose={() => {
-                  onClose && onClose();
+                onClose={(boolean) => {
+                  onClose && onClose(boolean);
                 }}
               />
             </div>
@@ -83,7 +83,14 @@ const CustomModal = ({
           {typeForm == "logout" && (
             <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
               <Button onClick={onClickLogout} styleButton="outline" text="Sim" />
-              <Button onClick={onClose} text="Não" />
+              <Button onClick={() => onClose && onClose(false)} text="Não" />
+            </div>
+          )}
+          {typeForm == "message" && (
+            <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
+              <p className="font-family-base font-normal text-black text-sm">
+                {descripption}
+              </p>
             </div>
           )}
         </div>

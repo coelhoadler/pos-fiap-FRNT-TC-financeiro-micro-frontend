@@ -155,6 +155,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
   const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] = useState(false);
+  const [registered, setRegistered] = useState(false);
 
   store.subscribe(() =>{
     const state = store.getState()['userInfo'];
@@ -206,12 +207,13 @@ const MenuMobile = ({ className }: TMenuMobile) => {
     }, 500);
   };
 
-  const handleCloseRegisterModal = () => {
+  const handleCloseRegisterModal = (value: boolean) => {
     const modalContainer = document.querySelector(
       ".menu-mobile #register-modal .modal-container"
     );
     modalContainer.classList.add("animate-scaleOut");
-    console.log("mobile", modalContainer);
+    const valueBoolean = typeof value === "boolean" ? value : false;
+    setRegistered(valueBoolean);
     setTimeout(() => {
       setOpenModalRegister(false);
     }, 210);
@@ -229,7 +231,8 @@ const MenuMobile = ({ className }: TMenuMobile) => {
     setOpenModalLogoutConfirmation(true);
   };
 
-  const handleCloseLogoutConfirmationModal = () => {
+  const handleCloseLogoutConfirmationModal = (event) => {
+    console.log("handleCloseLogoutConfirmationModal", event);
     const modalContainer = document.querySelector(
       ".menu-mobile #logout-modal .modal-container"
     );
@@ -349,7 +352,9 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                 descripption="Preencha os campos abaixo para criar sua conta corrente!"
                 pathImage={illustrationRegisterModal}
                 isOpen={openModalRegister}
-                onClose={handleCloseRegisterModal}
+                onClose={(value) => {
+                  handleCloseRegisterModal(value);
+                }}
                 typeForm={"register"}
               />
             </>
@@ -365,6 +370,16 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               onClickLogout={handleLogout}
             />
           )}
+          {registered && (
+          <CustomModal
+            id="logout-modal"
+            title="Parabéns!!! Conta criada com sucesso!"
+            isOpen={registered}
+            onClose={() => setRegistered(false)}
+            typeForm={"message"}
+            onClickLogout={handleLogout}
+          />
+        )}
         </div>
       </div>
     </>
@@ -378,6 +393,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
   const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] = useState(false);
+  const [registered, setRegistered] = useState(false);
 
   store.subscribe(() => {
     const state = store.getState()['userInfo'];
@@ -403,10 +419,12 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
     }, 210);
   };
   
-  const handleCloseRegisterModal = () => {
+  const handleCloseRegisterModal = (value: boolean) => {
     const modalContainer = document.querySelector(
       "#register-modal .modal-container"
     );
+    const valueBoolean = typeof value === "boolean" ? value : false;
+    setRegistered(valueBoolean);
     modalContainer?.classList.add("animate-scaleOut");
     setTimeout(() => {
       setOpenModalRegister(false);
@@ -425,7 +443,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
     setOpenModalLogoutConfirmation(true);
   };
 
-  const handleCloseLogoutConfirmationModal = () => {
+  const handleCloseLogoutConfirmationModal = (event) => {
     const modalContainer = document.querySelector(
       "#logout-modal .modal-container"
     );
@@ -498,7 +516,9 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
             descripption="Preencha os campos abaixo para criar sua conta corrente!"
             pathImage={illustrationRegisterModal}
             isOpen={openModalRegister}
-            onClose={handleCloseRegisterModal}
+            onClose={(value) => {
+              handleCloseRegisterModal(value);
+            }}
             typeForm={"register"}
           />
         </>
@@ -514,6 +534,16 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           onClickLogout={handleLogout}
         />
       )}
+      {registered && (
+          <CustomModal
+            id="logout-modal"
+            title="Parabéns!!! &#127881; Conta criada com sucesso!"
+            isOpen={registered}
+            onClose={() => setRegistered(false)}
+            typeForm={"message"}
+            onClickLogout={handleLogout}
+          />
+        )}
     </div>
   );
 };

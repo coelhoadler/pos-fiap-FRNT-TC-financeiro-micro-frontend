@@ -78,26 +78,20 @@ export const register = async ({ email, password, name, messageError, onClose })
 
     const data = await response.json();
 
-    if (!response.ok) {
-      console.error(data.message || "Erro ao criar a conta.");
-      return { messageError: data.message || "Erro ao criar a conta." };
-    }
-
-    console.log("Conta criada com sucesso:", data);
+      if (!response.ok) {
+        console.error(data.message || "Erro ao criar a conta.");
+        return { messageError: data.message || "Erro ao criar a conta." };
+      }
 
     onClose(true);
 
-    setTimeout(() => {
-      alert("Conta criada com sucesso!");
-    }, 1000);
-
-  } catch (error) {
-    console.error("Erro:", error);
-    if (error?.status === 401) {
-      window.location.href = '/login';
+    } catch (error) {
+      console.error("Erro:", error);
+      if (error?.status === 401) {
+          window.location.href = '/login';
+        }
+      return { messageError: "Erro inesperado ao tentar criar a conta." };
     }
-    return { messageError: "Erro inesperado ao tentar criar a conta." };
-  }
 };
 
 export const logout = async () => {
