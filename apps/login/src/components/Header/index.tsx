@@ -20,6 +20,7 @@ import { logout } from "../../services/userService";
 import store from "../../store";
 import { UserInfo } from "../../interfaces/IUser";
 import { logoutRequest } from "../../features/slice";
+import useUserInfo from "../../hooks/useUserInfos";
 
 const MenulinksItems: TMenuLinksItems[] = [
   {
@@ -147,20 +148,14 @@ const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
 };
 
 const MenuMobile = ({ className }: TMenuMobile) => {
-  const [user, setUser] = useState<UserInfo>({});
-  const [authenticated, setAuthenticated] = useState<boolean>(false);  
+  const userInfo = useUserInfo();
+  const [user, setUser] = useState<UserInfo>(userInfo);
+  const [authenticated, setAuthenticated] = useState<boolean>(userInfo.email !== undefined && userInfo.email !== '');  
   const [open, setOpen] = useState(false);
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
   const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] = useState(false);
   const [registered, setRegistered] = useState(false);
-
-  useEffect(() => {
-    const userLocalStorage = localStorage.getItem('user');
-    const userInfo = userLocalStorage ? JSON.parse(userLocalStorage) : {};    
-    setUser(userInfo);
-    setAuthenticated(!!userInfo.email);
-  }, []);
 
   store.subscribe(() =>{
     const state = store.getState()['userInfo'];
@@ -392,19 +387,13 @@ const MenuMobile = ({ className }: TMenuMobile) => {
 };
 
 const MenuDesktop = ({ className }: TMenuDesktop) => {
-  const [user, setUser] = useState<UserInfo>({});
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const userInfo = useUserInfo();
+  const [user, setUser] = useState<UserInfo>(userInfo);
+  const [authenticated, setAuthenticated] = useState<boolean>(userInfo.email !== undefined && userInfo.email !== '');
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
   const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] = useState(false);
   const [registered, setRegistered] = useState(false);
-
-  useEffect(() => {
-    const userLocalStorage = localStorage.getItem('user');
-    const userInfo = userLocalStorage ? JSON.parse(userLocalStorage) : {};    
-    setUser(userInfo);
-    setAuthenticated(!!userInfo.email);
-  }, []);
 
   store.subscribe(() => {
     const state = store.getState()['userInfo'];
