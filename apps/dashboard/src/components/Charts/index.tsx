@@ -1,6 +1,7 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import { PieChart } from "@mui/x-charts/PieChart";
+import Button from "../Button";
 
 type TCharts = {
   data: {
@@ -10,12 +11,24 @@ type TCharts = {
   hasNoTransactions?: boolean;
   error?: string;
   endDate?: string;
-  startDate?: string;   
+  startDate?: string;
   onStartDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEndDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  OnResetFilter?: () => void;
+  filterDisabled?: boolean;
 };
 
-const Charts = ({ data, hasNoTransactions, error, startDate, endDate, onStartDateChange, onEndDateChange }: TCharts) => {
+const Charts = ({
+  data,
+  hasNoTransactions,
+  error,
+  startDate,
+  endDate,
+  filterDisabled,
+  onStartDateChange,
+  onEndDateChange,
+  OnResetFilter,
+}: TCharts) => {
   return (
     <>
       <h2 className="text-center text-xl font-family-base text-primary font-bold mb-4">
@@ -48,6 +61,35 @@ const Charts = ({ data, hasNoTransactions, error, startDate, endDate, onStartDat
               onChange={onEndDateChange}
               className="border border-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-[40px]  px-2 rounded cursor-pointer text-primary text-sm font-family-base "
             />
+          </div>
+          <div className="flex items-center mt-[20px]">
+            <button
+              onClick={OnResetFilter}
+              type="button"
+              disabled={filterDisabled}
+              className={`w-10 h-10 rounded-full bg-primary  text-[0px] flex justify-center items-center cursor-pointer hover:opacity-[.9] transition-all ${
+                filterDisabled ? "pointer-events-none" : ""
+              }`}
+            >
+              Reiniciar Filtros
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="text-white"
+              >
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                <path d="M21 3v5h-5" />
+                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                <path d="M8 16H3v5" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
