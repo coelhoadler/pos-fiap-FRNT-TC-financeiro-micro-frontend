@@ -39,8 +39,8 @@ const Charts = ({
         <label className="text-primary text-sm font-bold font-family-base mb-1">
           Busque a transação por data
         </label>
-        <div className="flex gap-4">
-          <div className="flex flex-col mb-1  w-1/2">
+        <div className="flex gap-4 max-md:flex-wrap max-md:gap-2">
+          <div className="flex flex-col mb-1  w-1/2 max-md:w-full">
             <label className="text-primary text-sm font-normal font-family-base mb-1 ">
               De:
             </label>
@@ -51,7 +51,7 @@ const Charts = ({
               className="border border-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-[40px]  px-2 rounded cursor-pointer text-primary text-sm font-family-base "
             />
           </div>
-          <div className="flex flex-col mb-1 w-1/2">
+          <div className="flex flex-col mb-1 w-1/2 max-md:w-[80%]">
             <label className="text-primary text-sm font-normal font-family-base mb-1 ">
               Até:
             </label>
