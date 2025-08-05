@@ -15,18 +15,11 @@ Este é um projeto feito com a multifrontend, cujo objetivo é representar as **
 ```
 /microfrontends
   ├── /apps
+  │   ├── /root-config (Orquestração com Single-SPA ::9000)
   │   ├── /login (React ::8501)
   │   ├── /dashboard (React ::8500)
   │   ├── /transfers (React ::8502)
-  │   ├── /root-config (Orquestração com Single-SPA ::9000)
 ```
-
-## Docker + Mongodb
-1 - Necessário que o Docker esteja rodando na máquina
-2 - Necessário instalar o mongodb **npm install mongodb**
-
-
-- /apps: Contém os microfrontends individuais, cada um com sua própria lógica e dependências.
 
 ## Como Está Sendo Feito o Deploy
 
@@ -40,7 +33,7 @@ Os arquivos estáticos de cada microfrontend são armazenados em diferentes past
 
 ### AWS Amplify
 
-GitHub Actions é usado para automatizar o processo de build e deploy. Cada vez que uma mudança é feita no código de um microfrontend, o GitHub Actions constrói e implanta essa mudança automaticamente.
+AWS Amplify foi usado para automatizar o processo de build e deploy. Cada vez que uma mudança é feita no código de um microfrontend, o GitHub Actions constrói e implanta essa mudança automaticamente.
 
 ## Comportamento da Aplicação
 
@@ -48,13 +41,13 @@ GitHub Actions é usado para automatizar o processo de build e deploy. Cada vez 
 
 Cada microfrontend é independente e isolado, o que facilita a manutenção e a escalabilidade. Mudanças em um microfrontend não afetam diretamente os outros microfrontends.
 
-### Comunicação entre Microfrontends
+### Comunicação entre Microfrontends e gerenciamento de estado (Redux)
 
-A comunicação entre microfrontends pode ser feita usando eventos ou um estado compartilhado. Por exemplo, a aplicação principal pode disparar um evento para abrir o carrinho de compras, que é um módulo carregado dinamicamente.
+A comunicação entre microfrontends foi feita utilizando as informações do usuário autenticado via LocalStorage. Para o gerenciamento de estado usamos o Redux por se adequar melhor a nossa necessidade.
 
 ## Requisitos
 
-### Docker
+### Docker-compose
 
 - Faça o clone desse projeto
 - Ter o Docker configurado na máquina. [Para mais informações](https://www.docker.com/).
@@ -68,3 +61,15 @@ A comunicação entre microfrontends pode ser feita usando eventos ou um estado 
 - Dentro da pasta do projeto, execute ```npm i -f```
 - Para subir as aplicações, execute ```npm run start:dev```
 - Acesse em: [localhost](//localhost:9000/).
+
+## Demo 🌐
+
+O projeto foi deployado na [AWS Amplify](https://vercel.com/), através do link: [clique aqui](https://main.d25xvicp4sjatv.amplifyapp.com/).
+
+## Contribuindo
+
+Contribuições são bem-vindas! Abra uma issue ou envie um pull request.
+
+## Licença
+
+Este projeto está sob a licença MIT.
