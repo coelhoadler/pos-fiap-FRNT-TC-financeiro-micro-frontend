@@ -1,25 +1,53 @@
 services:
   dashboard:
-    image: acoeelho/pos-fiap-frnt-tc-financeiro-micro-frontend-dashboard
-    container_name: dashboard-dev
+    image: multidesenv/pos-fiap-dashboard:latest
+    container_name: dashboard-prod
     ports:
       - "8500:8500"
     volumes:
       - ./apps/dashboard:/app
       - /app/node_modules
+
+  transfers:
+    image: multidesenv/pos-fiap-transfers:latest
+    container_name: transfers-prod
+    ports:
+      - "8502:8502"
+    volumes:
+      - ./apps/transfers:/app
+      - /app/node_modules      
+
   login:
-    image: acoeelho/pos-fiap-frnt-tc-financeiro-micro-frontend-login
-    container_name: login-dev
+    image: multidesenv/pos-fiap-login:latest
+    container_name: login-prod
     ports:
       - "8501:8501"
     volumes:
       - ./apps/login:/app
       - /app/node_modules
+    environment:
+        - PORT=3000
+        - JWT_KEY=jnkfdhheoriuoe265565e98e
+        - BCRYPT_COST=10       
+
   root-config:
-    image: acoeelho/pos-fiap-frnt-tc-financeiro-micro-frontend-root-config
-    container_name: root-config-dev
+    image: multidesenv/pos-fiap-root-config:latest
+    container_name: root-config-prod
     ports:
       - "9000:9000"
     volumes:
       - ./apps/root-config:/app
       - /app/node_modules
+
+  api:
+    image: multidesenv/pos-fiap-api:latest
+    container_name: api-prod
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/api:/app
+      - /app/node_modules
+    environment:
+        - PORT=3000
+        - JWT_KEY=jnkfdhheoriuoe265565e98e
+        - BCRYPT_COST=10

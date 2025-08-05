@@ -19,6 +19,7 @@ Este é um projeto feito com a multifrontend, cujo objetivo é representar as **
   │   ├── /login (React ::8501)
   │   ├── /dashboard (React ::8500)
   │   ├── /transfers (React ::8502)
+  │   ├── /api (NodeJs + Express ::3000)
 ```
 
 ## Como Está Sendo Feito o Deploy
