@@ -65,7 +65,7 @@ A comunicação entre microfrontends foi feita utilizando as informações do us
 
 ## Demo 🌐
 
-O projeto foi deployado na [AWS Amplify](https://vercel.com/), através do link: [clique aqui](https://main.d25xvicp4sjatv.amplifyapp.com/).
+O projeto foi deployado na [AWS Amplify](https://aws.amazon.com/pt/amplify/), através do link: [clique aqui](https://main.d25xvicp4sjatv.amplifyapp.com/).
 
 ## Contribuindo
 
