@@ -23,7 +23,8 @@ export default function AccountStatement({
   const [updatedTransactions, setUpdatedTransactions] = useState<
     ITransaction[]
   >([]);
-  const { extract, transactionServices, setBalance, setExtract } = useTransaction();
+  const { extract, transactionServices, setBalance, setExtract } =
+    useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.DELETE,
   });
@@ -39,6 +40,7 @@ export default function AccountStatement({
     setUpdatedTransactions(extractOrdered || []);
   }, [extract]);
 
+  // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleTransactionDelete = async (transactionId: string) => {
     try {
       await transactionServices.delete(transactionId);
@@ -56,7 +58,7 @@ export default function AccountStatement({
       }
     } catch (error) {
       if (error?.status === 401) {
-          window.location.href = '/login';
+        window.location.href = '/login';
       }
       console.error('Error deleting transaction:', error);
     }
@@ -84,9 +86,10 @@ export default function AccountStatement({
       accountType: 'Conta Corrente',
     };
     setBalance(accountJoana.balance);
-    await accountServices.updateAccountById(user.accountNumber , accountJoana);
+    await accountServices.updateAccountById(user.accountNumber, accountJoana);
   };
 
+  // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleConfirmSubmit = async (transactionId: string) => {
     try {
       await transactionServices.delete(transactionId);
@@ -104,7 +107,7 @@ export default function AccountStatement({
         setShowConfirmDialog(false);
       }
     } catch (error) {
-     if (error?.status === 401) {
+      if (error?.status === 401) {
         toast.error('Sessão expirada, por favor faça login novamente.');
         window.location.href = '/login';
       }
@@ -122,12 +125,17 @@ export default function AccountStatement({
         {updatedTransactions.length > 0 ? (
           <>
             {updatedTransactions
-              .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+              .slice(
+                currentPage * itemsPerPage,
+                (currentPage + 1) * itemsPerPage
+              )
               .map((transaction, index) => (
                 <TransactionItem
                   item={transaction}
                   key={index}
-                  onDelete={() => handleTransactionDeleteConfirmation(transaction.id!)}
+                  onDelete={() =>
+                    handleTransactionDeleteConfirmation(transaction.id!)
+                  }
                   onEdit={onEditTransaction}
                 />
               ))}
@@ -137,19 +145,22 @@ export default function AccountStatement({
                   <button
                     className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
                     disabled={currentPage === 0}
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 0))
+                    }
                   >
                     <ChevronLeftIcon style={{ color: 'white' }} />
                   </button>
                 </Tooltip>
               )}
-              {((currentPage + 1) * itemsPerPage < updatedTransactions.length) && (
+              {(currentPage + 1) * itemsPerPage <
+                updatedTransactions.length && (
                 <Tooltip title="Próxima página">
                   <button
                     className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
                     onClick={() => setCurrentPage((prev) => prev + 1)}
                   >
-                    <ChevronRightIcon style={{ color: 'white' }}/>
+                    <ChevronRightIcon style={{ color: 'white' }} />
                   </button>
                 </Tooltip>
               )}

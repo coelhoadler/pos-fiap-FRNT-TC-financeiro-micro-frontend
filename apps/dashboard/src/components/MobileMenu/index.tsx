@@ -7,6 +7,7 @@ import { useState } from 'react';
 import closeIcon from '../../assets/svg/close-icon.svg';
 import hamburgerMenuIcon from '../../assets/svg/hamburger-menu-icon.svg';
 
+// TODO colocar types em um arquivo separado - mudar nomes para MenuProps e MenuItemProps
 export type TMenu = {
   onClickItem?: () => void;
 };
@@ -15,6 +16,7 @@ export type TMenuItem = {
   path: string;
 };
 
+// TODO criar enum para os paths
 const menuItems: TMenuItem[] = [
   {
     title: 'Inicio',
@@ -35,16 +37,9 @@ const menuItems: TMenuItem[] = [
 ];
 
 const MenuItens = ({ onClickItem }: TMenu) => {
-  // const pathname = useLocation();
   const [activeItem, setActiveItem] = useState<string>('Inicio');
 
-  // useEffect(() => {
-  //   const match = menuItems.find((item) => item.path === pathname.pathname);
-  //   if (match) {
-  //     setActiveItem(match.title);
-  //   }
-  // }, [pathname]);
-
+  // TODO  verificar a necessidade desta função
   const handleClick = (item: TMenuItem) => {
     if (item.path.startsWith('#')) {
       setActiveItem(item.title);

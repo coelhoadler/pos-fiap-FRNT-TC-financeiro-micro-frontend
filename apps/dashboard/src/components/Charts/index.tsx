@@ -1,8 +1,9 @@
-import React from "react";
-import Stack from "@mui/material/Stack";
-import { PieChart } from "@mui/x-charts/PieChart";
-import Button from "../Button";
+import React from 'react';
+import Stack from '@mui/material/Stack';
+import { PieChart } from '@mui/x-charts/PieChart';
+import Button from '../Button';
 
+// TODO colocar este type em um arquivo separado - mudar nome do type para TransactionChartProps
 type TCharts = {
   data: {
     label: (location: string) => string;
@@ -68,7 +69,7 @@ const Charts = ({
               type="button"
               disabled={filterDisabled}
               className={`w-10 h-10 rounded-full bg-primary  text-[0px] flex justify-center items-center cursor-pointer hover:opacity-[.9] transition-all ${
-                filterDisabled ? "pointer-events-none" : ""
+                filterDisabled ? 'pointer-events-none' : ''
               }`}
             >
               Reiniciar Filtros
@@ -104,15 +105,15 @@ const Charts = ({
           alignItems="center"
         >
           <PieChart
-            colors={["#004d61", "#47a138", "#ff5031"]}
+            colors={['#004d61', '#47a138', '#ff5031']}
             series={[
               {
                 innerRadius: 70,
                 outerRadius: 100,
                 valueFormatter: ({ value }) =>
-                  value.toLocaleString("pt-br", {
-                    style: "currency",
-                    currency: "BRL",
+                  value.toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
                   }),
                 data,
               },
@@ -121,9 +122,9 @@ const Charts = ({
             width={250}
             slotProps={{
               legend: {
-                direction: "horizontal",
-                position: { vertical: "bottom", horizontal: "center" },
-                className: "flex w-full justify-start flex-wrap gap-2",
+                direction: 'horizontal',
+                position: { vertical: 'bottom', horizontal: 'center' },
+                className: 'flex w-full justify-start flex-wrap gap-2',
               },
             }}
           />

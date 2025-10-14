@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Snackbar, Box, Typography, LinearProgress, Paper } from '@mui/material';
+import {
+  Snackbar,
+  Box,
+  Typography,
+  LinearProgress,
+  Paper,
+} from '@mui/material';
 
+// TODO Colocar este interface em um arquivo separado
 interface SuccessSnackbarProps {
   open: boolean;
   onClose: () => void;
@@ -8,6 +15,7 @@ interface SuccessSnackbarProps {
   message?: string;
 }
 
+// TODO Colocar este componente dentro do diretorio shared
 const SuccessSnackbar: React.FC<SuccessSnackbarProps> = ({
   open,
   onClose,

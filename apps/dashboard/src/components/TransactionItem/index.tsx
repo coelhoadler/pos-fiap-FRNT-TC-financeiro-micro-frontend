@@ -7,6 +7,7 @@ import { formatDate, formatTime } from '../../utils/formatters';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 
+// TODO Colocar está interface em um arquivo separado
 interface TransactionItemProps {
   item: Partial<ITransaction>;
   onDelete: (transactionId: string) => void;
@@ -72,15 +73,16 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
               onEdit?.();
             }}
           >
-            <DriveFileRenameOutlineIcon sx={{
-              color: 'white',
-              cursor: 'pointer',
-              transition: 'color 0.3s',
-              '&:hover': {
-                color: '#8aec49',
-              },
-            }} />
-
+            <DriveFileRenameOutlineIcon
+              sx={{
+                color: 'white',
+                cursor: 'pointer',
+                transition: 'color 0.3s',
+                '&:hover': {
+                  color: '#8aec49',
+                },
+              }}
+            />
           </button>
 
           <button
@@ -88,14 +90,16 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
             onClick={() => onDelete(item.id || '')}
           >
-            <DeleteForeverIcon sx={{
-              color: 'white',
-              cursor: 'pointer',
-              transition: 'color 0.3s',
-              '&:hover': {
-                color: '#8d4d48', 
-              },
-             }} />
+            <DeleteForeverIcon
+              sx={{
+                color: 'white',
+                cursor: 'pointer',
+                transition: 'color 0.3s',
+                '&:hover': {
+                  color: '#8d4d48',
+                },
+              }}
+            />
           </button>
         </p>
       </div>

@@ -17,7 +17,7 @@ import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { IInputs } from '../../Models/FormModels';
 
-
+// TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
 };
@@ -44,6 +44,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const [idTemp, setIdTemp] = useState('');
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
+  // TODO Consumir do arquivo global que contem os tipos de transações
   const [typeTransactionOptions, setTypeTransactionOptions] = useState<
     ITypeTransaction[]
   >(() => {
@@ -90,7 +91,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     const typeDescription =
       typeTransactionOptions.find((option) => option.id === optionId)
         ?.description || '';
-    const _valueNew = watch('value');    
+    const _valueNew = watch('value');
 
     const form: ITransaction = {
       typeTransaction: { id: optionId, description: typeDescription },
@@ -104,6 +105,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     setShowConfirmDialog(true);
   };
 
+  // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleConfirmSubmit = async () => {
     if (!pendingFormData) return;
 
@@ -152,7 +154,6 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
       return (total + amount) as number;
     }, 0);
-
   };
 
   const handleOnlyTransactionEditing = () => {
