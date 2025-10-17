@@ -1,15 +1,17 @@
-import profileIcon from "../../assets/svg/profile-icon.svg";
-import byteBankIconWhite from "../../assets/svg/icon-bytebank-white.svg";
-import arrowDown from "../../assets/svg/arrow-down.svg";
-import { MobileMenu } from "../MobileMenu";
-import { useState } from "react";
-import { userLogout } from "../../services/UserProfile/apiEndpoints";
+import profileIcon from '../../assets/svg/profile-icon.svg';
+import byteBankIconWhite from '../../assets/svg/icon-bytebank-white.svg';
+import arrowDown from '../../assets/svg/arrow-down.svg';
+import { MobileMenu } from '../MobileMenu';
+import { useState } from 'react';
+import { userLogout } from '../../services/UserProfile/apiEndpoints';
 
+//TODO: colocar type em arquivo separado
 export type THeader = {
   nameUser: string;
   isLoggedIn?: boolean;
 };
 
+//TODO: usar props
 const Header = ({ nameUser, isLoggedIn }: THeader) => {
   const [openDropDown, setOpenDropDown] = useState(false);
   const handleOpenDropDown = () => {
@@ -22,14 +24,14 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
     localStorage.removeItem('token_expiration');
     userLogout();
   };
-  
+
   return (
     <header className="flex justify-between items-center bg-primary h-[96px] p-1.5 fixed w-full z-30 shadow-[0px_2px_10px_1px_rgba(0,0,0,0.75)]">
       <div className="max-w-[80%] m-auto w-full max-lg:max-w-full px-[15px] max-md:flex max-md:items-center">
         {isLoggedIn && <MobileMenu />}
         <div
           className={`flex items-center gap-5 w-full ${
-            isLoggedIn ? "justify-end" : "justify-center"
+            isLoggedIn ? 'justify-end' : 'justify-center'
           }`}
         >
           {isLoggedIn && (
@@ -49,7 +51,7 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
               <img
                 src={arrowDown}
                 className={` w-3 h-3 transition-transform filter-(--filter-white) ${
-                  openDropDown ? "rotate-180" : "rotate-0"
+                  openDropDown ? 'rotate-180' : 'rotate-0'
                 }`}
                 alt="Seta"
               />
@@ -57,8 +59,8 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
               <div
                 className={`absolute right-0 top-[50px] bg-white shadow-lg transition-all rounded-md p-2 w-full ${
                   openDropDown
-                    ? "animate-slide-in-top-soft z-[1]"
-                    : "animate-slide-out-top-soft z-[-999999] hidden"
+                    ? 'animate-slide-in-top-soft z-[1]'
+                    : 'animate-slide-out-top-soft z-[-999999] hidden'
                 }`}
               >
                 <ul>

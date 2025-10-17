@@ -11,6 +11,7 @@ import { accountServices } from '../../services/Account/apiEndpoint';
 import { ApiServices } from '../../services/apiServices';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 
+//TODO: verificar o que foi definido no modulo dashboard
 type TransactionContextType = {
   id: string;
   setId: (id: string) => void;
@@ -45,13 +46,13 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const responseData: any = await transactionServices.getAll() 
-        if (responseData?.message === "Nenhuma transação encontrada.") {
-            setExtract([]);  
-            handlerUpdateAccount([]);
-            return;
+        const responseData: any = await transactionServices.getAll();
+        if (responseData?.message === 'Nenhuma transação encontrada.') {
+          setExtract([]);
+          handlerUpdateAccount([]);
+          return;
         }
-        
+
         setExtract(responseData || []);
         handlerUpdateAccount(responseData || []);
       } catch (error) {
@@ -77,7 +78,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
       currency: 'BRL',
       accountType: 'Conta Corrente',
     };
-    
+
     await accountServices.updateAccountById(user.accountNumber, account);
   };
 

@@ -1,19 +1,23 @@
-import React from "react";
-import byteBankIconWhite from "./../../assets/icon-bytebank-white.svg";
-import iconInstagram from "./../../assets/icon-instagram.svg";
-import iconWhatsapp from "./../../assets/icon-whatsapp.svg";
-import iconYoutube from "./../../assets/icon-youtube.svg";
+import React from 'react';
+import byteBankIconWhite from './../../assets/icon-bytebank-white.svg';
+import iconInstagram from './../../assets/icon-instagram.svg';
+import iconWhatsapp from './../../assets/icon-whatsapp.svg';
+import iconYoutube from './../../assets/icon-youtube.svg';
 import {
   TMenuFooterTitle,
   TMenuFooterItems,
   TSocialMedia,
-} from "../../types/TFooter";
+} from '../../types/TFooter';
 
+// TODO: Criar componentes separados para footer Title, Items e Social Media
+// TODO: Colocar em diretorio shared
+
+// TODO: usar props
 const MenuFooterTitle = ({ text, className }: TMenuFooterTitle) => {
   return (
     <h4
       className={`font-bold font-family-base text-md mb-2 text-white max-md:text-center ${
-        className ? className : ""
+        className ? className : ''
       }`}
     >
       {text}
@@ -21,11 +25,12 @@ const MenuFooterTitle = ({ text, className }: TMenuFooterTitle) => {
   );
 };
 
+// TODO: usar props
 const MenuFooterItems = ({ text, className, children }: TMenuFooterItems) => {
   return (
     <li
       className={`font-normal font-family-base text-sm mb-2 text-white max-md:text-center ${
-        className ? className : ""
+        className ? className : ''
       }`}
     >
       {text || children}
@@ -33,6 +38,7 @@ const MenuFooterItems = ({ text, className, children }: TMenuFooterItems) => {
   );
 };
 
+// TODO: usar props
 const SocialMediaFooter = ({
   text,
   className,
@@ -43,12 +49,12 @@ const SocialMediaFooter = ({
   return (
     <div
       className={`relative hover:scale-110 transition-all ${
-        className ? className : ""
+        className ? className : ''
       }`}
     >
       <a
         href={href}
-        target={isBlank ? "_blank" : "_self"}
+        target={isBlank ? '_blank' : '_self'}
         title={text}
         className="text-zero cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block "
       >
@@ -74,9 +80,9 @@ const Footer: React.FC = () => {
         <div className="max-md:w-full max-md:flex max-md:flex-col max-md:items-center">
           <MenuFooterTitle text="Contato" />
           <ul className="space-y-1">
-            <MenuFooterItems  text="0800 004 250 08" />
+            <MenuFooterItems text="0800 004 250 08" />
 
-            <MenuFooterItems >
+            <MenuFooterItems>
               <a
                 href="mailto:#"
                 className="hover:underline transition-all"
@@ -104,7 +110,11 @@ const Footer: React.FC = () => {
             className="h-5 mb-2 mt-3 "
           />
           <div className="mt-4 flex space-x-4 ">
-            <SocialMediaFooter text="Instagram" href="#" image={iconInstagram} />
+            <SocialMediaFooter
+              text="Instagram"
+              href="#"
+              image={iconInstagram}
+            />
             <SocialMediaFooter text="Whatsapp" href="#" image={iconWhatsapp} />
             <SocialMediaFooter text="Youtube" href="#" image={iconYoutube} />
           </div>

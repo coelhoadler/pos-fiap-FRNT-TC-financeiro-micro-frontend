@@ -1,20 +1,22 @@
-import React from "react";
-
+import React from 'react';
+//TODO: Ccolocar em diretorio shared
+//TODO: colocar interface ButtonProps em um arquivo separado
 interface ButtonProps {
   primary?: boolean;
   label: string;
   onClick?: () => void;
-  type?: "button" | "submit" | "reset";
+  type?: 'button' | 'submit' | 'reset';
   style?: React.CSSProperties;
   disabled?: boolean;
 }
 
+//TODO: usar props
 const Button: React.FC<ButtonProps> = ({
   label,
   onClick,
   primary = false,
   style,
-  type = "button",
+  type = 'button',
   disabled = false,
   ...props
 }) => {
@@ -22,19 +24,19 @@ const Button: React.FC<ButtonProps> = ({
     <button
       type={type}
       className={[
-        "min-w-[250px]",
-        "h-[48px]",
-        `${primary ? "hover:bg-primary" : "hover:bg-secondary"}`,
-        `${disabled ? "pointer-events-none" : ""}`,
-        "bg-inactive",
-        "cursor-pointer",
-        "text-primary",
-        "hover:text-white",
-        "py-2 px-4",
-        "rounded-[8px]",
-        "transition",
-        "font-medium",
-      ].join(" ")}
+        'min-w-[250px]',
+        'h-[48px]',
+        `${primary ? 'hover:bg-primary' : 'hover:bg-secondary'}`,
+        `${disabled ? 'pointer-events-none' : ''}`,
+        'bg-inactive',
+        'cursor-pointer',
+        'text-primary',
+        'hover:text-white',
+        'py-2 px-4',
+        'rounded-[8px]',
+        'transition',
+        'font-medium',
+      ].join(' ')}
       onClick={onClick}
       style={style}
       disabled={disabled}

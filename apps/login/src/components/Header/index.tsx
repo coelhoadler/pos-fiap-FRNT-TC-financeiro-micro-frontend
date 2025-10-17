@@ -1,45 +1,49 @@
-import React, { useEffect, useState } from "react";
-import byteBankLogo from "./../../assets/logo-bytebank.svg";
-import byteBankLogoTablet from "./../../assets/logo-bytebank-tablet.svg";
-import userIcon from "./../../assets/user-icon.svg";
-import arrowDown from "./../../assets/arrow-down.svg";
-import closeIcon from "./../../assets/close-icon.svg";
-import hamburgerMenuIcon from "./../../assets/hamburger-menu-icon.svg";
-import illustrationRegisterModal from "./../../assets/ilustration-register-modal.svg";
-import illustrationLoginModal from "./../../assets/ilustration-login-modal.svg";
-import Button from "../Button";
+import React, { useEffect, useState } from 'react';
+import byteBankLogo from './../../assets/logo-bytebank.svg';
+import byteBankLogoTablet from './../../assets/logo-bytebank-tablet.svg';
+import userIcon from './../../assets/user-icon.svg';
+import arrowDown from './../../assets/arrow-down.svg';
+import closeIcon from './../../assets/close-icon.svg';
+import hamburgerMenuIcon from './../../assets/hamburger-menu-icon.svg';
+import illustrationRegisterModal from './../../assets/ilustration-register-modal.svg';
+import illustrationLoginModal from './../../assets/ilustration-login-modal.svg';
+import Button from '../Button';
 import {
   TMenuLinksItems,
   TMenuMobile,
   TMenuDesktop,
   TCtaItems,
   TMenuLogado,
-} from "../../types/TMenu";
-import { CustomModal } from "../CustomModal";
-import { logout } from "../../services/userService";
-import store from "../../store";
-import { UserInfo } from "../../interfaces/IUser";
-import { logoutRequest } from "../../features/slice";
-import useUserInfo from "../../hooks/useUserInfos";
+} from '../../types/TMenu';
+import { CustomModal } from '../CustomModal';
+import { logout } from '../../services/userService';
+import store from '../../store';
+import { UserInfo } from '../../interfaces/IUser';
+import { logoutRequest } from '../../features/slice';
+import useUserInfo from '../../hooks/useUserInfos';
 
+// TODO: Separar em diferentes componentes
+
+// TODO: Criar um enum para os links do menu
 const MenulinksItems: TMenuLinksItems[] = [
   {
-    text: "Sobre",
-    href: "#sobre",
+    text: 'Sobre',
+    href: '#sobre',
     isBlank: false,
   },
   {
-    text: "Serviços",
-    href: "#servicos",
+    text: 'Serviços',
+    href: '#servicos',
     isBlank: false,
   },
 ];
 
+// TODO: usar props - E mudar nome da função para algo extenso e mais fácil de entender
 const CtaItems = ({ onClickLogin, onClickRegister, className }: TCtaItems) => {
   return (
     <div
       className={`flex items-center gap-4 max-md:flex-col max-md:w-full max-md:mt-8 ${
-        className ? className : ""
+        className ? className : ''
       }`}
     >
       <Button
@@ -59,6 +63,7 @@ const CtaItems = ({ onClickLogin, onClickRegister, className }: TCtaItems) => {
   );
 };
 
+// TODO: usar props
 const LinkItem = ({
   text,
   href,
@@ -71,9 +76,9 @@ const LinkItem = ({
     <a
       href={href}
       title={text}
-      target={isBlank ? "_blank" : "_self"}
+      target={isBlank ? '_blank' : '_self'}
       className={`text-link text-md font-family-base font-bold transition-all hover:underline ${
-        className ? className : ""
+        className ? className : ''
       }`}
       style={style}
       onClick={onClick}
@@ -83,6 +88,7 @@ const LinkItem = ({
   );
 };
 
+// TODO: usar props
 const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
   const [openDropDown, setOpenDropDown] = useState(false);
   const handleOpenDropDown = () => {
@@ -90,7 +96,7 @@ const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
   };
 
   return (
-    <div className={`max-md:w-full menu-logado ${className ? className : ""}`}>
+    <div className={`max-md:w-full menu-logado ${className ? className : ''}`}>
       <div className="relative">
         <a
           href="#"
@@ -99,7 +105,7 @@ const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
             handleOpenDropDown();
           }}
           className={`flex items-center max-md:flex-wrap max-md:pb-2 max-md:border-b max-md:border-b-white gap-2 relative ${
-            openDropDown ? "max-md:border-none max-md:pb-0" : ""
+            openDropDown ? 'max-md:border-none max-md:pb-0' : ''
           }`}
         >
           <img
@@ -111,7 +117,7 @@ const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
           <img
             src={arrowDown}
             className={`w-3 h-3 transition-transform filter-(--filter-link) ${
-              openDropDown ? "rotate-180" : "rotate-0"
+              openDropDown ? 'rotate-180' : 'rotate-0'
             }`}
             alt="Seta"
           />
@@ -120,8 +126,8 @@ const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
         <div
           className={`flex flex-col bg-black rounded-[5px] px-4 py-3 absolute left-0 top-[40px] w-full transition-all min-w-40 max-lg:min-w-0 max-md:relative max-md:top-0 max-md:px-0 max-md:pb-0 ${
             openDropDown
-              ? "animate-slide-in-top-soft z-[1]"
-              : "animate-slide-out-top-soft z-[-999999] hidden"
+              ? 'animate-slide-in-top-soft z-[1]'
+              : 'animate-slide-out-top-soft z-[-999999] hidden'
           }`}
         >
           <LinkItem
@@ -147,40 +153,44 @@ const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
   );
 };
 
+// TODO: usar props
 const MenuMobile = ({ className }: TMenuMobile) => {
   const userInfo = useUserInfo();
   const [user, setUser] = useState<UserInfo>(userInfo);
-  const [authenticated, setAuthenticated] = useState<boolean>(userInfo.email !== undefined && userInfo.email !== '');  
+  const [authenticated, setAuthenticated] = useState<boolean>(
+    userInfo.email !== undefined && userInfo.email !== ''
+  );
   const [open, setOpen] = useState(false);
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
-  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] = useState(false);
+  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] =
+    useState(false);
   const [registered, setRegistered] = useState(false);
 
-  store.subscribe(() =>{
+  store.subscribe(() => {
     const state = store.getState()['userInfo'];
     setUser(state);
     setAuthenticated(state.isAuthenticated);
-  });  
+  });
 
   const handleClose = () => {
-    const contentMenuMobile = document.querySelector(".menu-mobile-wrapper");
-    contentMenuMobile?.classList.add("animate-slide-out-left");
+    const contentMenuMobile = document.querySelector('.menu-mobile-wrapper');
+    contentMenuMobile?.classList.add('animate-slide-out-left');
     const openMenuMobileWrapper = document.querySelector(
-      ".open-menu-mobile-wrapper"
+      '.open-menu-mobile-wrapper'
     );
-    openMenuMobileWrapper?.classList.add("animate-slide-in-top");
+    openMenuMobileWrapper?.classList.add('animate-slide-in-top');
     setTimeout(() => {
       setOpen(false);
     }, 400);
   };
   const handleOpen = () => {
-    const contentMenuMobile = document.querySelector(".menu-mobile-wrapper");
-    contentMenuMobile?.classList.remove("animate-slide-out-left");
+    const contentMenuMobile = document.querySelector('.menu-mobile-wrapper');
+    contentMenuMobile?.classList.remove('animate-slide-out-left');
     const openMenuMobileWrapper = document.querySelector(
-      ".open-menu-mobile-wrapper"
+      '.open-menu-mobile-wrapper'
     );
-    openMenuMobileWrapper?.classList.remove("animate-slide-in-top");
+    openMenuMobileWrapper?.classList.remove('animate-slide-in-top');
 
     setOpen(true);
   };
@@ -193,9 +203,9 @@ const MenuMobile = ({ className }: TMenuMobile) => {
 
   const handleCloseLoginModal = () => {
     const modalContainer = document.querySelector(
-      ".menu-mobile #login-modal .modal-container"
+      '.menu-mobile #login-modal .modal-container'
     );
-    modalContainer?.classList.add("animate-scaleOut");
+    modalContainer?.classList.add('animate-scaleOut');
     setTimeout(() => {
       setOpenModalLogin(false);
     }, 210);
@@ -209,10 +219,10 @@ const MenuMobile = ({ className }: TMenuMobile) => {
 
   const handleCloseRegisterModal = (value: boolean) => {
     const modalContainer = document.querySelector(
-      ".menu-mobile #register-modal .modal-container"
+      '.menu-mobile #register-modal .modal-container'
     );
-    modalContainer.classList.add("animate-scaleOut");
-    const valueBoolean = typeof value === "boolean" ? value : false;
+    modalContainer.classList.add('animate-scaleOut');
+    const valueBoolean = typeof value === 'boolean' ? value : false;
     setRegistered(valueBoolean);
     setTimeout(() => {
       setOpenModalRegister(false);
@@ -232,11 +242,11 @@ const MenuMobile = ({ className }: TMenuMobile) => {
   };
 
   const handleCloseLogoutConfirmationModal = (event) => {
-    console.log("handleCloseLogoutConfirmationModal", event);
+    console.log('handleCloseLogoutConfirmationModal', event);
     const modalContainer = document.querySelector(
-      ".menu-mobile #logout-modal .modal-container"
+      '.menu-mobile #logout-modal .modal-container'
     );
-    modalContainer?.classList.add("animate-scaleOut");
+    modalContainer?.classList.add('animate-scaleOut');
     setTimeout(() => {
       setOpenModalLogoutConfirmation(false);
     }, 210);
@@ -246,15 +256,15 @@ const MenuMobile = ({ className }: TMenuMobile) => {
     <>
       <div
         className={`flex items-center justify-between space-x-4 w-full menu-mobile ${
-          className ? className : ""
+          className ? className : ''
         }`}
       >
         <div className="w-full">
           <div
             className={`open-menu-mobile-wrapper ${
               open
-                ? "hidden"
-                : "flex justify-between w-full items-center animate-slide-in-top"
+                ? 'hidden'
+                : 'flex justify-between w-full items-center animate-slide-in-top'
             }`}
           >
             <button
@@ -282,8 +292,8 @@ const MenuMobile = ({ className }: TMenuMobile) => {
           <div
             className={` menu-mobile-wrapper min-h-screen w-full  fixed top-0 left-0  bg-black ${
               open
-                ? "animate-slide-in-left block"
-                : "animate-slide-out-left hidden"
+                ? 'animate-slide-in-left block'
+                : 'animate-slide-out-left hidden'
             }`}
           >
             <div className="container max-w-full pt-10 px-10 m-auto">
@@ -343,7 +353,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                 title="Login"
                 isOpen={openModalLogin}
                 onClose={handleCloseLoginModal}
-                typeForm={"login"}
+                typeForm={'login'}
                 pathImage={illustrationLoginModal}
               />
               <CustomModal
@@ -355,7 +365,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                 onClose={(value) => {
                   handleCloseRegisterModal(value);
                 }}
-                typeForm={"register"}
+                typeForm={'register'}
               />
             </>
           )}
@@ -366,33 +376,37 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
               isOpen={openModalLogoutConfirmation}
               onClose={handleCloseLogoutConfirmationModal}
-              typeForm={"logout"}
+              typeForm={'logout'}
               onClickLogout={handleLogout}
             />
           )}
           {registered && (
-          <CustomModal
-            id="logout-modal"
-            title="Parabéns!!! Conta criada com sucesso!"
-            isOpen={registered}
-            onClose={() => setRegistered(false)}
-            typeForm={"message"}
-            onClickLogout={handleLogout}
-          />
-        )}
+            <CustomModal
+              id="logout-modal"
+              title="Parabéns!!! Conta criada com sucesso!"
+              isOpen={registered}
+              onClose={() => setRegistered(false)}
+              typeForm={'message'}
+              onClickLogout={handleLogout}
+            />
+          )}
         </div>
       </div>
     </>
   );
 };
 
+// TODO: usar props
 const MenuDesktop = ({ className }: TMenuDesktop) => {
   const userInfo = useUserInfo();
   const [user, setUser] = useState<UserInfo>(userInfo);
-  const [authenticated, setAuthenticated] = useState<boolean>(userInfo.email !== undefined && userInfo.email !== '');
+  const [authenticated, setAuthenticated] = useState<boolean>(
+    userInfo.email !== undefined && userInfo.email !== ''
+  );
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalRegister, setOpenModalRegister] = useState(false);
-  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] = useState(false);
+  const [openModalLogoutConfirmation, setOpenModalLogoutConfirmation] =
+    useState(false);
   const [registered, setRegistered] = useState(false);
 
   store.subscribe(() => {
@@ -411,21 +425,21 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
 
   const handleCloseLoginModal = () => {
     const modalContainer = document.querySelector(
-      "#login-modal .modal-container"
+      '#login-modal .modal-container'
     );
-    modalContainer?.classList.add("animate-scaleOut");
+    modalContainer?.classList.add('animate-scaleOut');
     setTimeout(() => {
       setOpenModalLogin(false);
     }, 210);
   };
-  
+
   const handleCloseRegisterModal = (value: boolean) => {
     const modalContainer = document.querySelector(
-      "#register-modal .modal-container"
+      '#register-modal .modal-container'
     );
-    const valueBoolean = typeof value === "boolean" ? value : false;
+    const valueBoolean = typeof value === 'boolean' ? value : false;
     setRegistered(valueBoolean);
-    modalContainer?.classList.add("animate-scaleOut");
+    modalContainer?.classList.add('animate-scaleOut');
     setTimeout(() => {
       setOpenModalRegister(false);
     }, 210);
@@ -435,7 +449,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
     logout();
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    localStorage.removeItem('token_expiration')
+    localStorage.removeItem('token_expiration');
     store.dispatch(logoutRequest());
   };
 
@@ -445,9 +459,9 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
 
   const handleCloseLogoutConfirmationModal = (event) => {
     const modalContainer = document.querySelector(
-      "#logout-modal .modal-container"
+      '#logout-modal .modal-container'
     );
-    modalContainer?.classList.add("animate-scaleOut");
+    modalContainer?.classList.add('animate-scaleOut');
     setTimeout(() => {
       setOpenModalLogoutConfirmation(false);
     }, 210);
@@ -456,7 +470,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
   return (
     <div
       className={`container max-w-290 m-auto flex justify-between items-center ${
-        className ? className : ""
+        className ? className : ''
       }`}
     >
       <div className="flex items-center space-x-4 ">
@@ -491,7 +505,10 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
       </div>
 
       {authenticated ? (
-        <MenuLogado onClick={handleOpenLogoutConfirmationModal} name={user.name} />
+        <MenuLogado
+          onClick={handleOpenLogoutConfirmationModal}
+          name={user.name}
+        />
       ) : (
         <div className="space-x-4">
           <CtaItems
@@ -507,7 +524,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
             title="Login"
             isOpen={openModalLogin}
             onClose={handleCloseLoginModal}
-            typeForm={"login"}
+            typeForm={'login'}
             pathImage={illustrationLoginModal}
           />
           <CustomModal
@@ -519,7 +536,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
             onClose={(value) => {
               handleCloseRegisterModal(value);
             }}
-            typeForm={"register"}
+            typeForm={'register'}
           />
         </>
       )}
@@ -530,20 +547,20 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
           isOpen={openModalLogoutConfirmation}
           onClose={handleCloseLogoutConfirmationModal}
-          typeForm={"logout"}
+          typeForm={'logout'}
           onClickLogout={handleLogout}
         />
       )}
       {registered && (
-          <CustomModal
-            id="logout-modal"
-            title="Parabéns!!! &#127881; Conta criada com sucesso!"
-            isOpen={registered}
-            onClose={() => setRegistered(false)}
-            typeForm={"message"}
-            onClickLogout={handleLogout}
-          />
-        )}
+        <CustomModal
+          id="logout-modal"
+          title="Parabéns!!! &#127881; Conta criada com sucesso!"
+          isOpen={registered}
+          onClose={() => setRegistered(false)}
+          typeForm={'message'}
+          onClickLogout={handleLogout}
+        />
+      )}
     </div>
   );
 };

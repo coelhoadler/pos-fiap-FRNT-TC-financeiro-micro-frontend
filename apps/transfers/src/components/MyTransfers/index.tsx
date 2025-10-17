@@ -29,7 +29,8 @@ const MyTransfers = () => {
     endDate: '',
   });
 
-  const { transactionServices, setBalance, extract, setExtract } = useTransaction();
+  const { transactionServices, setBalance, extract, setExtract } =
+    useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>();
   const [id, setId] = useState<string>('');
   const [edit, setEdit] = useState<ITransaction>({} as ITransaction);
@@ -39,18 +40,19 @@ const MyTransfers = () => {
   const itemsPerPage = 3;
   const user = JSON.parse(localStorage.getItem('user')) || '';
 
+  //TODO: usar hooks para pegar as transacoes
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
         const responseData = await transactionServices.getAll();
         const extractOrdered = sortExtractByAscDate(responseData || []);
-        setMyTransactions(extractOrdered);  
+        setMyTransactions(extractOrdered);
       } catch (error) {
         if (error.status === 401) {
           window.location.href = '/login';
           console.error('Erro ao enviar o formulário:', error);
-        }      
-      }      
+        }
+      }
     };
     fetchTransaction();
   }, [extract]);
@@ -84,7 +86,7 @@ const MyTransfers = () => {
       currency: 'BRL',
       accountType: 'Conta Corrente',
     };
-    
+
     await accountServices.updateAccountById(user.accountNumber, account);
   };
 
@@ -100,10 +102,10 @@ const MyTransfers = () => {
       setShowConfirmDialog(false);
       toast.dismiss();
     } catch (error) {
-        if (error?.status === 401) {
-          window.location.href = '/login';
-          console.error('Erro ao enviar o formulário:', error);
-        } 
+      if (error?.status === 401) {
+        window.location.href = '/login';
+        console.error('Erro ao enviar o formulário:', error);
+      }
     }
   };
 
@@ -130,13 +132,12 @@ const MyTransfers = () => {
       setShowSuccess(true);
       setShowConfirmDialog(false);
       toast.dismiss();
-      setExtract([])
-
+      setExtract([]);
     } catch (error) {
-        if (error.status === 401) {
-          window.location.href = '/login';
-          console.error('Erro ao enviar o formulário:', error);
-        } 
+      if (error.status === 401) {
+        window.location.href = '/login';
+        console.error('Erro ao enviar o formulário:', error);
+      }
     }
   };
 
@@ -161,8 +162,8 @@ const MyTransfers = () => {
   };
 
   const handleCancelSubmit = () => {
-    setShowConfirmDialog
-  }
+    setShowConfirmDialog;
+  };
 
   const normalizeStartDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split('-');
@@ -360,7 +361,6 @@ const MyTransfers = () => {
             setOpen={setShowConfirmDialog}
             handleConfirmSubmit={() => handleConfirmSubmit(id)}
             handleCancelSubmit={handleCancelSubmit}
-            
           />
 
           <SuccessSnackbar

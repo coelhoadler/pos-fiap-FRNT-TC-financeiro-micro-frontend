@@ -9,6 +9,8 @@ import { ITransaction } from '../../../Models/transactionModels';
 import { useTransaction } from '../../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../../utils/formatters';
 import SuccessSnackbar from '../../SucessSnackBar';
+
+//TODO: colocar interface em arquivo separado
 interface TransactionItemProps {
   item: Partial<ITransaction>;
   onDelete: (transactionId: string) => void;
@@ -21,9 +23,9 @@ const TransferItem: React.FC<TransactionItemProps> = ({
   onEdit,
   ...props
 }) => {
-  const { setId, setTypeTransactionEdit, setValueEdit, setExtract, extract } = useTransaction();
+  const { setId, setTypeTransactionEdit, setValueEdit, setExtract, extract } =
+    useTransaction();
   const [showSuccess, setShowSuccess] = useState(false);
-  
 
   const handleEditTransaction = ({
     id,
@@ -73,13 +75,12 @@ const TransferItem: React.FC<TransactionItemProps> = ({
           },
         });
 
-        if(responseFile.status !== 200) {
+        if (responseFile.status !== 200) {
           throw new Error('Failed to upload file');
         }
 
         setShowSuccess(true);
-        setExtract([]);        
-
+        setExtract([]);
       } catch (error) {
         if (error.status === 401) {
           toast.error('Sessão expirada, por favor faça login novamente.');
@@ -131,7 +132,7 @@ const TransferItem: React.FC<TransactionItemProps> = ({
               onEdit(item as ITransaction);
             }}
           >
-            <DriveFileRenameOutlineIcon 
+            <DriveFileRenameOutlineIcon
               sx={{
                 color: 'white',
                 cursor: 'pointer',
@@ -139,22 +140,24 @@ const TransferItem: React.FC<TransactionItemProps> = ({
                 '&:hover': {
                   color: '#8aec49',
                 },
-              }} />
+              }}
+            />
           </button>
           <button
             title="Excluir"
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
             onClick={() => onDelete(item.id || '')}
           >
-            <DeleteForeverIcon 
+            <DeleteForeverIcon
               sx={{
-                  color: 'white',
-                  cursor: 'pointer',
-                  transition: 'color 0.3s',
-                  '&:hover': {
-                    color: '#8d4d48', 
-                  },
-                }} />
+                color: 'white',
+                cursor: 'pointer',
+                transition: 'color 0.3s',
+                '&:hover': {
+                  color: '#8d4d48',
+                },
+              }}
+            />
           </button>
 
           {item.base64Image ? (
@@ -166,15 +169,16 @@ const TransferItem: React.FC<TransactionItemProps> = ({
                 handleDownloadBase64(item.base64Image!, item.fileMimetype!)
               }
             >
-              <FileDownloadIcon  
+              <FileDownloadIcon
                 sx={{
-                    color: 'white',
-                    cursor: 'pointer',
-                    transition: 'color 0.3s',
-                    '&:hover': {
-                      color: '#8aec49', // exemplo: azul claro ao passar o mouse
-                    },
-                  }} />
+                  color: 'white',
+                  cursor: 'pointer',
+                  transition: 'color 0.3s',
+                  '&:hover': {
+                    color: '#8aec49', // exemplo: azul claro ao passar o mouse
+                  },
+                }}
+              />
             </label>
           ) : (
             <>

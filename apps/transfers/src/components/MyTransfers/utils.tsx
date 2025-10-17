@@ -3,6 +3,7 @@ import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import Title from '../Title';
 
 export const buildTransactionEditForm = (transactionItem: ITransaction) => {
+  //TODO: Criar um enum para typeTransaction
   const typeTransactionOptions: ITypeTransaction[] = [
     { id: '1', description: 'Câmbio e Moedas' },
     { id: '2', description: 'DOC/TED' },

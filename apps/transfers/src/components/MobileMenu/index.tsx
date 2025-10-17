@@ -8,6 +8,7 @@ import closeIcon from '../../assets/svg/close-icon.svg';
 import hamburgerMenuIcon from '../../assets/svg/hamburger-menu-icon.svg';
 import { useEffect } from 'react';
 
+//TODO: seguir as mesmas definicoes que está neste arquivo no modulo dashboard
 export type TMenu = {
   onClickItem?: () => void;
 };

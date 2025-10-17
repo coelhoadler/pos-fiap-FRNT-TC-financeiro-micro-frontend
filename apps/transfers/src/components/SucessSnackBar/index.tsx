@@ -7,6 +7,8 @@ import {
   Paper,
 } from '@mui/material';
 
+//TODO: seguir o que foi definido no modulo dashboard
+
 interface SuccessSnackbarProps {
   open: boolean;
   onClose: () => void;

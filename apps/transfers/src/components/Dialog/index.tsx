@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DialogContent } from '@mui/material';
 
+//TODO: usar props - e colocar este componente em diretorio shared
 const AlertDialog = ({
   children,
   type,
