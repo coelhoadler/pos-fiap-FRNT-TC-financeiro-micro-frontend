@@ -1,0 +1,37 @@
+{
+  "name": "shared-api",
+  "version": "1.0.0",
+  "description": "Módulo compartilhado de cliente HTTP e chamadas de API para os microfrontends.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "clean": "rimraf dist",
+    "lint": "eslint 'src/**/*.{ts,tsx}'"
+  },
+  "dependencies": {
+    "axios": "^1.12.2"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node": "^20.11.30",
+    "eslint": "^9.0.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.4.0"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "api",
+    "axios",
+    "shared",
+    "microfrontend",
+    "typescript"
+  ]
+}
