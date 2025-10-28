@@ -65,7 +65,7 @@ const Home: React.FC = () => {
                   />
                 </div>
               </div>
-            </section>            
+            </section>
           </div>
         </section>
       </div>

@@ -15,7 +15,16 @@ services:
       - "8502:8502"
     volumes:
       - ./apps/transfers:/app
-      - /app/node_modules      
+      - /app/node_modules
+
+  shared-ui:
+    build: ./packages/ui
+    container_name: shared-ui-dev
+    ports:
+      - "8503:8503"
+    volumes:
+      - ./packages/ui:/app
+      - /app/node_modules
 
   login:
     build: ./apps/login
@@ -26,9 +35,9 @@ services:
       - ./apps/login:/app
       - /app/node_modules
     environment:
-        - PORT=3000
-        - JWT_KEY=jnkfdhheoriuoe265565e98e
-        - BCRYPT_COST=10       
+      - PORT=3000
+      - JWT_KEY=jnkfdhheoriuoe265565e98e
+      - BCRYPT_COST=10
 
   root-config:
     build: ./apps/root-config
@@ -48,6 +57,6 @@ services:
       - ./apps/api:/app
       - /app/node_modules
     environment:
-        - PORT=3000
-        - JWT_KEY=jnkfdhheoriuoe265565e98e
-        - BCRYPT_COST=10
+      - PORT=3000
+      - JWT_KEY=jnkfdhheoriuoe265565e98e
+      - BCRYPT_COST=10
