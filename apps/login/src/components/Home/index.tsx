@@ -4,9 +4,11 @@ import vantagem1Image from "./../../assets/vantagem1.svg";
 import vantagem2Image from "./../../assets/vantagem2.svg";
 import vantagem3Image from "./../../assets/vantagem3.svg";
 import vantagem4Image from "./../../assets/vantagem4.svg";
+import { publicApiFunction } from "@financeiro/shared-ui";
 
 // TODO: Rever se precisa deste componente
 const Home: React.FC = () => {
+  publicApiFunction();
   return (
     <div className="flex flex-col bg-gradient-to-b  from-primary to-white py-28 min-h-screen px-10">
       {/* Incio Conteúdo principal */}
