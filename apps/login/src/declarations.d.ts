@@ -38,5 +38,5 @@ declare module "*.svg" {
   export default src;
 }
 
-declare module "@financeiro/ui"
+declare module "@financeiro/ui";
 

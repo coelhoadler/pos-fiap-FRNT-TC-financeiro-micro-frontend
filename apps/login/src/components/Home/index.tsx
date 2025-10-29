@@ -5,14 +5,13 @@ import vantagem2Image from "./../../assets/vantagem2.svg";
 import vantagem3Image from "./../../assets/vantagem3.svg";
 import vantagem4Image from "./../../assets/vantagem4.svg";
 
-import { publicApiFunction } from "@financeiro/ui";
-
-publicApiFunction();
+import { Button } from "@financeiro/ui";
 
 // TODO: Rever se precisa deste componente
 const Home: React.FC = () => {
   return (
     <div className="flex flex-col bg-gradient-to-b  from-primary to-white py-28 min-h-screen px-10">
+      <Button />
       {/* Incio Conteúdo principal */}
       <div className="container m-auto max-w-290">
         <section className="flex flex-col md:flex-row justify-between items-center">
