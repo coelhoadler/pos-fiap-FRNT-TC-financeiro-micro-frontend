@@ -1,7 +1,8 @@
 {
-  "extends": "ts-config-single-spa",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
+    "declaration": true,
     "declarationDir": "dist",
     "sourceMap": true,
     "inlineSourceMap": false,

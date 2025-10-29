@@ -10,6 +10,7 @@ import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import { accountServices } from '../../services/Account/apiEndpoint';
 import { ApiServices } from '../../services/apiServices';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
+import { getAll } from '@financeiro/api-client'
 
 // TODO Verificar a possibilidade refatorar itens neste arquivo
 // TODO Colocar todos os types em um arquivo separado
@@ -47,7 +48,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const responseData: any = await transactionServices.getAll();
+        const responseData: any = await getAll();
         if (responseData?.message === 'Nenhuma transação encontrada.') {
           setExtract([]);
           handlerUpdateAccount([]);
