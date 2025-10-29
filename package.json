@@ -8,6 +8,7 @@
     "install": "npm-run-all --serial install:*",
     "install:root-config": "cd apps/root-config && npm install",
     "install:transfers": "cd apps/transfers && npm install",
+    "install:ui": "cd packages/ui && npm install",
     "install:dashboard": "cd apps/dashboard && npm install",
     "install:login": "cd apps/login && npm install",
     "install:api": "cd apps/api && npm install",
