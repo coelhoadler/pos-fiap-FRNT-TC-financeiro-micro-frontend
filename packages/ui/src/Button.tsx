@@ -1,5 +1,9 @@
-export const Button = () => {
+import React from 'react';
+
+export const Button: React.FC = () => {
     return (
-        `<button>Financeiro UI Button</button>`
+        <button style={{ border: '1px solid red' }}>Financeiro UI Button</button>
     );
-}
+};
+
+export default Button;

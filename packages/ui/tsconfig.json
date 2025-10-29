@@ -4,6 +4,7 @@
     "src/financeiro-ui.ts"
   ],
   "compilerOptions": {
+    "jsx": "react",
     "declarationDir": "dist"
   },
   "include": [
