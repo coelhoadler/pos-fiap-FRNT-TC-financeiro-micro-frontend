@@ -1,2 +1,2 @@
 // Export shared components
-export { Button } from './Button';
+export { Button } from './components/login/Button/Button';
