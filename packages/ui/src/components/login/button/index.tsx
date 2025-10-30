@@ -5,14 +5,14 @@ export const Button = ({
   text,
   className,
   typeButton,
-  styleButton,
+  styleButton ="default",
   children,
   onClick,
 }: TButton) => {
   return (
     <button
       type={
-        typeButton === 'button'
+        typeButton === 'button' 
           ? 'button'
           : typeButton === 'submit'
           ? 'submit'
