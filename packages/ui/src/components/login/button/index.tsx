@@ -1,7 +1,7 @@
-import { TButton } from '../../types/TButton';
+import React from "react";
+import { TButton } from "../../../types/login/TButton";
 
-// TODO: Colocar em diretorio shared
-const Button = ({
+export const Button = ({
   text,
   className,
   typeButton,
@@ -31,3 +31,4 @@ const Button = ({
 };
 
 export default Button;
+

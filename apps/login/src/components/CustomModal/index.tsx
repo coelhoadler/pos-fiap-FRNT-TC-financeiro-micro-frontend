@@ -1,5 +1,5 @@
 import { TCustomModal } from '../../types/TCustomModal';
-import Button from '../Button';
+import { Button } from "@financeiro/ui";
 import { FormLogin, FormRegister } from '../Forms';
 import closeIcon from './../../assets/close-icon.svg';
 

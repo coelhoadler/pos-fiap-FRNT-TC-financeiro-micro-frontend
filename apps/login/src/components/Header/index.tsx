@@ -7,7 +7,7 @@ import closeIcon from './../../assets/close-icon.svg';
 import hamburgerMenuIcon from './../../assets/hamburger-menu-icon.svg';
 import illustrationRegisterModal from './../../assets/ilustration-register-modal.svg';
 import illustrationLoginModal from './../../assets/ilustration-login-modal.svg';
-import Button from '../Button';
+import { Button } from "@financeiro/ui";
 import {
   TMenuLinksItems,
   TMenuMobile,

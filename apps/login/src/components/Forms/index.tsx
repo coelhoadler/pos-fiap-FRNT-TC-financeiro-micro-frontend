@@ -8,7 +8,7 @@ import {
   TFormLabelItem,
   TFormMessageItem,
 } from '../../types/TForms';
-import Button from '../Button';
+import { Button } from "@financeiro/ui";
 import { login, register } from '../../services/userService';
 
 // TODO: Separar em vários arquivos de componentes
