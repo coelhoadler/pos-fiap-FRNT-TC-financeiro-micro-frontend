@@ -1,5 +1,6 @@
 const { merge } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-ts");
+const path = require("path");
 
 module.exports = (webpackConfigEnv, argv) => {
   const defaultConfig = singleSpaDefaults({
@@ -11,6 +12,26 @@ module.exports = (webpackConfigEnv, argv) => {
   });
 
   return merge(defaultConfig, {
-    // modify the webpack config however you'd like to by adding to this object
+    
+    devtool: "source-map",
+
+    output: {
+      devtoolModuleFilenameTemplate: (info) =>
+        path.resolve(info.absoluteResourcePath).replace(/\\/g, "/"),
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/i,
+          use: ["postcss-loader"],
+        },
+      ],
+    },
+
+    
+    watchOptions: {
+      poll: true,
+      ignored: /node_modules/,
+    },
   });
 };
