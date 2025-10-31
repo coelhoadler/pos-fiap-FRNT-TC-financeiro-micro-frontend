@@ -11,7 +11,7 @@ export type THeader = {
     isLoggedIn?: boolean;
 };
 
-export const Header = ({ nameUser, isLoggedIn }: THeader) => {
+const Header = ({ nameUser, isLoggedIn }: THeader) => {
     const [openDropDown, setOpenDropDown] = useState(false);
     const handleOpenDropDown = () => {
         setOpenDropDown((state) => !state);
@@ -92,4 +92,4 @@ export const Header = ({ nameUser, isLoggedIn }: THeader) => {
     );
 };
 
-export default Header;
+export { Header };
