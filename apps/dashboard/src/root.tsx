@@ -1,7 +1,7 @@
 import Home from "./components/Home";
 import { TransactionProvider } from "./setup/context/transactionContext";
 
-import Header from "./components/Header";
+import { Header } from "@financeiro/ui";
 import { DesktopMenu } from "./components/MobileMenu";
 import { useEffect, useState } from "react";
 import { getUserProfile } from "./services/UserProfile/apiEndpoints";
@@ -39,9 +39,8 @@ export default function Root() {
     <TransactionProvider>
       <Header isLoggedIn={isLoggedIn} nameUser={username} />
       <main
-        className={`flex justify-center min-w-[320px] pt-[116px] pb-[1rem] max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7 ${
-          error ? "h-screen" : ""
-        }`}
+        className={`flex justify-center min-w-[320px] pt-[116px] pb-[1rem] max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7 ${error ? "h-screen" : ""
+          }`}
       >
         {error ? (
           <div className="flex flex-col items-center justify-center">
