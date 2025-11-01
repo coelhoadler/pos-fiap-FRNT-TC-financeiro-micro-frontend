@@ -76,7 +76,7 @@
     "react-toastify": "^11.0.5",
     "single-spa": "^5.9.3",
     "single-spa-react": "^6.0.2",
-    "@financeiro/api-client": "workspace:*"
+    "@financeiro/api-client": "file:../../libs/api-client"
   },
   "types": "dist/financeiro-dashboard.d.ts"
 }
