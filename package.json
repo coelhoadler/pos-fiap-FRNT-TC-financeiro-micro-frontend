@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Este é um projeto feito com multi-frontend, cujo objetivo é representar as **transações financeiras** de um usuário.",
   "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "commit": "git add . && git cz",
     "install": "npm-run-all --serial install:*",
@@ -32,7 +37,11 @@
     "build:dashboard": "cd apps/dashboard && npm run build",
     "build:login": "cd apps/login && npm run build",
     "build:api": "cd apps/api",
-    "build:root-config": "cd apps/root-config && npm run build"
+    "build:root-config": "cd apps/root-config && npm run build",
+
+    "start:api-client": "yarn workspace @financeiro/api-client start",
+    "build:api-client": "yarn workspaces run build"
+    
   },
   "repository": {
     "type": "git",
