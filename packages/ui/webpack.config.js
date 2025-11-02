@@ -12,6 +12,7 @@ module.exports = (webpackConfigEnv, argv) => {
   });
 
   return merge(defaultConfig, {
+    externals: ["react", "react-dom"],
     
     devtool: "source-map",
 

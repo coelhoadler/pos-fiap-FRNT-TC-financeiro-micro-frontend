@@ -3,9 +3,8 @@ import profileIcon from '../../../assets/svg/profile-icon.svg';
 import byteBankIconWhite from '../../../assets/svg/icon-bytebank-white.svg';
 import arrowDown from '../../../assets/svg/arrow-down.svg';
 import { MobileMenu } from '../MobileMenu';
-// import { userLogout } from '../../services/UserProfile/apiEndpoints';
+import { userLogout } from '../../../services/UserProfile/apiEndpoints';
 
-// TODO Colocar este type em um arquivo separado - e mudar nome do type para HeaderProps
 export type THeader = {
     nameUser: string;
     isLoggedIn?: boolean;
@@ -21,7 +20,7 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('token_expiration');
-        // userLogout();
+        userLogout();
     };
 
     return (
