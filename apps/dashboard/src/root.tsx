@@ -1,8 +1,7 @@
 import Home from "./components/Home";
 import { TransactionProvider } from "./setup/context/transactionContext";
 
-import { Header } from "@financeiro/ui";
-import { DesktopMenu } from "./components/MobileMenu";
+import { Header, DesktopMenu } from "@financeiro/ui";
 import { useEffect, useState } from "react";
 import { getUserProfile } from "./services/UserProfile/apiEndpoints";
 import "./styles/globals.css";
