@@ -7,6 +7,9 @@ services:
     volumes:
       - ./apps/dashboard:/app
       - /app/node_modules
+    environment:
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
 
   transfers:
     build: ./apps/transfers
@@ -16,6 +19,9 @@ services:
     volumes:
       - ./apps/transfers:/app
       - /app/node_modules
+    environment:
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
 
   shared-ui:
     build: ./packages/ui
@@ -25,6 +31,9 @@ services:
     volumes:
       - ./packages/ui:/app
       - /app/node_modules
+    environment:
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
 
   login:
     build: ./apps/login
@@ -47,6 +56,9 @@ services:
     volumes:
       - ./apps/root-config:/app
       - /app/node_modules
+    environment:
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
 
   api:
     build: ./apps/api
