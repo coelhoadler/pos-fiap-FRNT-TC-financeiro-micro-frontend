@@ -1,9 +1,0 @@
-{
-  "extends": "ts-config-single-spa",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@financeiro/api-client": ["../../libs/api-client"]
-    }
-  }
-}
