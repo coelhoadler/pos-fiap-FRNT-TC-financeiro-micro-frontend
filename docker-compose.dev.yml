@@ -1,12 +1,14 @@
 services:
   dashboard:
-    build: ./apps/dashboard
+    build:
+      context: .
+      dockerfile: apps/dashboard/Dockerfile
     container_name: dashboard-dev
     ports:
       - "8500:8500"
     volumes:
-      - ./apps/dashboard:/app
-      - /app/node_modules
+      - ./apps/dashboard:/app/apps/dashboard
+
 
   transfers:
     build: ./apps/transfers

@@ -1,20 +1,30 @@
-FROM node:22-alpine
+# Etapa base
+FROM node:22-alpine AS base
 
-# Set the working directory
+# Habilita pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Instala dependências nativas necessárias (PostCSS, Tailwind, etc.)
+RUN apk add --no-cache libc6-compat python3 make g++
+
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package.json ./
-COPY package-lock.json ./
+# Copia arquivos principais do monorepo
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml tsconfig.base.json ./
 
-# Install dependencies
-RUN npm install -f
-
-# Copy the rest of the application files
+# Copia todo o código (inclui apps e libs)
 COPY . .
 
-# Expose the port the app runs on
+ENV CI=true
+
+# Instala dependências do workspace inteiro
+RUN pnpm install --frozen-lockfile
+
+# Define diretório do dashboard
+WORKDIR /app/apps/dashboard
+
+# Expõe a porta usada
 EXPOSE 8500
 
-# Command to run the application
-CMD ["npm", "run", "start"]
+# Inicia o app
+CMD ["pnpm", "run", "start"]

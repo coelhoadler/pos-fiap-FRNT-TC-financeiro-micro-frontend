@@ -48,7 +48,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const responseData: any = await getAll();
+        const responseData: any = await transactionServices.getAll();
         if (responseData?.message === 'Nenhuma transação encontrada.') {
           setExtract([]);
           handlerUpdateAccount([]);
