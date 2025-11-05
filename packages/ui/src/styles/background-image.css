@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+@theme {
+  --bg-ui-check-icon: url("../assets/check-icon.svg");
+}

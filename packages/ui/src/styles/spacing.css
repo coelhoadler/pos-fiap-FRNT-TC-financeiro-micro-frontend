@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+    --spacing-ui-sm: 8px;
+    --spacing-ui-md: 16px;
+    --spacing-ui-lg: 32px;
+  }

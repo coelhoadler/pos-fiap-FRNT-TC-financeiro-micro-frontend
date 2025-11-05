@@ -7,7 +7,7 @@ import closeIcon from './../../assets/close-icon.svg';
 import hamburgerMenuIcon from './../../assets/hamburger-menu-icon.svg';
 import illustrationRegisterModal from './../../assets/ilustration-register-modal.svg';
 import illustrationLoginModal from './../../assets/ilustration-login-modal.svg';
-import { Button } from "@financeiro/ui";
+import { Button, CustomModal } from "@financeiro/ui";
 import {
   TMenuLinksItems,
   TMenuMobile,
@@ -15,7 +15,7 @@ import {
   TCtaItems,
   TMenuLogado,
 } from '../../types/TMenu';
-import { CustomModal } from '../CustomModal';
+// import { CustomModal } from '../CustomModal';
 import { logout } from '../../services/userService';
 import store from '../../store';
 import { UserInfo } from '../../interfaces/IUser';
@@ -49,13 +49,13 @@ const CtaItems = ({ onClickLogin, onClickRegister, className }: TCtaItems) => {
       <Button
         className="max-md:w-full"
         text="Abrir minha conta"
-        typeButton="button"
+        typeButton="button" variant="primary-2"
         onClick={onClickRegister}
       />
       <Button
         className="max-md:w-full"
         text="Já tenho conta"
-        styleButton="outline"
+        variant="primary-2-outline"
         typeButton="button"
         onClick={onClickLogin}
       />
@@ -255,7 +255,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
   return (
     <>
       <div
-        className={`flex items-center justify-between space-x-4 w-full menu-mobile ${
+        className={`flex items-center  justify-between space-x-4 w-full menu-mobile ${
           className ? className : ''
         }`}
       >
@@ -351,9 +351,9 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               <CustomModal
                 id="login-modal"
                 title="Login"
-                isOpen={openModalLogin}
+                open={openModalLogin}
                 onClose={handleCloseLoginModal}
-                typeForm={'login'}
+                variant={'login'}
                 pathImage={illustrationLoginModal}
               />
               <CustomModal
@@ -361,11 +361,11 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                 title="Cadastre-se"
                 descripption="Preencha os campos abaixo para criar sua conta corrente!"
                 pathImage={illustrationRegisterModal}
-                isOpen={openModalRegister}
+                open={openModalRegister}
                 onClose={(value) => {
                   handleCloseRegisterModal(value);
                 }}
-                typeForm={'register'}
+                variant={'register'}
               />
             </>
           )}
@@ -374,9 +374,9 @@ const MenuMobile = ({ className }: TMenuMobile) => {
             <CustomModal
               id="logout-modal"
               title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
-              isOpen={openModalLogoutConfirmation}
+              open={openModalLogoutConfirmation}
               onClose={handleCloseLogoutConfirmationModal}
-              typeForm={'logout'}
+              variant={'logout'}
               onClickLogout={handleLogout}
             />
           )}
@@ -384,9 +384,9 @@ const MenuMobile = ({ className }: TMenuMobile) => {
             <CustomModal
               id="logout-modal"
               title="Parabéns!!! Conta criada com sucesso!"
-              isOpen={registered}
+              open={registered}
               onClose={() => setRegistered(false)}
-              typeForm={'message'}
+              variant={'message'}
               onClickLogout={handleLogout}
             />
           )}
@@ -522,9 +522,9 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           <CustomModal
             id="login-modal"
             title="Login"
-            isOpen={openModalLogin}
+            open={openModalLogin}
             onClose={handleCloseLoginModal}
-            typeForm={'login'}
+            variant={'login'}
             pathImage={illustrationLoginModal}
           />
           <CustomModal
@@ -532,11 +532,11 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
             title="Cadastre-se"
             descripption="Preencha os campos abaixo para criar sua conta corrente!"
             pathImage={illustrationRegisterModal}
-            isOpen={openModalRegister}
+            open={openModalRegister}
             onClose={(value) => {
               handleCloseRegisterModal(value);
             }}
-            typeForm={'register'}
+            variant={'register'}
           />
         </>
       )}
@@ -545,9 +545,9 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
         <CustomModal
           id="logout-modal"
           title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
-          isOpen={openModalLogoutConfirmation}
+          open={openModalLogoutConfirmation}
           onClose={handleCloseLogoutConfirmationModal}
-          typeForm={'logout'}
+          variant={'logout'}
           onClickLogout={handleLogout}
         />
       )}
@@ -555,9 +555,9 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
         <CustomModal
           id="logout-modal"
           title="Parabéns!!! &#127881; Conta criada com sucesso!"
-          isOpen={registered}
+          open={registered}
           onClose={() => setRegistered(false)}
-          typeForm={'message'}
+          variant={'message'}
           onClickLogout={handleLogout}
         />
       )}

@@ -4,11 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "./colors.css";
+/* @import "./colors.css";
 @import "./filter.css";
 @import "./animations.css";
 @import "./spacing.css";
-@import "./typography.css";
+@import "./typography.css"; */
 
 body {
   background-color: var(--background-color);
