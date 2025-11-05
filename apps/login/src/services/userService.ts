@@ -1,7 +1,7 @@
 import { loginFailure, loginRequest, loginSuccess } from '../features/slice';
 import { UserInfo, LoginUser, RegisterUser } from '../interfaces/IUser';
 import store from '../store';
-
+import  { authenticateUser } from '../../../../libs/api-client/src/auth';
 //TODO: Usar diretorio services somente para definicao de API/endpoint
 //TODO: Cada hook abaixo deve estar em arquivos separados
 // validar hooks genericos e locais
@@ -46,24 +46,26 @@ export const login = async ({
   messageError,
 }): Promise<LoginUser | null> => {
   try {
-    const response = await fetch('http://localhost:3000/api/user/auth', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ email, password: password }),
-    });
+    // const response = await fetch('http://localhost:3000/api/user/auth', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   credentials: 'include',
+    //   body: JSON.stringify({ email, password: password }),
+    // });
 
-    const data = await response.json();
+    
+    const response =  await authenticateUser(email, password )
+    // const data = await response
 
-    if (!response.ok) {
-      console.error(data.message || 'Erro ao fazer login.');
-      return { messageError: data.message || 'Erro ao fazer login.' };
+    if (!response) {
+      console.error(response?.message || 'Erro ao fazer login.');
+      return { messageError: response?.message || 'Erro ao fazer login.' };
     }
 
-    localStorage.setItem('token', data?.token);
-    localStorage.setItem('user', JSON.stringify(data));
+    localStorage.setItem('token', response?.token);
+    localStorage.setItem('user', JSON.stringify(response.token));
     window.location.href = '/dashboard';
   } catch (error) {
     console.error('Erro:', error);

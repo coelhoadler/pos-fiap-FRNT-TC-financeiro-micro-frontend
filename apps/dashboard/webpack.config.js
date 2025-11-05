@@ -40,7 +40,7 @@ module.exports = (webpackConfigEnv, argv) => {
       new webpack.DefinePlugin({
         'process.env': JSON.stringify({
           // 🔹 Você pode alterar essa URL conforme o ambiente
-          API_BASE_URL: process.env.API_BASE_URL || 'http://localhost:3000/',
+          REACT_API_URL: process.env.REACT_API_URL || 'http://localhost:3000',
         }),
       }),
     ],
