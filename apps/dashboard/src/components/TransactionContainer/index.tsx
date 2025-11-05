@@ -8,7 +8,7 @@ import { alertDialogTypes } from '../../enums/alertDialogTypes';
 import Button from '../Button';
 import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SuccessSnackbar';
-import Title from '../Title';
+import { Title } from '@financeiro/ui';
 
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import { accountServices } from '../../services/Account/apiEndpoint';
