@@ -92,7 +92,7 @@ const DesktopMenu = () => {
 
 const MobileMenu = () => {
   return (
-    <Disclosure as="nav" className="md:hidden flex items-center">
+    <Disclosure as="nav" className="md:hidden">
       {({ open, close }) => (
         <>
           <DisclosureButton className="text-gray-700 hover:text-black focus:outline-none">
