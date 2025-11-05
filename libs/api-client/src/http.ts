@@ -2,6 +2,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie'; // Instale: npm install js-cookie @types/js-cookie
 
+<<<<<<< HEAD
 // Nome do cookie onde o token está armazenado
 const TOKEN_COOKIE_NAME = 'auth_token'; // Ajuste conforme seu projeto
 
@@ -11,6 +12,12 @@ console.log('API URL:', process.env.REACT_API_URL);
 const httpClient: AxiosInstance = axios.create({
   baseURL: process.env.REACT_API_URL,
   timeout: 10000,
+=======
+const BASE_URL = process.env.API_URL;
+
+const api = axios.create({
+  baseURL: BASE_URL,
+>>>>>>> 37c091e6289ee84787547d77386e4ab7d48bcf75
   headers: {
     'Content-Type': 'application/json',
   },
