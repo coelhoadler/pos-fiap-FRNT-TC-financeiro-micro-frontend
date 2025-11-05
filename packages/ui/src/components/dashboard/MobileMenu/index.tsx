@@ -7,33 +7,25 @@ import {
 import { useState } from 'react';
 import closeIcon from '../../../assets/svg/close-icon.svg';
 import hamburgerMenuIcon from '../../../assets/svg/hamburger-menu-icon.svg';
+import { TMenu, TMenuItem } from '../../../types/TMenu';
+import { Routes } from '../../../enums/routes';
 
-// TODO colocar types em um arquivo separado - mudar nomes para MenuProps e MenuItemProps
-export type TMenu = {
-  onClickItem?: () => void;
-};
-export type TMenuItem = {
-  title: string;
-  path: string;
-};
-
-// TODO criar enum para os paths
 const menuItems: TMenuItem[] = [
   {
     title: 'Inicio',
-    path: '/dashboard',
+    path: Routes.DASHBOARD,
   },
   {
     title: 'Transferências',
-    path: '/transferencias',
+    path: Routes.TRANSFERENCIAS,
   },
   {
     title: 'Investimentos',
-    path: '#investimentos',
+    path: Routes.INVESTIMENTOS,
   },
   {
     title: 'Outros serviços',
-    path: '#outros-servicos',
+    path: Routes.OUTROS_SERVICOS,
   },
 ];
 
@@ -41,6 +33,7 @@ const MenuItens = ({ onClickItem }: TMenu) => {
   const [activeItem, setActiveItem] = useState<string>('Inicio');
 
   // TODO  verificar a necessidade desta função
+
   const handleClick = (item: TMenuItem) => {
     if (item.path.startsWith('#')) {
       setActiveItem(item.title);
