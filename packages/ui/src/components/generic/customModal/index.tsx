@@ -1,4 +1,3 @@
-// import { FormLogin, FormRegister } from '../Forms';
 import React from "react";
 import { TCustomModal } from "../../../types/generic/TCustomModal";
 import closeIcon from "../../../assets/svg/close-icon.svg";
@@ -13,18 +12,30 @@ const CustomModal = ({
   variant,
   className,
   id,
-  onClose,
   onClickLogout,
+  handleConfirmSubmit,
+  setOpen,
+  type,
 }: TCustomModal) => {
+  
+  const handleClose = () => {
+    const modalContainer = document.querySelector(
+      ".custom-modal .modal-container"
+    );
+    modalContainer?.classList.add("animate-ui-scaleOut");
+    setTimeout(() => {
+      setOpen && setOpen(false);
+    }, 210);
+  };
   return (
     <div
       id={id}
-      className={`fixed inset-0 flex justify-center items-center z-50 ${
+      className={`fixed inset-0 flex custom-modal justify-center items-center z-50 ${
         open ? "block" : "hidden"
       }`}
     >
       <div
-        onClick={onClose}
+        onClick={handleClose}
         className="absolute top-0 bottom-0 left-0 right-0 m-auto h-full block w-full bg-black/45"
       ></div>
       <div
@@ -39,7 +50,7 @@ const CustomModal = ({
         <div className="w-full relative">
           <button
             className=" hover:scale-[.95] transition-all absolute right-0 top-0 indent-[99999px] text-ui-zero w-3 h-3  cursor-pointer"
-            onClick={onClose}
+            onClick={handleClose}
           >
             Fechar
             <img
@@ -84,9 +95,7 @@ const CustomModal = ({
                 action="register"
                 id="register"
                 method="post"
-                onClose={(boolean) => {
-                  onClose && onClose(boolean);
-                }}
+                onClose={handleClose}
               />
             </div>
           )}
@@ -97,8 +106,11 @@ const CustomModal = ({
                 variant="primary-2-outline"
                 text="Sim"
               />
-              <Button variant="primary" text="Não" />
-              {/* <Button variant="primary" onClick={() => onClose && onClose(false)} text="Não" /> */}
+              <Button
+                variant="primary-2-outline"
+                onClick={handleClose}
+                text="Não"
+              />
             </div>
           )}
           {variant == "message" && (

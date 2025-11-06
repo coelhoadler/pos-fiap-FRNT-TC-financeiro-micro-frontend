@@ -1,6 +1,5 @@
 export type TCustomModal = {
   open: boolean;
-  onClose: (boolean) => void;
   onClickLogout?: () => void;
   variant?: | 'login' | 'register' | 'logout' | 'message' | 'transactions';
   title?: string;

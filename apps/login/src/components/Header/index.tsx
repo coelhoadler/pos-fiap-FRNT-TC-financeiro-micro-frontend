@@ -205,7 +205,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
     const modalContainer = document.querySelector(
       '.menu-mobile #login-modal .modal-container'
     );
-    modalContainer?.classList.add('animate-scaleOut');
+    modalContainer?.classList.add('animate-ui-scaleOut');
     setTimeout(() => {
       setOpenModalLogin(false);
     }, 210);
@@ -221,7 +221,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
     const modalContainer = document.querySelector(
       '.menu-mobile #register-modal .modal-container'
     );
-    modalContainer.classList.add('animate-scaleOut');
+    modalContainer.classList.add('animate-ui-scaleOut');
     const valueBoolean = typeof value === 'boolean' ? value : false;
     setRegistered(valueBoolean);
     setTimeout(() => {
@@ -246,7 +246,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
     const modalContainer = document.querySelector(
       '.menu-mobile #logout-modal .modal-container'
     );
-    modalContainer?.classList.add('animate-scaleOut');
+    modalContainer?.classList.add('animate-ui-scaleOut');
     setTimeout(() => {
       setOpenModalLogoutConfirmation(false);
     }, 210);
@@ -352,7 +352,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                 id="login-modal"
                 title="Login"
                 open={openModalLogin}
-                onClose={handleCloseLoginModal}
+                setOpen={setOpenModalLogin}
                 variant={'login'}
                 pathImage={illustrationLoginModal}
               />
@@ -362,9 +362,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
                 descripption="Preencha os campos abaixo para criar sua conta corrente!"
                 pathImage={illustrationRegisterModal}
                 open={openModalRegister}
-                onClose={(value) => {
-                  handleCloseRegisterModal(value);
-                }}
+                setOpen={setOpenModalRegister}
                 variant={'register'}
               />
             </>
@@ -375,7 +373,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               id="logout-modal"
               title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
               open={openModalLogoutConfirmation}
-              onClose={handleCloseLogoutConfirmationModal}
+              setOpen={setOpenModalLogoutConfirmation}
               variant={'logout'}
               onClickLogout={handleLogout}
             />
@@ -385,7 +383,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
               id="logout-modal"
               title="Parabéns!!! Conta criada com sucesso!"
               open={registered}
-              onClose={() => setRegistered(false)}
+              setOpen={setRegistered}
               variant={'message'}
               onClickLogout={handleLogout}
             />
@@ -427,7 +425,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
     const modalContainer = document.querySelector(
       '#login-modal .modal-container'
     );
-    modalContainer?.classList.add('animate-scaleOut');
+    modalContainer?.classList.add('animate-ui-scaleOut');
     setTimeout(() => {
       setOpenModalLogin(false);
     }, 210);
@@ -439,7 +437,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
     );
     const valueBoolean = typeof value === 'boolean' ? value : false;
     setRegistered(valueBoolean);
-    modalContainer?.classList.add('animate-scaleOut');
+    modalContainer?.classList.add('animate-ui-scaleOut');
     setTimeout(() => {
       setOpenModalRegister(false);
     }, 210);
@@ -461,7 +459,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
     const modalContainer = document.querySelector(
       '#logout-modal .modal-container'
     );
-    modalContainer?.classList.add('animate-scaleOut');
+    modalContainer?.classList.add('animate-ui-scaleOut');
     setTimeout(() => {
       setOpenModalLogoutConfirmation(false);
     }, 210);
@@ -523,7 +521,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
             id="login-modal"
             title="Login"
             open={openModalLogin}
-            onClose={handleCloseLoginModal}
+            setOpen={setOpenModalLogin}
             variant={'login'}
             pathImage={illustrationLoginModal}
           />
@@ -533,9 +531,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
             descripption="Preencha os campos abaixo para criar sua conta corrente!"
             pathImage={illustrationRegisterModal}
             open={openModalRegister}
-            onClose={(value) => {
-              handleCloseRegisterModal(value);
-            }}
+            setOpen={setOpenModalRegister}
             variant={'register'}
           />
         </>
@@ -546,7 +542,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           id="logout-modal"
           title="Ao sair, você precisará fazer login novamente. Deseja continuar?"
           open={openModalLogoutConfirmation}
-          onClose={handleCloseLogoutConfirmationModal}
+          setOpen={setOpenModalLogoutConfirmation}
           variant={'logout'}
           onClickLogout={handleLogout}
         />
@@ -556,7 +552,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           id="logout-modal"
           title="Parabéns!!! &#127881; Conta criada com sucesso!"
           open={registered}
-          onClose={() => setRegistered(false)}
+          setOpen={setRegistered}
           variant={'message'}
           onClickLogout={handleLogout}
         />
