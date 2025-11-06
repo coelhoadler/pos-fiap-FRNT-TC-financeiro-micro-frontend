@@ -3,6 +3,7 @@ import React from "react";
 import { TCustomModal } from "../../../types/generic/TCustomModal";
 import closeIcon from "../../../assets/svg/close-icon.svg";
 import { Button } from "../../../financeiro-ui";
+import { FormLogin, FormRegister } from "../forms";
 
 const CustomModal = ({
   open,
@@ -18,19 +19,22 @@ const CustomModal = ({
   return (
     <div
       id={id}
-      className={`fixed inset-0 flex justify-center items-center z-50 ${open ? "block" : "hidden"
-        }`}
+      className={`fixed inset-0 flex justify-center items-center z-50 ${
+        open ? "block" : "hidden"
+      }`}
     >
       <div
         onClick={onClose}
         className="absolute top-0 bottom-0 left-0 right-0 m-auto h-full block w-full bg-black/45"
       ></div>
       <div
-        className={`bg-ui-gray-100 z-51 modal-container p-8 flex flex-col items-center justify-center rounded-md transition-all min-w-[40%] max-w-[800px] max-lg:max-w-[80%] max-lg:min-w-[60%] max-md:max-w-[95%] max-2xl:max-h-[800px] max-2xl:overflow-y-auto max-2xl:justify-start max-md:max-h-[750px] max-md:justify-start max-md:overflow-y-auto duration-300 shadow-sm  ${open ? "animate-ui-scaleIn" : "animate-ui-scaleOut"
-          } ${variant === "logout"
+        className={`bg-ui-gray-100 z-51 modal-container p-8 flex flex-col items-center justify-center rounded-md transition-all min-w-[40%] max-w-[800px] max-lg:max-w-[80%] max-lg:min-w-[60%] max-md:max-w-[95%] max-2xl:max-h-[800px] max-2xl:overflow-y-auto max-2xl:justify-start max-md:max-h-[750px] max-md:justify-start max-md:overflow-y-auto duration-300 shadow-sm  ${
+          open ? "animate-ui-scaleIn" : "animate-ui-scaleOut"
+        } ${
+          variant === "logout"
             ? "min-w-[420px!important] max-w-[420px!important] max-md:min-w-[80%!important] max-md:max-w-[90%!important]"
             : ""
-          }`}
+        }`}
       >
         <div className="w-full relative">
           <button
@@ -71,21 +75,19 @@ const CustomModal = ({
 
           {variant == "login" && (
             <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
-              {/* <FormLogin action="login" id="login" method="get" /> */}
-              form login aqui
+              <FormLogin action="login" id="login" method="get" />
             </div>
           )}
           {variant == "register" && (
             <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
-              {/* <FormRegister
+              <FormRegister
                 action="register"
                 id="register"
                 method="post"
                 onClose={(boolean) => {
                   onClose && onClose(boolean);
                 }}
-              /> */}
-              form register aqui
+              />
             </div>
           )}
           {variant == "logout" && (
@@ -108,7 +110,6 @@ const CustomModal = ({
           )}
 
           {variant === "transactions" && <div>transações</div>}
-
         </div>
       </div>
     </div>

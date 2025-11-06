@@ -51,9 +51,11 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
+    "@reduxjs/toolkit": "^2.8.2",
     "@types/jest": "^27.0.1",
     "@types/systemjs": "^6.1.1",
     "@types/webpack-env": "^1.16.2",
+    "react-redux": "^9.2.0",
     "axios": "^1.11.0",
     "single-spa": "^5.9.3"
   },
