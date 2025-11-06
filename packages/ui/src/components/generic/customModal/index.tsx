@@ -17,16 +17,17 @@ const CustomModal = ({
   setOpen,
   type,
 }: TCustomModal) => {
-  
   const handleClose = () => {
-    const modalContainer = document.querySelector(
-      ".custom-modal .modal-container"
-    );
+    if (!id) return;
+    const modal = document.getElementById(id);
+    const modalContainer = modal?.querySelector(".modal-container");
+
     modalContainer?.classList.add("animate-ui-scaleOut");
     setTimeout(() => {
       setOpen && setOpen(false);
     }, 210);
   };
+
   return (
     <div
       id={id}
