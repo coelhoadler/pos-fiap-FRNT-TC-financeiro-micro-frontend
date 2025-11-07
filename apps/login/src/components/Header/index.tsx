@@ -15,7 +15,6 @@ import {
   TCtaItems,
   TMenuLogado,
 } from '../../types/TMenu';
-// import { CustomModal } from '../CustomModal';
 import { logout } from '../../services/userService';
 import store from '../../store';
 import { UserInfo } from '../../interfaces/IUser';
@@ -421,28 +420,6 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
     setOpenModalRegister(true);
   };
 
-  const handleCloseLoginModal = () => {
-    const modalContainer = document.querySelector(
-      '#login-modal .modal-container'
-    );
-    modalContainer?.classList.add('animate-ui-scaleOut');
-    setTimeout(() => {
-      setOpenModalLogin(false);
-    }, 210);
-  };
-
-  const handleCloseRegisterModal = (value: boolean) => {
-    const modalContainer = document.querySelector(
-      '#register-modal .modal-container'
-    );
-    const valueBoolean = typeof value === 'boolean' ? value : false;
-    setRegistered(valueBoolean);
-    modalContainer?.classList.add('animate-ui-scaleOut');
-    setTimeout(() => {
-      setOpenModalRegister(false);
-    }, 210);
-  };
-
   const handleLogout = async () => {
     logout();
     localStorage.removeItem('token');
@@ -453,16 +430,6 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
 
   const handleOpenLogoutConfirmationModal = () => {
     setOpenModalLogoutConfirmation(true);
-  };
-
-  const handleCloseLogoutConfirmationModal = (event) => {
-    const modalContainer = document.querySelector(
-      '#logout-modal .modal-container'
-    );
-    modalContainer?.classList.add('animate-ui-scaleOut');
-    setTimeout(() => {
-      setOpenModalLogoutConfirmation(false);
-    }, 210);
   };
 
   return (
