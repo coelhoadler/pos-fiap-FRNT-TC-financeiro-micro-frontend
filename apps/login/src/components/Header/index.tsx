@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import byteBankLogo from './../../assets/logo-bytebank.svg';
 import byteBankLogoTablet from './../../assets/logo-bytebank-tablet.svg';
 import userIcon from './../../assets/user-icon.svg';
