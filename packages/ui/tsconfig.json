@@ -5,7 +5,7 @@
   ],
   "compilerOptions": {
     "jsx": "react",
-    "declarationDir": "dist"
+    "declarationDir": "dist",
   },
   "include": [
     "src/**/*"

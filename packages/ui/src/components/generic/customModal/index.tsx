@@ -2,7 +2,8 @@ import React from "react";
 import { TCustomModal } from "../../../types/generic/TCustomModal";
 import closeIcon from "../../../assets/svg/close-icon.svg";
 import { Button } from "../../../financeiro-ui";
-import { FormLogin, FormRegister } from "../forms";
+import { FormLogin } from "../../login/forms/login";
+import { FormRegister } from "../../login/forms/register";
 
 const CustomModal = ({
   open,
@@ -10,7 +11,7 @@ const CustomModal = ({
   pathImage,
   descripption,
   variant,
-  
+
   id,
   onClickLogout,
   handleConfirmSubmit,
@@ -68,7 +69,9 @@ const CustomModal = ({
           >
             Fechar
             <img
-              className={`m-auto w-full h-full ${variant === "transactions" ? "filter-(--filter-ui-primary)": ""}`}
+              className={`m-auto w-full h-full ${
+                variant === "transactions" ? "filter-(--filter-ui-primary)" : ""
+              }`}
               src={closeIcon}
               alt="Fechar"
             />
@@ -97,7 +100,7 @@ const CustomModal = ({
               </p>
             )}
             {variant == "login" && (
-              <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
+              <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full w-full">
                 <FormLogin action="login" id="login" method="get" />
               </div>
             )}
@@ -135,9 +138,9 @@ const CustomModal = ({
 
             {variant === "transactions" && (
               <>
-                <p className="font-family-ui-base text-center font-normal text-black text-sm">
+                <h4 className="font-family-ui-base text-ui-md font-semibold text-black text-center mb-4">
                   {getDialogMessage()}
-                </p>
+                </h4>
                 <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
                   <Button
                     onClick={handleClose}
