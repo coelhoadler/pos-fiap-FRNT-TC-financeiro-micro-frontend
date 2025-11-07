@@ -4,14 +4,13 @@ import closeIcon from "../../../assets/svg/close-icon.svg";
 import { Button } from "../../../financeiro-ui";
 import { FormLogin } from "../../login/forms/login";
 import { FormRegister } from "../../login/forms/register";
-
+// TODO: Criar uma interface para o modal
 const CustomModal = ({
   open,
   title,
   pathImage,
   descripption,
   variant,
-
   id,
   onClickLogout,
   handleConfirmSubmit,
