@@ -3,7 +3,9 @@ import Home from "./components/Home";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { Provider } from "react-redux";
-import store from "./store";
+// import store from "./store";
+import { store } from '@financeiro/ui';
+
 
 export default function Root(props) {
 

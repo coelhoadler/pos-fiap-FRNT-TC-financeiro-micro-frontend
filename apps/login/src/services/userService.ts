@@ -1,6 +1,7 @@
-import { loginFailure, loginRequest, loginSuccess } from '../features/slice';
+// import { loginFailure, loginRequest, loginSuccess } from '../features/slice';
+import { loginFailure,loginRequest,loginSuccess } from '@financeiro/ui';
 import { UserInfo, LoginUser, RegisterUser } from '../interfaces/IUser';
-import store from '../store';
+import {store} from '@financeiro/ui';
 
 //TODO: Usar diretorio services somente para definicao de API/endpoint
 //TODO: Cada hook abaixo deve estar em arquivos separados

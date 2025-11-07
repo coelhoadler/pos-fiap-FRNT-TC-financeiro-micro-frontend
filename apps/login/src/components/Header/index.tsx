@@ -8,6 +8,7 @@ import hamburgerMenuIcon from './../../assets/hamburger-menu-icon.svg';
 import illustrationRegisterModal from './../../assets/ilustration-register-modal.svg';
 import illustrationLoginModal from './../../assets/ilustration-login-modal.svg';
 import { Button, CustomModal } from "@financeiro/ui";
+import { logoutRequest } from '@financeiro/ui';
 import {
   TMenuLinksItems,
   TMenuMobile,
@@ -16,9 +17,8 @@ import {
   TMenuLogado,
 } from '../../types/TMenu';
 import { logout } from '../../services/userService';
-import store from '../../store';
+import {store} from '@financeiro/ui';
 import { UserInfo } from '../../interfaces/IUser';
-import { logoutRequest } from '../../features/slice';
 import useUserInfo from '../../hooks/useUserInfos';
 
 // TODO: Separar em diferentes componentes
