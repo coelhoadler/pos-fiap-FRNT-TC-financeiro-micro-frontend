@@ -28,6 +28,19 @@ const CustomModal = ({
     }, 210);
   };
 
+  const getDialogMessage = () => {
+    switch (type) {
+      case "Delete":
+        return "Tem certeza de que deseja excluir este registro?";
+      case "Edit":
+        return "Você deseja realmente atualizar este registro?";
+      case "Confirm":
+        return "Você está prestes a concluir esta transação. Deseja continuar?";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div
       id={id}
@@ -55,7 +68,7 @@ const CustomModal = ({
           >
             Fechar
             <img
-              className="m-auto w-full h-full"
+              className={`m-auto w-full h-full ${variant === "transactions" ? "filter-(--filter-ui-primary)": ""}`}
               src={closeIcon}
               alt="Fechar"
             />
@@ -73,56 +86,73 @@ const CustomModal = ({
 
             {title && (
               <h4
-                className={`font-family-base font-bold text-md text-black text-center`}
+                className={`font-family-ui-base text-ui-md font-bold text-black text-center`}
               >
                 {title}
               </h4>
             )}
             {descripption && (
-              <p className="font-family-base font-normal text-black text-sm">
+              <p className="font-family-ui-base text-ui-sm font-normal text-black text-sm">
                 {descripption}
               </p>
             )}
+            {variant == "login" && (
+              <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
+                <FormLogin action="login" id="login" method="get" />
+              </div>
+            )}
+            {variant == "register" && (
+              <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
+                <FormRegister
+                  action="register"
+                  id="register"
+                  method="post"
+                  onClose={handleClose}
+                />
+              </div>
+            )}
+            {variant == "logout" && (
+              <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
+                <Button
+                  onClick={onClickLogout}
+                  variant="primary-2-outline"
+                  text="Sim"
+                />
+                <Button
+                  variant="primary-2-outline"
+                  onClick={handleClose}
+                  text="Não"
+                />
+              </div>
+            )}
+            {variant == "message" && (
+              <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
+                <p className="font-family-ui-base text-ui-sm font-normal text-black text-sm">
+                  {descripption}
+                </p>
+              </div>
+            )}
+
+            {variant === "transactions" && (
+              <>
+                <p className="font-family-ui-base text-center font-normal text-black text-sm">
+                  {getDialogMessage()}
+                </p>
+                <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
+                  <Button
+                    onClick={handleClose}
+                    variant="primary-outline"
+                    text="Cancelar"
+                  />
+                  <Button
+                    variant="primary"
+                    onClick={handleConfirmSubmit}
+                    text="Confirmar"
+                  />
+                </div>
+              </>
+            )}
           </div>
-
-          {variant == "login" && (
-            <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
-              <FormLogin action="login" id="login" method="get" />
-            </div>
-          )}
-          {variant == "register" && (
-            <div className="mt-2 max-w-[90%] m-auto max-md:max-w-full">
-              <FormRegister
-                action="register"
-                id="register"
-                method="post"
-                onClose={handleClose}
-              />
-            </div>
-          )}
-          {variant == "logout" && (
-            <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
-              <Button
-                onClick={onClickLogout}
-                variant="primary-2-outline"
-                text="Sim"
-              />
-              <Button
-                variant="primary-2-outline"
-                onClick={handleClose}
-                text="Não"
-              />
-            </div>
-          )}
-          {variant == "message" && (
-            <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
-              <p className="font-family-base font-normal text-black text-sm">
-                {descripption}
-              </p>
-            </div>
-          )}
-
-          {variant === "transactions" && <div>transações</div>}
         </div>
       </div>
     </div>
