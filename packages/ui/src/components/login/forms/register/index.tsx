@@ -128,7 +128,7 @@ export const FormRegister: React.FC<IFormRegister> = ({
             />
           </div>
 
-          <Message
+          <Message variant="error"
             showMessage={emailInvalido}
             text="Dado incorreto. Revise e digite novamente."
           />

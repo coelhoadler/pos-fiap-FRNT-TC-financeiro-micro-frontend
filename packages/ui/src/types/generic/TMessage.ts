@@ -3,4 +3,5 @@ export type TMessage = {
     id?: string;
     text: string;
     showMessage: boolean;
+    variant: 'error' | 'info' | 'success';
 };

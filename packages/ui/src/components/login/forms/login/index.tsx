@@ -87,7 +87,7 @@ export const FormLogin: React.FC<IFormLogin> = ({ className, method, id }) => {
             </div>
           </div>
 
-          <Message showMessage={!!erro} text={erro} />
+          <Message variant="error" showMessage={!!erro} text={erro} />
 
           <Button
             className="w-fit m-auto mt-6"
