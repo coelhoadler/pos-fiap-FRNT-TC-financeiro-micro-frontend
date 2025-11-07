@@ -6,7 +6,6 @@ export type TCustomModal = {
   pathImage?: string;
   descripption?:string;
   id?: string;
-  className?: string;
   type?: string;
   setOpen?: (open: boolean) => void;
   handleConfirmSubmit?: (event?: object) => void;

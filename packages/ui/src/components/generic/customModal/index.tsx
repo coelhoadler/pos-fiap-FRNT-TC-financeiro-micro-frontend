@@ -10,7 +10,7 @@ const CustomModal = ({
   pathImage,
   descripption,
   variant,
-  className,
+  
   id,
   onClickLogout,
   handleConfirmSubmit,
