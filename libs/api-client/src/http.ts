@@ -1,20 +1,17 @@
-// libs/api-client/src/http.ts
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import Cookies from 'js-cookie'; // Instale: npm install js-cookie @types/js-cookie
+import Cookies from 'js-cookie';
 
 // Nome do cookie onde o token está armazenado
 const TOKEN_COOKIE_NAME = 'auth_token'; // Ajuste conforme seu projeto
 
-console.log('API URL:', process.env.REACT_API_URL);
-
 // Configuração base do cliente HTTP
 const httpClient: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_API_URL,
+  baseURL: process.env.REACT_APP_ENDPOINT,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Permite envio de cookies em requisições CORS
+  withCredentials: true,
 });
 
 // Interceptor de requisição para adicionar o token automaticamente
@@ -22,12 +19,12 @@ httpClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // Busca o token dos cookies
     const token = Cookies.get('token');
-    
+
     if (token) {
       // Adiciona o token no header Authorization
       config.headers.Authorization = `Bearer ${token}`;
     }
-    
+
     return config;
   },
   (error) => {
@@ -43,11 +40,11 @@ httpClient.interceptors.response.use(
     if (error.response?.status === 401) {
       // Remove o token expirado
       Cookies.remove(TOKEN_COOKIE_NAME);
-      
+
       // Redireciona para o microfrontend de login
       window.location.href = '/login';
     }
-    
+
     return Promise.reject(error);
   }
 );

@@ -10,6 +10,7 @@ import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import { accountServices } from '../../services/Account/apiEndpoint';
 import { ApiServices } from '../../services/apiServices';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
+import { getAllTransactions } from '../../../../../libs/api-client/src/transactions';
 
 //TODO: verificar o que foi definido no modulo dashboard
 type TransactionContextType = {
@@ -46,7 +47,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const responseData: any = await transactionServices.getAll();
+        const responseData: any = await getAllTransactions();
         if (responseData?.message === 'Nenhuma transação encontrada.') {
           setExtract([]);
           handlerUpdateAccount([]);

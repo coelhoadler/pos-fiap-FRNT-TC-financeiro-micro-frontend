@@ -1,40 +1,16 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
+import { getAllTransactions } from '../../../../../libs/api-client/src/transactions';
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import { accountServices } from '../../services/Account/apiEndpoint';
-import { ApiServices } from '../../services/apiServices';
 import { transactionServices } from '../../services/Transacoes/apiEndpoints';
-import { getAllTransactions } from '../../../../../libs/api-client/src/transactions';
+import { TransactionContextType, TransactionProviderProps } from './types';
 
 // TODO Verificar a possibilidade refatorar itens neste arquivo
-// TODO Colocar todos os types em um arquivo separado
-type TransactionContextType = {
-  id: string;
-  setId: (id: string) => void;
-  valueEdit: string;
-  setValueEdit: (value: string) => void;
-  extract: any[];
-  setExtract: (extract: any[]) => void;
-  transactionServices: ApiServices<ITransaction>;
-  typeTransactionEdit: ITypeTransaction;
-  setTypeTransactionEdit: (typeTransaction: ITypeTransaction) => void;
-  balance: number;
-  setBalance: (balance: number) => void;
-};
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
   undefined
 );
-
-type TransactionProviderProps = {
-  children: ReactNode;
-};
 
 export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   const [id, setId] = useState('');

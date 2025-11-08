@@ -25,7 +25,7 @@
     "start:micro-dashboard": "cd apps/dashboard && npm start",
     "start:micro-login": "cd apps/login && npm start",
     "start:micro-root-config": "cd apps/root-config && npm start",
-    "start:dev": "npm-run-all --parallel start:micro-*",
+    "start:dev": "env-cmd -f environments/.env.development npm-run-all --parallel start:micro-*",
     "start:prod": "docker compose -f docker-compose.prod.yml up",
     "build": "npm-run-all --serial build:*",
     "build:transfers": "cd apps/transfers && npm run build",
@@ -52,6 +52,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "commitizen": "^4.3.1",
+    "env-cmd": "^11.0.0",
     "npm-run-all": "^4.1.5",
     "raw-loader": "^4.0.2",
     "rimraf": "^6.0.1"
