@@ -7,7 +7,7 @@ import {
 import { useState } from 'react';
 import closeIcon from '../../../assets/svg/close-icon.svg';
 import hamburgerMenuIcon from '../../../assets/svg/hamburger-menu-icon.svg';
-import { TMenu, TMenuItem } from '../../../types/TMenu';
+import { TMenu, TMenuItem } from '../../../types/generic/TMenu';
 import { Routes } from '../../../enums/routes';
 
 const menuItems: TMenuItem[] = [

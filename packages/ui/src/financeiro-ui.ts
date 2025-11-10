@@ -14,6 +14,7 @@ export { loginRequest } from './features/login/slice';
 export { loginSuccess } from './features/login/slice';
 export { loginFailure } from './features/login/slice';
 export { logoutRequest } from './features/login/slice';
+export { Footer } from './components/login/footer';
 export { default as store } from './store/login';
 export { DesktopMenu, MenuItens, MobileMenu } from './components/dashboard/MobileMenu';
 export { Title } from './components/dashboard/Title';
