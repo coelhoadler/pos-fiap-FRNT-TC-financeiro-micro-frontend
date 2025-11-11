@@ -1,42 +1,39 @@
+import {
+  userAuthentication,
+  userInfo,
+  userLogout,
+  userRegister,
+} from '../../../../libs/api-client/src/auth';
 import { loginFailure, loginRequest, loginSuccess } from '../features/slice';
-import { UserInfo, LoginUser, RegisterUser } from '../interfaces/IUser';
+import {
+  LoginUserProps,
+  RegisterUserProps,
+  UserInfoProps,
+} from '../interfaces/IUser';
 import store from '../store';
-import  { authenticateUser } from '../../../../libs/api-client/src/auth';
-//TODO: Usar diretorio services somente para definicao de API/endpoint
-//TODO: Cada hook abaixo deve estar em arquivos separados
-// validar hooks genericos e locais
-export const userInfos = async (): Promise<UserInfo | null> => {
+
+export const userInfos = async (): Promise<UserInfoProps | null> => {
   try {
+    // TODO: Verificar o gerenciamento de estado
+    // TODO: Validar se precisa nas demais requisições
     store.dispatch(loginRequest());
-    const response = await fetch('http://localhost:3000/api/user/info', {
-      method: 'GET',
-      credentials: 'include',
-    });
+    const response = await userInfo();
 
-    if (response.ok) {
-      const data = await response.json();
-
-      localStorage.setItem('token', data.token);
-      store.dispatch(
-        loginSuccess({ email: data.email, name: data.name, token: data.token })
-      );
-      return { name: data.name, email: data.email, token: data.token };
-    }
-
-    if (response.status === 401) {
-      const message = 'Usuário não autenticado ou sessão expirada.';
-      console.error(message);
-      store.dispatch(loginFailure({ message }));
-      return { messageError: message };
-    }
+    const data = await response.json();
+    store.dispatch(
+      loginSuccess({ email: data.email, name: data.name, token: data.token })
+    );
+    return { name: data.name, email: data.email, token: data.token };
   } catch (error) {
     if (error?.status === 401) {
       window.location.href = '/login';
     }
-    const message = 'Erro ao buscar informações do usuário.';
-    console.log(message, error);
-    store.dispatch(loginFailure({ message }));
-    return { messageError: error };
+
+    const message = error.message;
+    console.log('UserInfoError', message);
+    store.dispatch(loginFailure({ error: message }));
+
+    return { messageError: message };
   }
 };
 
@@ -44,31 +41,14 @@ export const login = async ({
   email,
   password,
   messageError,
-}): Promise<LoginUser | null> => {
+}): Promise<LoginUserProps | null> => {
   try {
-    // const response = await fetch('http://localhost:3000/api/user/auth', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   credentials: 'include',
-    //   body: JSON.stringify({ email, password: password }),
-    // });
+    const response = await userAuthentication(email, password);
 
-    
-    const response =  await authenticateUser(email, password )
-    // const data = await response
-
-    if (!response) {
-      console.error(response?.message || 'Erro ao fazer login.');
-      return { messageError: response?.message || 'Erro ao fazer login.' };
-    }
-
-    localStorage.setItem('token', response?.token);
-    localStorage.setItem('user', JSON.stringify(response.token));
+    localStorage.setItem('user', JSON.stringify(response));
     window.location.href = '/dashboard';
   } catch (error) {
-    console.error('Erro:', error);
+    console.error('LoginError:', error);
     if (error?.status === 401) {
       window.location.href = '/login';
     }
@@ -82,26 +62,12 @@ export const register = async ({
   name,
   messageError,
   onClose,
-}): Promise<RegisterUser | null> => {
+}): Promise<RegisterUserProps | null> => {
   try {
-    const response = await fetch('http://localhost:3000/api/user/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name: name, email: email, password: password }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error(data.message || 'Erro ao criar a conta.');
-      return { messageError: data.message || 'Erro ao criar a conta.' };
-    }
-
+    await userRegister(name, email, password);
     onClose(true);
   } catch (error) {
-    console.error('Erro:', error);
+    console.error('RegisterError:', error);
     if (error?.status === 401) {
       window.location.href = '/login';
     }
@@ -110,9 +76,12 @@ export const register = async ({
 };
 
 export const logout = async () => {
-  await fetch('http://localhost:3000/api/user/logout', {
-    method: 'POST',
-    credentials: 'include',
-  });
-  window.location.href = '/';
+  try {
+    await userLogout();
+  } catch (error) {
+    console.error('LogoutError:', error);
+  } finally {
+    localStorage.removeItem('user');
+    window.location.href = '/';
+  }
 };

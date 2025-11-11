@@ -18,7 +18,7 @@ import {
 import { CustomModal } from '../CustomModal';
 import { logout } from '../../services/userService';
 import store from '../../store';
-import { UserInfo } from '../../interfaces/IUser';
+import { UserInfoProps } from '../../interfaces/IUser';
 import { logoutRequest } from '../../features/slice';
 import useUserInfo from '../../hooks/useUserInfos';
 
@@ -156,7 +156,7 @@ const MenuLogado = ({ name, className, onClick }: TMenuLogado) => {
 // TODO: usar props
 const MenuMobile = ({ className }: TMenuMobile) => {
   const userInfo = useUserInfo();
-  const [user, setUser] = useState<UserInfo>(userInfo);
+  const [user, setUser] = useState<UserInfoProps>(userInfo);
   const [authenticated, setAuthenticated] = useState<boolean>(
     userInfo.email !== undefined && userInfo.email !== ''
   );
@@ -399,7 +399,7 @@ const MenuMobile = ({ className }: TMenuMobile) => {
 // TODO: usar props
 const MenuDesktop = ({ className }: TMenuDesktop) => {
   const userInfo = useUserInfo();
-  const [user, setUser] = useState<UserInfo>(userInfo);
+  const [user, setUser] = useState<UserInfoProps>(userInfo);
   const [authenticated, setAuthenticated] = useState<boolean>(
     userInfo.email !== undefined && userInfo.email !== ''
   );

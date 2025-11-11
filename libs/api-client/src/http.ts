@@ -2,12 +2,11 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
 // Nome do cookie onde o token está armazenado
-const TOKEN_COOKIE_NAME = 'auth_token'; // Ajuste conforme seu projeto
+const TOKEN_COOKIE_NAME = 'token';
 
 // Configuração base do cliente HTTP
 const httpClient: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_ENDPOINT,
-  timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -18,7 +17,7 @@ const httpClient: AxiosInstance = axios.create({
 httpClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // Busca o token dos cookies
-    const token = Cookies.get('token');
+    const token = Cookies.get(TOKEN_COOKIE_NAME);
 
     if (token) {
       // Adiciona o token no header Authorization
