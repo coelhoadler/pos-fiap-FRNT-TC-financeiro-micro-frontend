@@ -19,3 +19,4 @@ export { default as store } from './store/login';
 export { DesktopMenu, MenuItens, MobileMenu } from './components/dashboard/MobileMenu';
 export { Title } from './components/dashboard/Title';
 export { Charts } from './components/dashboard/Charts';
+export { SuccessSnackbar } from './components/dashboard/SuccessSnackbar';
