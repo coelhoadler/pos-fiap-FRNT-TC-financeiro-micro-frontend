@@ -3,7 +3,7 @@ import { ITypeTransaction } from '../../Models/transactionModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import AccountStatement from '../AccountStatement';
 import CardBalance from '../CardBalance';
-import Charts from '../Charts';
+import { Charts } from '@financeiro/ui';
 import FormTransaction from '../TransactionContainer';
 
 export default function Home({ username }: { username: string }) {
