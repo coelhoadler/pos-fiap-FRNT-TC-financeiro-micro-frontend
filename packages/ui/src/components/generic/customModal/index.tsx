@@ -160,4 +160,4 @@ const CustomModal = ({
     </div>
   );
 };
-export { CustomModal };
+export default  CustomModal ;

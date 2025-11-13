@@ -4,13 +4,15 @@ import { Header } from "./components/Header";
 import { Provider } from "react-redux";
 import { store } from '@financeiro/ui';
 import { Footer } from '@financeiro/ui';
+import { HeaderLogin } from '@financeiro/ui';
 
 
 export default function Root(props) {
 
   return (
     <Provider store={store}>
-      <Header />
+      {/* <Header /> */}
+      <HeaderLogin />
       <Home />
       <Footer />
     </Provider>
