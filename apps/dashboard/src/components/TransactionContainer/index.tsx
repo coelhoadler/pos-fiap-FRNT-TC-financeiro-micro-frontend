@@ -6,7 +6,6 @@ import bgCardTransaction from "../../assets/img/bg-card-transaction.png";
 import womanCreditCard from "../../assets/img/woman-credit-card.png";
 import { alertDialogTypes } from "../../enums/alertDialogTypes";
 import Button from "../Button";
-// import AlertDialog from "../Dialog";
 import SuccessSnackbar from "../SuccessSnackbar";
 import { Title } from "@financeiro/ui";
 

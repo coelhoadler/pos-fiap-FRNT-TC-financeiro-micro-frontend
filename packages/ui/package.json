@@ -50,11 +50,16 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@headlessui/react": "^2.2.4",
     "@reduxjs/toolkit": "^2.8.2",
     "@types/jest": "^27.0.1",
     "@types/systemjs": "^6.1.1",
     "@types/webpack-env": "^1.16.2",
+    "@mui/x-charts": "^8.9.2",
+    "@mui/icons-material": "^7.2.0",
+    "@mui/material": "^7.2.0",
     "axios": "^1.11.0",
     "react-redux": "^9.2.0",
     "single-spa": "^5.9.3",

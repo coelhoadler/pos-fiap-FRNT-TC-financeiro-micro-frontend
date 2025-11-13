@@ -1,25 +1,9 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
 import { PieChart } from '@mui/x-charts/PieChart';
-import Button from '../Button';
+import { TransactionChartProps } from '../../../types/TChart';
 
-// TODO colocar este type em um arquivo separado - mudar nome do type para TransactionChartProps
-type TCharts = {
-  data: {
-    label: (location: string) => string;
-    value: number;
-  }[];
-  hasNoTransactions?: boolean;
-  error?: string;
-  endDate?: string;
-  startDate?: string;
-  onStartDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onEndDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  OnResetFilter?: () => void;
-  filterDisabled?: boolean;
-};
-
-const Charts = ({
+export const Charts = ({
   data,
   hasNoTransactions,
   error,
@@ -29,7 +13,7 @@ const Charts = ({
   onStartDateChange,
   onEndDateChange,
   OnResetFilter,
-}: TCharts) => {
+}: TransactionChartProps) => {
   return (
     <>
       <h2 className="text-center text-xl font-family-base text-primary font-bold mb-4">
@@ -63,12 +47,12 @@ const Charts = ({
               className="border border-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-[40px]  px-2 rounded cursor-pointer text-primary text-sm font-family-base "
             />
           </div>
-          <div className="flex items-center mt-[20px]">
+          <div className="flex items-center mt-5">
             <button
               onClick={OnResetFilter}
               type="button"
               disabled={filterDisabled}
-              className={`w-10 h-10 rounded-full bg-primary  text-[0px] flex justify-center items-center cursor-pointer hover:opacity-[.9] transition-all ${filterDisabled ? 'pointer-events-none' : ''
+              className={`w-10 h-10 rounded-full bg-primary  text-ui-zero flex justify-center items-center cursor-pointer hover:opacity-[.9] transition-all ${filterDisabled ? 'pointer-events-none' : ''
                 }`}
             >
               Reiniciar Filtros
@@ -136,5 +120,3 @@ const Charts = ({
     </>
   );
 };
-
-export default Charts;
