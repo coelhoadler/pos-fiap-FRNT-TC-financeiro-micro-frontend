@@ -1,3 +1,5 @@
+import useUserInfo from "../../hooks/useUserInfos"
+
 export type TMenu = {
   onClickItem?: () => void;
 };
@@ -24,9 +26,15 @@ export type TCustomLinkMenu = {
 
 export type TMenuMobile = {
   className?: string;
+  useAuth?: ReturnType<typeof useUserInfo>;
+  menuLinksItems: TMenuLinksItems[];
+  variant?: "dashboard" | "login";
 };
 export type TMenuDesktop = {
   className?: string;
+  useAuth?: ReturnType<typeof useUserInfo>;
+  menuLinksItems: TMenuLinksItems[];
+  variant?: "dashboard" | "login";
 };
 
 export type TMenuLogado = {

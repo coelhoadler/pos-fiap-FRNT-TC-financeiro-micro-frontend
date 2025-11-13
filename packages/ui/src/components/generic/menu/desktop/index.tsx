@@ -8,20 +8,24 @@ import MenuLogado from "../logado";
 
 import { default as store } from "../../../../store/login";
 
-import useUserInfo from "../../../../hooks/useUserInfos";
+// import useUserInfo from "../../../../hooks/useUserInfos";
 import { UserInfo } from "../../../../interfaces/login/IUser";
 
 import { logout } from "../../../../services/UserProfile/userService";
 import { logoutRequest } from "../../../../features/login/slice";
-import { MenulinksItems } from "../../../login/header/menuItems";
 
-import byteBankLogo from './../../../../assets/svg/logo-bytebank.svg';
-import byteBankLogoTablet from './../../../../assets/svg/logo-bytebank-tablet.svg';
-import illustrationRegisterModal from './../../../../assets/svg/ilustration-register-modal.svg';
-import illustrationLoginModal from './../../../../assets/svg/ilustration-login-modal.svg';
+import byteBankLogo from "./../../../../assets/svg/logo-bytebank.svg";
+import byteBankLogoTablet from "./../../../../assets/svg/logo-bytebank-tablet.svg";
+import illustrationRegisterModal from "./../../../../assets/svg/ilustration-register-modal.svg";
+import illustrationLoginModal from "./../../../../assets/svg/ilustration-login-modal.svg";
 // TODO: usar props
-const MenuDesktop = ({ className }: TMenuDesktop) => {
-  const userInfo = useUserInfo(); // talvez receber por paramentro 
+const MenuDesktop = ({
+  className,
+  useAuth,
+  menuLinksItems,
+  variant,
+}: TMenuDesktop) => {
+  const userInfo = useAuth; // talvez receber por paramentro
   const [user, setUser] = useState<UserInfo>(userInfo);
   const [authenticated, setAuthenticated] = useState<boolean>(
     userInfo.email !== undefined && userInfo.email !== ""
@@ -70,7 +74,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
             text="Inicio"
             href="/"
             isBlank={false}
-            className="text-[0px] cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block"
+            className="text-ui-zero cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block"
           />
           <img
             src={byteBankLogo}
@@ -84,7 +88,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           />
         </div>
         <nav className="space-x-6 text-green-500">
-          {MenulinksItems.map((link) => ( //receber por parametro
+          {menuLinksItems.map((link) => (
             <CustomLinkMenu
               key={link.text}
               text={link.text}
@@ -100,15 +104,19 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           onClick={handleOpenLogoutConfirmationModal}
           name={user.name}
         />
+      ) : variant === "login" ? (
+        <>
+          <div className="space-x-4">
+            <ActionButtonsMenu
+              onClickLogin={handleOpenLoginModal}
+              onClickRegister={handleOpenRegisterModal}
+            />
+          </div>
+        </>
       ) : (
-        <div className="space-x-4">
-          <ActionButtonsMenu
-            onClickLogin={handleOpenLoginModal}
-            onClickRegister={handleOpenRegisterModal}
-          />
-        </div>
+        ""
       )}
-      {!authenticated && (
+      {!authenticated && variant === "login" && (
         <>
           <CustomModal
             id="login-modal"
@@ -140,7 +148,7 @@ const MenuDesktop = ({ className }: TMenuDesktop) => {
           onClickLogout={handleLogout}
         />
       )}
-      {registered && (
+      {registered && variant === "login" && (
         <CustomModal
           id="logout-modal"
           title="Parabéns!!! &#127881; Conta criada com sucesso!"
