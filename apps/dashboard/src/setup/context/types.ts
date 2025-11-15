@@ -9,7 +9,7 @@ export type TransactionContextType = {
   setValueEdit: (value: string) => void;
   extract: any[];
   setExtract: (extract: any[]) => void;
-  transactionServices: ApiServices<ITransaction>;
+  transactionServices: any;
   typeTransactionEdit: ITypeTransaction;
   setTypeTransactionEdit: (typeTransaction: ITypeTransaction) => void;
   balance: number;

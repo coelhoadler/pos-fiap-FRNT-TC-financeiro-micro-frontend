@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { getAllTransactions } from '../../../../../libs/api-client/src/transactions';
+import { transactionServices } from '../../../../../libs/api-client/src/transactions';
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import { accountServices } from '../../services/Account/apiEndpoint';
-import { transactionServices } from '../../services/Transacoes/apiEndpoints';
+// import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 import { TransactionContextType, TransactionProviderProps } from './types';
 
 // TODO Verificar a possibilidade refatorar itens neste arquivo
@@ -11,6 +11,7 @@ import { TransactionContextType, TransactionProviderProps } from './types';
 const TransactionContext = createContext<TransactionContextType | undefined>(
   undefined
 );
+const transactionAPIMethods = new transactionServices<ITransaction>();
 
 export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   const [id, setId] = useState('');
@@ -21,10 +22,13 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   const [balance, setBalance] = useState<number>(0);
   const user = JSON.parse(localStorage.getItem('user')) || {};
 
+  // TODO: Verificar a possibilidade de remover
+  // tratamento de erro por aqui
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const responseData: any = await getAllTransactions();
+        const responseData: any =
+          await transactionAPIMethods.getTransactionsAll();
         if (responseData?.message === 'Nenhuma transação encontrada.') {
           setExtract([]);
           handlerUpdateAccount([]);
@@ -78,7 +82,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         setValueEdit,
         extract,
         setExtract,
-        transactionServices: transactionServices,
+        transactionServices: transactionAPIMethods,
         typeTransactionEdit,
         setTypeTransactionEdit,
         balance,

@@ -8,9 +8,8 @@ import {
 
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import { accountServices } from '../../services/Account/apiEndpoint';
-import { ApiServices } from '../../services/apiServices';
-import { transactionServices } from '../../services/Transacoes/apiEndpoints';
-import { getAllTransactions } from '../../../../../libs/api-client/src/transactions';
+// import { transactionServices } from '../../services/Transacoes/apiEndpoints';
+import { transactionServices } from '../../../../../libs/api-client/src/transactions';
 
 //TODO: verificar o que foi definido no modulo dashboard
 type TransactionContextType = {
@@ -20,7 +19,7 @@ type TransactionContextType = {
   setValueEdit: (value: string) => void;
   extract: any[];
   setExtract: (extract: any[]) => void;
-  transactionServices: ApiServices<ITransaction>;
+  transactionServices: any;
   typeTransactionEdit: ITypeTransaction;
   setTypeTransactionEdit: (typeTransaction: ITypeTransaction) => void;
   balance: number;
@@ -35,6 +34,8 @@ type TransactionProviderProps = {
   children: ReactNode;
 };
 
+const transactionAPIMethods = new transactionServices<ITransaction>();
+
 export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   const [id, setId] = useState('');
   const [valueEdit, setValueEdit] = useState('');
@@ -47,7 +48,9 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const responseData: any = await getAllTransactions();
+        const responseData: any =
+          await transactionAPIMethods.getTransactionsAll();
+        console.log(responseData);
         if (responseData?.message === 'Nenhuma transação encontrada.') {
           setExtract([]);
           handlerUpdateAccount([]);
@@ -92,7 +95,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         setValueEdit,
         extract,
         setExtract,
-        transactionServices: transactionServices,
+        transactionServices: transactionAPIMethods,
         typeTransactionEdit,
         setTypeTransactionEdit,
         balance,
