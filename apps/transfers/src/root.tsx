@@ -5,6 +5,7 @@ import { DesktopMenu } from './components/MobileMenu';
 import { useEffect, useState } from 'react';
 import { getUserProfile } from './services/UserProfile/apiEndpoints';
 import MyTransfers from './components/MyTransfers';
+import "./styles/globals.css";
 
 export default function Root() {
   const [username, setUsername] = useState('');

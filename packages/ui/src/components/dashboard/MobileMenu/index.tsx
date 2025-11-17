@@ -60,7 +60,7 @@ const MenuItens = ({ onClickItem }: TMenu) => {
           key={index}
           href={item.path}
           onClick={() => handleClick(item)}
-          className={`text-primary text-base font-family-base max-lg:border-0 pb-2 max-lg:mb-0 transition-all border-b border-primary mb-2 w-full text-center max-w-[100%] max-sm:pb-3 max-sm:mb-3 max-sm:max-w-[80%] ${item.title === activeItem
+          className={`text-ui-primary text-base font-family-base max-lg:border-0 pb-2 max-lg:mb-0 transition-all border-b border-ui-primary mb-2 w-full text-center max-w-[100%] max-sm:pb-3 max-sm:mb-3 max-sm:max-w-[80%] ${item.title === activeItem
             ? 'font-bold border-b-2 max-lg:border-b-2 max-lg:text-link max-lg:border-link max-sm:text-secondary'
             : 'font-normal'
             }`}
@@ -101,7 +101,7 @@ const MobileMenu = () => {
             )}
           </DisclosureButton>
           <div
-            className={`transition-all duration-500 fixed w-full top-0 h-screen z-30 bg-[#E4EDE3] p-4 ${open ? 'right-0' : 'right-[100%]'
+            className={`transition-all duration-500 fixed w-full top-0 h-screen z-30 bg-[#E4EDE3] p-4 ${open ? 'right-0' : 'right-full'
               }`}
           >
             <DisclosurePanel className="flex flex-col px-4 pb-4 space-y-2 items-end mt-4">
