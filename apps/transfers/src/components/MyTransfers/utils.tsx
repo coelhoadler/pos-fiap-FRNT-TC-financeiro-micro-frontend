@@ -30,7 +30,7 @@ export const buildTransactionEditForm = (transactionItem: ITransaction) => {
 
         <select
           id="type-transaction-option"
-          className="w-full md:w-[355px] h-[48px] border-solid border-1 border-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+          className="w-full md:w-[355px] h-12 border-solid border border-ui-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
           defaultValue={
             typeTransactionOptions.find(
               (option) =>
@@ -70,7 +70,7 @@ export const buildTransactionEditForm = (transactionItem: ITransaction) => {
 
         <CurrencyInput
           key={`edit-${transactionItem.id}`}
-          className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+          className="w-full md:w-[250px] h-12 border border-ui-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
           defaultValue={transactionItem.amount
             .replace('R$', '')
             .trim()

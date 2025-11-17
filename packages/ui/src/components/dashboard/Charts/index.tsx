@@ -16,35 +16,35 @@ export const Charts = ({
 }: TransactionChartProps) => {
   return (
     <>
-      <h2 className="text-center text-xl font-family-base text-primary font-bold mb-4">
+      <h2 className="text-center text-xl font-family-base text-ui-primary font-bold mb-4">
         Gráfico de transações
       </h2>
 
       <div className="flex gap-2 flex-col mb-4">
-        <label className="text-primary text-sm font-bold font-family-base mb-1">
+        <label className="text-ui-primary text-sm font-bold font-family-base mb-1">
           Busque a transação por data
         </label>
         <div className="flex gap-4 max-md:flex-wrap max-md:gap-2">
           <div className="flex flex-col mb-1  w-1/2 max-md:w-full">
-            <label className="text-primary text-sm font-normal font-family-base mb-1 ">
+            <label className="text-ui-primary text-sm font-normal font-family-base mb-1 ">
               De:
             </label>
             <input
               type="date"
               value={startDate}
               onChange={onStartDateChange}
-              className="border border-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-[40px]  px-2 rounded cursor-pointer text-primary text-sm font-family-base "
+              className="border border-ui-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-10  px-2 rounded cursor-pointer text-ui-primary text-sm font-family-base "
             />
           </div>
           <div className="flex flex-col mb-1 w-1/2 max-md:w-[80%]">
-            <label className="text-primary text-sm font-normal font-family-base mb-1 ">
+            <label className="text-ui-primary text-sm font-normal font-family-base mb-1 ">
               Até:
             </label>
             <input
               type="date"
               value={endDate}
               onChange={onEndDateChange}
-              className="border border-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-[40px]  px-2 rounded cursor-pointer text-primary text-sm font-family-base "
+              className="border border-ui-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-10  px-2 rounded cursor-pointer text-ui-primary text-sm font-family-base "
             />
           </div>
           <div className="flex items-center mt-5">
@@ -52,7 +52,7 @@ export const Charts = ({
               onClick={OnResetFilter}
               type="button"
               disabled={filterDisabled}
-              className={`w-10 h-10 rounded-full bg-primary  text-ui-zero flex justify-center items-center cursor-pointer hover:opacity-[.9] transition-all ${filterDisabled ? 'pointer-events-none' : ''
+              className={`w-10 h-10 rounded-full bg-ui-primary  text-ui-zero flex justify-center items-center cursor-pointer hover:opacity-[.9] transition-all ${filterDisabled ? 'pointer-events-none' : ''
                 }`}
             >
               Reiniciar Filtros

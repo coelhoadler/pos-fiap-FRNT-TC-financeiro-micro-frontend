@@ -19,14 +19,14 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       className={[
         'min-w-[250px]',
-        'h-[48px]',
-        `${primary ? 'hover:bg-primary' : 'hover:bg-secondary'}`,
+        'h-12',
+        `${primary ? 'hover:bg-ui-primary' : 'hover:bg-ui-secondary'}`,
         'bg-inactive',
         'cursor-pointer',
-        'text-primary',
+        'text-ui-primary',
         'hover:text-white',
         'py-2 px-4',
-        'rounded-[8px]',
+        'rounded-lg',
         'transition',
         'font-medium',
       ].join(' ')}

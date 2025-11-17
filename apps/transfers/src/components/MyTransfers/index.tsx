@@ -195,13 +195,13 @@ const MyTransfers = () => {
         );
         const min = filters.minimumValue
           ? parseFloat(
-              filters.minimumValue.replace(/\./g, '').replace(',', '.')
-            )
+            filters.minimumValue.replace(/\./g, '').replace(',', '.')
+          )
           : undefined;
         const max = filters.maximumValue
           ? parseFloat(
-              filters.maximumValue.replace(/\./g, '').replace(',', '.')
-            )
+            filters.maximumValue.replace(/\./g, '').replace(',', '.')
+          )
           : undefined;
 
         if (min !== undefined && isNaN(min)) return false;
@@ -318,7 +318,7 @@ const MyTransfers = () => {
                 currentPage > 0 && (
                   <Tooltip title="Página anterior">
                     <button
-                      className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                      className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
                       onClick={() =>
                         setCurrentPage((prev) => Math.max(prev - 1, 0))
                       }
@@ -330,22 +330,22 @@ const MyTransfers = () => {
 
               {filteredTransactions.length >
                 (currentPage + 1) * itemsPerPage && (
-                <Tooltip title="Próxima página">
-                  <button
-                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
-                    onClick={() =>
-                      setCurrentPage((prev) =>
-                        Math.min(
-                          prev + 1,
-                          Math.floor(filteredTransactions.length / itemsPerPage)
+                  <Tooltip title="Próxima página">
+                    <button
+                      className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
+                      onClick={() =>
+                        setCurrentPage((prev) =>
+                          Math.min(
+                            prev + 1,
+                            Math.floor(filteredTransactions.length / itemsPerPage)
+                          )
                         )
-                      )
-                    }
-                  >
-                    <ChevronRightIcon style={{ color: 'white' }} />
-                  </button>
-                </Tooltip>
-              )}
+                      }
+                    >
+                      <ChevronRightIcon style={{ color: 'white' }} />
+                    </button>
+                  </Tooltip>
+                )}
             </div>
           )}
         </>

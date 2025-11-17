@@ -42,7 +42,7 @@ export default function CardBalance({
   }, [balance]);
 
   return (
-    <div className="flex relative max-sm:flex-col max-sm:h-[700px] sm:min-h-[350px] w-full md:min-w-[320px] text-white bg-primary rounded-[10px]">
+    <div className="flex relative max-sm:flex-col max-sm:h-[700px] sm:min-h-[350px] w-full md:min-w-[320px] text-white bg-ui-primary rounded-[10px]">
       <img
         width={180}
         height={177}
@@ -70,9 +70,8 @@ export default function CardBalance({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className={`cursor-pointer size-6 text-orange-600 ${
-              showBalance ? 'visible' : 'hidden'
-            }`}
+            className={`cursor-pointer size-6 text-orange-600 ${showBalance ? 'visible' : 'hidden'
+              }`}
           >
             <path
               strokeLinecap="round"
@@ -92,9 +91,8 @@ export default function CardBalance({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className={`cursor-pointer size-6 text-orange-600 ${
-              showBalance ? 'hidden' : 'visible'
-            }`}
+            className={`cursor-pointer size-6 text-orange-600 ${showBalance ? 'hidden' : 'visible'
+              }`}
           >
             <path
               strokeLinecap="round"

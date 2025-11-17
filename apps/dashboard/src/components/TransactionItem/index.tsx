@@ -55,9 +55,8 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
         <div>
           <p className="text-md">{item.typeTransaction?.description}</p>
           <p
-            className={`text-md font-bold ${
-              parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
-            }`}
+            className={`text-md font-bold ${parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
+              }`}
           >
             {parseFloat(item.amount || '0') < 0 ? '-' : ''}{' '}
             {handleValueFormat(item.amount) || '0'}
@@ -66,7 +65,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
         <p className={'text-sm flex flex-col gap-3.5 text-white'}>
           <button
             title="Editar"
-            className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+            className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
               handleEditTransaction(item as ITransaction);
@@ -87,7 +86,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
 
           <button
             title="Excluir"
-            className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+            className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
             onClick={() => onDelete(item.id || '')}
           >
             <DeleteForeverIcon

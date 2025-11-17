@@ -26,13 +26,12 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
   };
 
   return (
-    <header className="flex justify-between items-center bg-primary h-[96px] p-1.5 fixed w-full z-30 shadow-[0px_2px_10px_1px_rgba(0,0,0,0.75)]">
+    <header className="flex justify-between items-center bg-ui-primary h-24 p-1.5 fixed w-full z-30 shadow-[0px_2px_10px_1px_rgba(0,0,0,0.75)]">
       <div className="max-w-[80%] m-auto w-full max-lg:max-w-full px-[15px] max-md:flex max-md:items-center">
         {isLoggedIn && <MobileMenu />}
         <div
-          className={`flex items-center gap-5 w-full ${
-            isLoggedIn ? 'justify-end' : 'justify-center'
-          }`}
+          className={`flex items-center gap-5 w-full ${isLoggedIn ? 'justify-end' : 'justify-center'
+            }`}
         >
           {isLoggedIn && (
             <div className="relative flex items-center gap-3">
@@ -50,23 +49,21 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
               </p>
               <img
                 src={arrowDown}
-                className={` w-3 h-3 transition-transform filter-(--filter-white) ${
-                  openDropDown ? 'rotate-180' : 'rotate-0'
-                }`}
+                className={` w-3 h-3 transition-transform filter-(--filter-white) ${openDropDown ? 'rotate-180' : 'rotate-0'
+                  }`}
                 alt="Seta"
               />
 
               <div
-                className={`absolute right-0 top-[50px] bg-white shadow-lg transition-all rounded-md p-2 w-full ${
-                  openDropDown
-                    ? 'animate-slide-in-top-soft z-[1]'
-                    : 'animate-slide-out-top-soft z-[-999999] hidden'
-                }`}
+                className={`absolute right-0 top-[50px] bg-white shadow-lg transition-all rounded-md p-2 w-full ${openDropDown
+                  ? 'animate-slide-in-top-soft z-1'
+                  : 'animate-slide-out-top-soft z-[-999999] hidden'
+                  }`}
               >
                 <ul>
                   <li>
                     <a
-                      className="rounded-md py-1 px-2 font-bold text-sm font-family-base block transition-all text-primary hover:bg-gray-100"
+                      className="rounded-md py-1 px-2 font-bold text-sm font-family-base block transition-all text-ui-primary hover:bg-gray-100"
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
@@ -86,7 +83,7 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
               <img
                 src={byteBankIconWhite}
                 alt="Bytebank"
-                className="h-10 mb-2 mt-3 "
+                className="h-10 mb-2 mt-3"
               />
             </div>
           )}

@@ -24,7 +24,7 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
     };
 
     return (
-        <header className="flex justify-between items-center bg-primary h-[96px] p-1.5 fixed w-full z-30 shadow-[0px_2px_10px_1px_rgba(0,0,0,0.75)]">
+        <header className="flex justify-between items-center bg-ui-primary h-24 p-1.5 fixed w-full z-30 shadow-[0px_2px_10px_1px_rgba(0,0,0,0.75)]">
             <div className="max-w-[80%] m-auto w-full max-lg:max-w-full px-[15px] max-md:flex max-md:items-center">
                 {isLoggedIn && <MobileMenu />}
                 <div
@@ -54,14 +54,14 @@ const Header = ({ nameUser, isLoggedIn }: THeader) => {
 
                             <div
                                 className={`absolute right-0 top-[50px] bg-white shadow-lg transition-all rounded-md p-2 w-full ${openDropDown
-                                    ? 'animate-slide-in-top-soft z-[1]'
+                                    ? 'animate-slide-in-top-soft z-1'
                                     : 'animate-slide-out-top-soft z-[-999999] hidden'
                                     }`}
                             >
                                 <ul>
                                     <li>
                                         <a
-                                            className="rounded-md py-1 px-2 font-bold text-sm font-family-base block transition-all text-primary hover:bg-gray-100"
+                                            className="rounded-md py-1 px-2 font-bold text-sm font-family-base block transition-all text-ui-primary hover:bg-gray-100"
                                             href="#"
                                             onClick={(e) => {
                                                 e.preventDefault();

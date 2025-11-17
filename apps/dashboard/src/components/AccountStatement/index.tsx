@@ -145,7 +145,7 @@ export default function AccountStatement({
               {currentPage > 0 && (
                 <Tooltip title="Página anterior">
                   <button
-                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                    className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
                     disabled={currentPage === 0}
                     onClick={() =>
                       setCurrentPage((prev) => Math.max(prev - 1, 0))
@@ -157,19 +157,19 @@ export default function AccountStatement({
               )}
               {(currentPage + 1) * itemsPerPage <
                 updatedTransactions.length && (
-                <Tooltip title="Próxima página">
-                  <button
-                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
-                    onClick={() => setCurrentPage((prev) => prev + 1)}
-                  >
-                    <ChevronRightIcon style={{ color: "white" }} />
-                  </button>
-                </Tooltip>
-              )}
+                  <Tooltip title="Próxima página">
+                    <button
+                      className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
+                      onClick={() => setCurrentPage((prev) => prev + 1)}
+                    >
+                      <ChevronRightIcon style={{ color: "white" }} />
+                    </button>
+                  </Tooltip>
+                )}
             </div>
           </>
         ) : (
-          <span className="text-gray-500 text-center">
+          <span className="text-ui-gray-500 text-center">
             Nenhuma transação encontrada.
           </span>
         )}

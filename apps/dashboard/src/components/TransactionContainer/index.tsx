@@ -212,7 +212,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
           <select
             id="type-transaction-option"
-            className="w-full md:w-[355px] h-[48px] border-solid border-1 border-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+            className="w-full md:w-[355px] h-[48px] border-solid border border-ui-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
             {...register("typeTransaction", { required: true })}
           >
             <option value="">Selecione uma opção</option>
@@ -254,7 +254,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
               locale: "pt-BR",
               currency: "BRL",
             }}
-            className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+            className="w-full md:w-[250px] h-[48px] border border-ui-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
             onValueChange={(event, originalValue, maskedValue) => {
               const valueWithoutCurrencySymbol = maskedValue.formatted.replace(
                 "R$",

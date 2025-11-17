@@ -81,9 +81,8 @@ const TransfersFiltersItem = ({
     <>
       {typeItem === 'select' ? (
         <select
-          className={`border w-full border-primary  focus:outline-none focus:shadow-md focus-visible:shadow-md h-[40px]  px-2 rounded cursor-pointer text-primary text-sm font-family-base ${
-            className ? className : ''
-          }`}
+          className={`border w-full border-ui-primary  focus:outline-none focus:shadow-md focus-visible:shadow-md h-10  px-2 rounded cursor-pointer text-ui-primary text-sm font-family-base ${className ? className : ''
+            }`}
           name={name}
           value={value}
           onChange={onChange}
@@ -103,9 +102,8 @@ const TransfersFiltersItem = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={`border border-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-[40px]  px-2 rounded cursor-pointer text-primary text-sm font-family-base ${
-            className ? className : ''
-          }`}
+          className={`border border-ui-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-10  px-2 rounded cursor-pointer text-ui-primary text-sm font-family-base ${className ? className : ''
+            }`}
           onKeyDown={onKeyDown}
         />
       ) : typeItem === 'currency' ? (
@@ -126,9 +124,8 @@ const TransfersFiltersItem = ({
             } as React.ChangeEvent<HTMLInputElement>;
             onChange(customEvent);
           }}
-          className={`border border-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md h-[40px] px-2 rounded cursor-pointer text-primary text-sm font-family-base ${
-            className || ''
-          }`}
+          className={`border border-ui-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md h-10 px-2 rounded cursor-pointer text-ui-primary text-sm font-family-base ${className || ''
+            }`}
         />
       ) : null}
     </>
@@ -143,9 +140,8 @@ const TransfersFiltersLabels = ({
 }: TTransfersFiltersLabels) => {
   return (
     <label
-      className={`text-primary text-sm font-bold font-family-base mb-1 ${
-        className ? className : ''
-      }`}
+      className={`text-ui-primary text-sm font-bold font-family-base mb-1 ${className ? className : ''
+        }`}
       style={style}
     >
       {text}
