@@ -1,5 +1,6 @@
-import React from 'react';
-import { TCustomLinkMenu } from '../../../../types/generic/TMenu';
+import React from "react";
+import { TCustomLinkMenu } from "../../../../types/generic/TMenu";
+import { cn } from "../../../../utils/utils";
 // TODO: usar props
 const CustomLinkMenu = ({
   text,
@@ -13,10 +14,11 @@ const CustomLinkMenu = ({
     <a
       href={href}
       title={text}
-      target={isBlank ? '_blank' : '_self'}
-      className={`text-ui-primary-2 text-ui-md font-family-ui-base font-bold transition-all hover:underline ${
-        className ? className : ''
-      }`}
+      target={isBlank ? "_blank" : "_self"}
+      className={cn(
+        `text-ui-primary-2 text-ui-md font-family-ui-base font-bold transition-all hover:underline`,
+        className
+      )}
       style={style}
       onClick={onClick}
     >

@@ -21,6 +21,7 @@ import CustomLinkMenu from "../customLink";
 import MenuLogado from "../logado";
 import ActionButtonsMenu from "../actionButtons";
 import CustomModal from "../../customModal";
+import { cn } from "../../../../utils/utils";
 
 // TODO: usar props
 const MenuMobile = ({
@@ -116,7 +117,7 @@ const MenuMobile = ({
               <img
                 src={hamburgerMenuIcon}
                 alt="Menu"
-                className="cursor-pointer filter-(--filter-ui-primary-2)"
+                className={cn(`cursor-pointer filter-(--filter-ui-primary-2)`, variant === "dashboard" ? "filter-(--filter-ui-white)" : variant === "login" ? "filter-(--filter-ui-primary-2)" : "")}
               />
             </button>
             <div className="relative">
@@ -126,16 +127,12 @@ const MenuMobile = ({
                 isBlank={false}
                 className="text-ui-zero cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block"
               />
-              <img src={byteBankLogo} alt="Bytebank" className="h-6" />
+              <img src={byteBankLogo} alt="Bytebank" className={cn(`h-6`, variant === "dashboard" ? "filter-(--filter-ui-white)" : variant === "login" ? "filter-(--filter-ui-primary-2)" : "")} />
             </div>
           </div>
 
           <div
-            className={` menu-mobile-wrapper min-h-screen w-full  fixed top-0 left-0  bg-black ${
-              open
-                ? "animate-ui-slide-in-left block"
-                : "animate-ui-slide-out-left hidden"
-            }`}
+            className={cn(`menu-mobile-wrapper min-h-screen w-full  fixed top-0 left-0  bg-black`,  open ? "animate-ui-slide-in-left block" : "animate-ui-slide-out-left hidden", variant === "dashboard" ? "bg-ui-primary" :variant ==="login" ?"bg-black" :"" )}
           >
             <div className="container max-w-full pt-10 px-10 m-auto">
               <button
@@ -146,11 +143,11 @@ const MenuMobile = ({
                 <img
                   src={closeIcon}
                   alt="Fechar menu"
-                  className="filter-(--filter-ui-primary-2) w-4 h-4"
+                  className={cn(`w-4 h-4`, variant === "dashboard" ? "filter-(--filter-ui-white)" : variant === "login" ? "filter-(--filter-ui-primary-2)" : "")}
                 />
               </button>
               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
-                <nav className="space-x-6 text-ui-primary-2 flex flex-col gap-4 w-full">
+                <nav className="space-x-6 flex flex-col gap-4 w-full">
                   {authenticated && (
                     <MenuLogado variant={variant} menuLinksItemsLogado={menuLinksItemsLogado}
                       onClick={() => {
@@ -162,7 +159,7 @@ const MenuMobile = ({
                   )}
                   {menuLinksItems.map((link) => (
                     <CustomLinkMenu
-                      className="border-b border-white pb-3 w-full m-0"
+                      className="border-b border-white pb-3 w-full m-0 text-white"
                       key={link.text}
                       text={link.text}
                       href={link.href}

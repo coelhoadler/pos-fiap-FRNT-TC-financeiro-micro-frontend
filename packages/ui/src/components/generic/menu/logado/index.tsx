@@ -73,11 +73,7 @@ const MenuLogado = ({
         </a>
 
         <div
-          className={`flex flex-col bg-black rounded-[5px] px-4 py-3 absolute left-0 top-[40px] w-full transition-all min-w-40 max-lg:min-w-0 max-md:relative max-md:top-0 max-md:px-0 max-md:pb-0 ${
-            openDropDown
-              ? "animate-ui-slide-in-top-soft z-[1]"
-              : "animate-ui-slide-out-top-soft z-[-999999] hidden"
-          }`}
+          className={cn(`flex flex-col bg-black rounded-[5px] px-4 py-3 absolute left-0 top-[40px] w-full transition-all min-w-40 max-lg:min-w-0 max-md:relative max-md:top-0 max-md:px-0 max-md:pb-0`,openDropDown ? "animate-ui-slide-in-top-soft z-[1]" : "animate-ui-slide-out-top-soft z-[-999999] hidden", variant === "dashboard" ? "bg-ui-primary max-md:bg-transparent" :variant ==="login" ?"bg-black" :"" ) }
         >
           {variant === "login" && (
             <>
@@ -92,7 +88,10 @@ const MenuLogado = ({
             </>
           )}
           <CustomLinkMenu
-            className={cn(`text-ui-sm pb-3 mb-3 border-b border-white hover:no-underline no-underline max-md:mb-0`, variant === "dashboard" ? "text-white":"")}
+            className={cn(
+              `text-ui-sm pb-3 mb-3 border-b border-white hover:no-underline no-underline max-md:mb-0`,
+              variant === "dashboard" ? "text-white" : ""
+            )}
             text="Sair"
             href="/"
             onClick={(e) => {
