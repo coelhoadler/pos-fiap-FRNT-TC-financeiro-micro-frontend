@@ -27,7 +27,7 @@ const MenuMobile = ({
   className,
   menuLinksItems,
   useAuth,
-  variant,
+  variant,menuLinksItemsLogado,
 }: TMenuMobile) => {
   const userInfo = useAuth;
   const [user, setUser] = useState<UserInfo>(userInfo);
@@ -152,7 +152,7 @@ const MenuMobile = ({
               <div className="flex flex-col justify-between h-full gap-4 w-full mt-4">
                 <nav className="space-x-6 text-ui-primary-2 flex flex-col gap-4 w-full">
                   {authenticated && (
-                    <MenuLogado
+                    <MenuLogado variant={variant} menuLinksItemsLogado={menuLinksItemsLogado}
                       onClick={() => {
                         handleOpenLogoutConfirmationModal();
                         handleClose();

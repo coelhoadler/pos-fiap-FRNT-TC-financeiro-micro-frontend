@@ -28,12 +28,13 @@ export type TMenuMobile = {
   className?: string;
   useAuth?: ReturnType<typeof useUserInfo>;
   menuLinksItems: TMenuLinksItems[];
+   menuLinksItemsLogado?: TMenuLinksItems[];
   variant?: "dashboard" | "login";
 };
 export type TMenuDesktop = {
   className?: string;
   useAuth?: ReturnType<typeof useUserInfo>;
-  menuLinksItems: TMenuLinksItems[];
+  menuLinksItems: TMenuLinksItems[]; menuLinksItemsLogado?: TMenuLinksItems[];
   variant?: "dashboard" | "login";
 };
 
@@ -41,6 +42,8 @@ export type TMenuLogado = {
   className?: string;
   name?: string;
   onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+  variant?: "dashboard" | "login";
+  menuLinksItemsLogado?: TMenuLinksItems[];
 };
 
 export type TMenuLinksItems = {

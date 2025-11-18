@@ -18,12 +18,14 @@ import byteBankLogo from "./../../../../assets/svg/logo-bytebank.svg";
 import byteBankLogoTablet from "./../../../../assets/svg/logo-bytebank-tablet.svg";
 import illustrationRegisterModal from "./../../../../assets/svg/ilustration-register-modal.svg";
 import illustrationLoginModal from "./../../../../assets/svg/ilustration-login-modal.svg";
+import { cn } from "../../../../utils/utils";
 // TODO: usar props
 const MenuDesktop = ({
   className,
   useAuth,
   menuLinksItems,
   variant,
+  menuLinksItemsLogado
 }: TMenuDesktop) => {
   const userInfo = useAuth; // talvez receber por paramentro
   const [user, setUser] = useState<UserInfo>(userInfo);
@@ -63,44 +65,42 @@ const MenuDesktop = ({
   };
 
   return (
-    <div
-      className={`container max-w-290 m-auto flex justify-between items-center ${
-        className ? className : ""
-      }`}
-    >
-      <div className="flex items-center space-x-4 ">
-        <div className="relative">
-          <CustomLinkMenu
-            text="Inicio"
-            href="/"
-            isBlank={false}
-            className="text-ui-zero cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block"
-          />
-          <img
-            src={byteBankLogo}
-            alt="Bytebank"
-            className="h-6 max-lg:hidden"
-          />
-          <img
-            src={byteBankLogoTablet}
-            alt="Bytebank"
-            className="h-6 max-lg:block hidden max-md:hidden"
-          />
-        </div>
-        <nav className="space-x-6 text-green-500">
-          {menuLinksItems.map((link) => (
+    <div className={cn(`container max-w-290 m-auto flex justify-between items-center`, variant === "dashboard" ? "justify-end": "", className)}>
+      {variant === "login" && (
+        <div className="flex items-center space-x-4 ">
+          <div className="relative">
             <CustomLinkMenu
-              key={link.text}
-              text={link.text}
-              href={link.href}
-              isBlank={link.isBlank}
+              text="Inicio"
+              href="/"
+              isBlank={false}
+              className="text-ui-zero cursor-pointer absolute top-0 left-0 right-0 bottom-0 m-auto z-[1] w-full h-full block"
             />
-          ))}
-        </nav>
-      </div>
+            <img
+              src={byteBankLogo}
+              alt="Bytebank"
+              className="h-6 max-lg:hidden"
+            />
+            <img
+              src={byteBankLogoTablet}
+              alt="Bytebank"
+              className="h-6 max-lg:block hidden max-md:hidden"
+            />
+          </div>
+          <nav className="space-x-6 text-ui-primary-2">
+            {menuLinksItems.map((item) => (
+              <CustomLinkMenu
+                key={item.text}
+                text={item.text}
+                href={item.href}
+                isBlank={item.isBlank}
+              />
+            ))}
+          </nav>
+        </div>
+      )}
 
       {authenticated ? (
-        <MenuLogado
+        <MenuLogado menuLinksItemsLogado={menuLinksItemsLogado} variant={variant}
           onClick={handleOpenLogoutConfirmationModal}
           name={user.name}
         />

@@ -12,3 +12,9 @@ export const LoginMenuItems: TMenuLinksItems[] = [
     isBlank: false,
   },
 ];
+export const LoginLogadoMenuItems: TMenuLinksItems[] = [
+  {
+    text: 'Dashboard',
+    href: '/dashboard',
+  }
+];
