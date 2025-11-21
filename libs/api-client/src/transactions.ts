@@ -1,8 +1,7 @@
 import api from './http';
-import { Iaccount } from './Models/accountModels';
-import { Itransaction } from './Models/transactionModels';
+import { ITransactionData, ITransactionMethods} from './Models/transactionModels';
 
-export class transactionServices<T> implements Itransaction {
+export class transactionServices<T> implements ITransactionMethods {
   getTransactionsAll = async () => {
     try {
       const response = await api.get('/api/transactions');
@@ -12,9 +11,15 @@ export class transactionServices<T> implements Itransaction {
     }
   };
 
-  // createTransaction = async (id: string) => {
-  //   return;
-  // };
+  createTransaction = async (data: ITransactionData) => {
+    try {
+      const response = await api.post('/api/transactions', data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching transactions:', error);
+    }
+  };
+
   // getTransactionById = async (id: string) => {
   //   return;
   // };

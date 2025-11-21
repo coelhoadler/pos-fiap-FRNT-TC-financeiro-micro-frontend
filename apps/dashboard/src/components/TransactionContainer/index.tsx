@@ -12,15 +12,18 @@ import Title from '../Title';
 
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
 import { accountServices } from '../../services/Account/apiEndpoint';
-import { transactionServices } from '../../services/Transacoes/apiEndpoints';
+// import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { IInputs } from '../../Models/FormModels';
+import { transactionServices } from '../../../../../libs/api-client/src/transactions';
 
 // TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
 };
+
+const transactionAPIMethods = new transactionServices<ITransaction>();
 
 const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const {
@@ -95,8 +98,6 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
     const form: ITransaction = {
       typeTransaction: { id: optionId, description: typeDescription },
-      //   amount: id ? valueWatched : _valueNew,
-      // amount: 0 ? valueWatched : _valueNew,
       amount: 0 ? '' : _valueNew,
       date: new Date().toISOString(),
       accountNumber: user.accountNumber,
@@ -111,15 +112,15 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
     try {
       if (id) {
-        await transactionServices.update(id, pendingFormData);
+        // await transactionServices.update(id, pendingFormData);
         setIdTemp(id);
       } else {
-        await transactionServices.create(pendingFormData);
+        await transactionAPIMethods.createTransaction(pendingFormData);
         handleNew();
         setIdTemp('');
       }
 
-      const response = await transactionServices.getAll();
+      const response = await transactionAPIMethods.getTransactionsAll();
       setExtract(response || []);
       handlerUpdateAccount(response || []);
 

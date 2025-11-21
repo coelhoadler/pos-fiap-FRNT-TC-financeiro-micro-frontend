@@ -1,7 +1,20 @@
-export interface Itransaction {
+export interface ITransactionMethods {
   getTransactionsAll: () => Promise<[]>;
   // getTransactionById: (id: string) => Promise<{}>;
-  // createTransaction: (data: Partial<{}>) => Promise<{}>;
+  createTransaction: (data: Partial<{}>) => Promise<{}>;
   // updateTransactionById: (id: string, data: Partial<{}>) => Promise<{}>;
   // deleteTransactionById: (id: string) => Promise<void>;
+}
+
+export interface ITransactionData {
+  id?: string;
+  typeTransaction: ITypeTransaction;
+  amount: string;
+  date: string;
+  accountNumber: string;
+}
+
+export interface ITypeTransaction {
+  id: string;
+  description: string;
 }
