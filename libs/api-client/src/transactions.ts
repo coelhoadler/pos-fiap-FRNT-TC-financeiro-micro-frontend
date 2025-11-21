@@ -7,7 +7,7 @@ export class transactionServices<T> implements ITransactionMethods {
       const response = await api.get('/api/transactions');
       return response.data;
     } catch (error) {
-      console.error('Error fetching transactions:', error);
+      console.error('Erro ao listar transações:', error);
     }
   };
 
@@ -16,16 +16,24 @@ export class transactionServices<T> implements ITransactionMethods {
       const response = await api.post('/api/transactions', data);
       return response.data;
     } catch (error) {
-      console.error('Error fetching transactions:', error);
+      console.error('Erro ao criar transação:', error);
     }
   };
 
   // getTransactionById = async (id: string) => {
   //   return;
   // };
-  // updateTransactionById = async (id: string) => {
-  //   return;
-  // };
+
+  updateTransaction = async (id: string, data: ITransactionData) => {
+    try {
+
+      const response = await api.put(`/api/transactions/${id}`,data);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao atualizar transação:', error);
+    }
+  };
+
   // deleteTransactionById = async (id: string) => {
   //   return;
   // };

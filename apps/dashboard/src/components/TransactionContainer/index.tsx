@@ -112,7 +112,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
     try {
       if (id) {
-        // await transactionServices.update(id, pendingFormData);
+        await transactionAPIMethods.updateTransaction(id, pendingFormData);
         setIdTemp(id);
       } else {
         await transactionAPIMethods.createTransaction(pendingFormData);
