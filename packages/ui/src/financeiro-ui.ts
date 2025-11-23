@@ -20,7 +20,7 @@ export { default as HeaderLogin } from './components/login/header';
 
 export { default as store } from './store/login';
 
-export { DesktopMenu, MenuItens, MobileMenu } from './components/dashboard/mobileMenu';
 export { Title } from './components/dashboard/title';
 export { Charts } from './components/dashboard/charts';
 export { SuccessSnackbar } from './components/dashboard/successSnackbar';
+export { default as SideBarMenuDashboard } from './components/dashboard/sidebarMenu';

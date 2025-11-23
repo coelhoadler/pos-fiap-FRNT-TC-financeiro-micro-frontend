@@ -1,6 +1,5 @@
 import "./styles/index.css";
 import Home from "./components/Home";
-import { Header } from "./components/Header";
 import { Provider } from "react-redux";
 import { store } from '@financeiro/ui';
 import { Footer } from '@financeiro/ui';

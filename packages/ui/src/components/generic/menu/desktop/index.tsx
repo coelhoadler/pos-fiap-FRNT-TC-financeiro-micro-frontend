@@ -25,7 +25,7 @@ const MenuDesktop = ({
   useAuth,
   menuLinksItems,
   variant,
-  menuLinksItemsLogado
+  menuLinksItemsLogado,
 }: TMenuDesktop) => {
   const userInfo = useAuth; // talvez receber por paramentro
   const [user, setUser] = useState<UserInfo>(userInfo);
@@ -65,7 +65,13 @@ const MenuDesktop = ({
   };
 
   return (
-    <div className={cn(`container max-w-290 m-auto flex justify-between items-center`, variant === "dashboard" ? "justify-end": "", className)}>
+    <div
+      className={cn(
+        `container max-w-290 m-auto flex justify-between items-center`,
+        variant === "dashboard" ? "justify-end" : "",
+        className
+      )}
+    >
       {variant === "login" && (
         <div className="flex items-center space-x-4 ">
           <div className="relative">
@@ -87,20 +93,26 @@ const MenuDesktop = ({
             />
           </div>
           <nav className="space-x-6 text-ui-primary-2">
-            {menuLinksItems.map((item) => (
-              <CustomLinkMenu
-                key={item.text}
-                text={item.text}
-                href={item.href}
-                isBlank={item.isBlank}
-              />
-            ))}
+            {menuLinksItems && (
+              <>
+                {menuLinksItems.map((item) => (
+                  <CustomLinkMenu
+                    key={item.text}
+                    text={item.text}
+                    href={item.href}
+                    isBlank={item.isBlank}
+                  />
+                ))}
+              </>
+            )}
           </nav>
         </div>
       )}
 
       {authenticated ? (
-        <MenuLogado menuLinksItemsLogado={menuLinksItemsLogado} variant={variant}
+        <MenuLogado
+          menuLinksItemsLogado={menuLinksItemsLogado}
+          variant={variant}
           onClick={handleOpenLogoutConfirmationModal}
           name={user.name}
         />

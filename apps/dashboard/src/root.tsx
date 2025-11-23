@@ -1,7 +1,7 @@
 import Home from "./components/Home";
 import { TransactionProvider } from "./setup/context/transactionContext";
 
-import { Header, DesktopMenu } from "@financeiro/ui";
+import { Header, SideBarMenuDashboard } from "@financeiro/ui";
 import { useEffect, useState } from "react";
 import { getUserProfile } from "./services/UserProfile/apiEndpoints";
 import "./styles/globals.css";
@@ -54,7 +54,7 @@ export default function Root() {
         ) : (
           <div className="lg:grid-cols-[250px_auto] lg:grid-colums md:grid-cols-1 w-full  grid gap-3 grid-cols-1">
             <div className="lg:justify-center lg:items-start max-sm:hidden flex justify-center items-center box-content grow">
-              <DesktopMenu />
+              <SideBarMenuDashboard />
             </div>
             <div className="lg:justify-center items-center md:items-start flex grow-3 justify-center max-lg:pt-5">
               <Home username={username} />

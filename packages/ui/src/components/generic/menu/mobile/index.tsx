@@ -195,23 +195,27 @@ const MenuMobile = ({
                       name={user.name}
                     />
                   )}
-                  {menuLinksItems.map((link) => (
-                    <CustomLinkMenu
-                      className={cn(
-                        `border-b border-white pb-3 w-full m-0 text-white`,
-                        variant === "login"
-                          ? "text-ui-primary-2 border-ui-primary-2"
-                          : variant === "dashboard"
-                          ? "text-white border-white"
-                          : ""
-                      )}
-                      key={link.text}
-                      text={link.text}
-                      href={link.href}
-                      isBlank={link.isBlank}
-                      onClick={handleClose}
-                    />
-                  ))}
+                  {menuLinksItems && (
+                    <>
+                      {menuLinksItems.map((link) => (
+                        <CustomLinkMenu
+                          className={cn(
+                            `border-b border-white pb-3 w-full m-0 text-white`,
+                            variant === "login"
+                              ? "text-ui-primary-2 border-ui-primary-2"
+                              : variant === "dashboard"
+                              ? "text-white border-white"
+                              : ""
+                          )}
+                          key={link.text}
+                          text={link.text}
+                          href={link.href}
+                          isBlank={link.isBlank}
+                          onClick={handleClose}
+                        />
+                      ))}
+                    </>
+                  )}
                 </nav>
                 {!authenticated && variant === "login" && (
                   <ActionButtonsMenu

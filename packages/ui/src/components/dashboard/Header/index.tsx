@@ -18,7 +18,7 @@ const Header = () => {
       <div className="max-md:block hidden w-full">
         <MenuMobile
           variant="dashboard"
-          menuLinksItems={DashboardMenuItems}
+          
           useAuth={userInfo}
         />
       </div>
