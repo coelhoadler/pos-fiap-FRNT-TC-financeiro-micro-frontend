@@ -9,4 +9,5 @@ export type TCustomModal = {
   type?: string;
   setOpen?: (open: boolean) => void;
   handleConfirmSubmit?: (event?: object) => void;
+  children?: React.ReactNode;
 };

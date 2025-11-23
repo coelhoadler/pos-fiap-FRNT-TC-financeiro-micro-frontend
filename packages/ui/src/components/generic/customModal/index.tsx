@@ -15,7 +15,7 @@ const CustomModal = ({
   onClickLogout,
   handleConfirmSubmit,
   setOpen,
-  type,
+  type,children
 }: TCustomModal) => {
   const handleClose = () => {
     if (!id) return;
@@ -73,6 +73,7 @@ const CustomModal = ({
           </button>
 
           <div className="w-full flex flex-col items-center justify-center gap-2 mt-8 mb-8">
+            {children && children }
             {pathImage && (
               <div className="mb-4">
                 <img

@@ -15,6 +15,8 @@ import { TransfersFilters } from './TransferFilter';
 import TransferItem from './TransferItem';
 import { buildTransactionEditForm } from './utils';
 
+import { CustomModal } from "@financeiro/ui";
+
 const MyTransfers = () => {
   const [myTransactions, setMyTransactions] = useState<ITransaction[]>([]);
   const [filteredTransactions, setFilteredTransactions] = useState<
@@ -355,12 +357,21 @@ const MyTransfers = () => {
 
       {dialogType?.type === alertDialogTypes.DELETE && (
         <>
-          <AlertDialog
+          {/* <AlertDialog
             open={showConfirmDialog}
             type={'Delete'}
             setOpen={setShowConfirmDialog}
             handleConfirmSubmit={() => handleConfirmSubmit(id)}
             handleCancelSubmit={handleCancelSubmit}
+          /> */}
+          <CustomModal
+            open={showConfirmDialog}
+            variant="transactions"
+            id="delete-transaction"
+            type={'Delete'}
+            setOpen={setShowConfirmDialog}
+            handleConfirmSubmit={() => handleConfirmSubmit(id)}
+
           />
 
           <SuccessSnackbar
@@ -385,6 +396,17 @@ const MyTransfers = () => {
             handleCancelSubmit={() => handleCancelEdit()}
             children={buildTransactionEditForm(edit)}
           />
+          {/* <CustomModal
+            open={showConfirmDialog}
+            type={'Edit'}
+            id="edit-transaction"
+            setOpen={setShowConfirmDialog}
+            handleConfirmSubmit={() => {
+              if (!edit.amount) return;
+              handleConfirmEditSubmit(edit);
+            }}
+            children={buildTransactionEditForm(edit)}
+          /> */}
 
           <SuccessSnackbar
             open={showSuccess}
