@@ -1,11 +1,13 @@
-import { TransactionProvider } from './setup/context/transactionContext';
+import { Header, SideBarMenuDashboard } from "@financeiro/ui";
 
-import Header from './components/Header';
+import "./styles/globals.css";
+
+import { TransactionProvider } from './setup/context/transactionContext';
+// import Header from './components/Header';
 import { DesktopMenu } from './components/MobileMenu';
 import { useEffect, useState } from 'react';
 import { getUserProfile } from './services/UserProfile/apiEndpoints';
 import MyTransfers from './components/MyTransfers';
-import "./styles/globals.css";
 
 export default function Root() {
   const [username, setUsername] = useState('');
@@ -35,7 +37,8 @@ export default function Root() {
 
   return (
     <TransactionProvider>
-      <Header isLoggedIn={isLoggedIn} nameUser={username} />
+      <Header />
+      {/* <Header isLoggedIn={isLoggedIn} nameUser={username} /> */}
       <main className={`flex justify-center min-w-[320px] pt-[116px] pb-4 max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7 ${error ? "h-screen" : ""
         }`}>
         {
@@ -52,7 +55,8 @@ export default function Root() {
           ) :
             <div className="lg:grid-cols-[250px_auto] lg:grid-colums md:grid-cols-1 w-full  grid gap-3 grid-cols-1">
               <div className="lg:justify-center lg:items-start max-sm:hidden flex justify-center items-center box-content grow">
-                <DesktopMenu />
+                {/* <DesktopMenu /> */}
+                <SideBarMenuDashboard />
               </div>
               <div className="lg:justify-center items-center md:items-start flex grow-3 justify-center max-lg:pt-5">
                 <MyTransfers />

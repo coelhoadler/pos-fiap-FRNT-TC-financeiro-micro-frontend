@@ -1,10 +1,11 @@
+import { Header, SideBarMenuDashboard } from "@financeiro/ui";
+import "./styles/globals.css";
+
 import Home from "./components/Home";
 import { TransactionProvider } from "./setup/context/transactionContext";
 
-import { Header, SideBarMenuDashboard } from "@financeiro/ui";
 import { useEffect, useState } from "react";
 import { getUserProfile } from "./services/UserProfile/apiEndpoints";
-import "./styles/globals.css";
 
 export default function Root() {
   const [username, setUsername] = useState("");
@@ -36,7 +37,8 @@ export default function Root() {
 
   return (
     <TransactionProvider>
-      <Header isLoggedIn={isLoggedIn} nameUser={username} />
+      {/* <Header isLoggedIn={isLoggedIn} nameUser={username} /> */}
+      <Header />
       <main
         className={`flex justify-center min-w-[320px] pt-[116px] pb-4 max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7 ${error ? "h-screen" : ""
           }`}
