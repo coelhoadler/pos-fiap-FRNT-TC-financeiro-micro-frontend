@@ -29,9 +29,15 @@ const MenuLogado = ({
             e.preventDefault();
             handleOpenDropDown();
           }}
-          className={`flex items-center max-md:flex-wrap max-md:pb-2 max-md:border-b max-md:border-b-white gap-2 relative ${
-            openDropDown ? "max-md:border-none max-md:pb-0" : ""
-          }`}
+          className={cn(
+            `flex items-center max-md:flex-wrap max-md:pb-2 max-md:border-b max-md:border-b-white gap-2 relative`,
+            openDropDown ? "max-md:border-none max-md:pb-0" : "",
+            variant === "login"
+              ? "max-md:border-b-ui-primary-2"
+              : variant === "dashboard"
+              ? "max-md:border-b-white"
+              : ""
+          )}
         >
           <img
             src={userIcon}
@@ -73,14 +79,31 @@ const MenuLogado = ({
         </a>
 
         <div
-          className={cn(`flex flex-col bg-black rounded-[5px] px-4 py-3 absolute left-0 top-[40px] w-full transition-all min-w-40 max-lg:min-w-0 max-md:relative max-md:top-0 max-md:px-0 max-md:pb-0`,openDropDown ? "animate-ui-slide-in-top-soft z-[1]" : "animate-ui-slide-out-top-soft z-[-999999] hidden", variant === "dashboard" ? "bg-ui-primary max-md:bg-transparent" :variant ==="login" ?"bg-black" :"" ) }
+          className={cn(
+            `flex flex-col bg-black rounded-[5px] px-4 py-3 absolute left-0 top-[40px] w-full transition-all min-w-40 max-lg:min-w-0 max-md:relative max-md:top-0 max-md:px-0 max-md:pb-0`,
+            openDropDown
+              ? "animate-ui-slide-in-top-soft z-[1]"
+              : "animate-ui-slide-out-top-soft z-[-999999] hidden",
+            variant === "dashboard"
+              ? "bg-ui-primary max-md:bg-transparent"
+              : variant === "login"
+              ? "bg-black"
+              : ""
+          )}
         >
-          {variant === "login" && (
+          {menuLinksItemsLogado && (
             <>
               {menuLinksItemsLogado?.map((item) => (
                 <CustomLinkMenu
                   key={item.href}
-                  className={cn(`text-ui-sm pb-3 mb-3 border-b border-white`)}
+                  className={cn(
+                    `text-ui-sm pb-3 mb-3 border-b border-white hover:no-underline no-underline max-md:mb-0`,
+                    variant === "dashboard"
+                      ? "text-white"
+                      : variant === "login"
+                      ? "text-ui-primary-2 border-ui-primary-2"
+                      : ""
+                  )}
                   text={item.text}
                   href={item.href}
                 />
@@ -90,7 +113,11 @@ const MenuLogado = ({
           <CustomLinkMenu
             className={cn(
               `text-ui-sm pb-3 mb-3 border-b border-white hover:no-underline no-underline max-md:mb-0`,
-              variant === "dashboard" ? "text-white" : ""
+              variant === "dashboard"
+                ? "text-white"
+                : variant === "login"
+                ? "text-ui-primary-2 border-ui-primary-2"
+                : ""
             )}
             text="Sair"
             href="/"
