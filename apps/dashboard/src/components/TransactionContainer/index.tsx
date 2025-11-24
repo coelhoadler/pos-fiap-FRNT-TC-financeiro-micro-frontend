@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import bgCardTransaction from "../../assets/img/bg-card-transaction.png";
 import womanCreditCard from "../../assets/img/woman-credit-card.png";
 import { alertDialogTypes } from "../../enums/alertDialogTypes";
-import Button from "../Button";
 import SuccessSnackbar from "../SuccessSnackbar";
 import { Title } from "@financeiro/ui";
 
@@ -16,7 +15,7 @@ import { useTransaction } from "../../setup/context/transactionContext";
 import { TAlertDialogType } from "../../types/TAlertDialogType";
 import { IInputs } from "../../Models/FormModels";
 
-import { CustomModal } from "@financeiro/ui";
+import { CustomModal, Button } from "@financeiro/ui";
 
 // TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {
@@ -278,15 +277,16 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
         <section className="flex gap-2 max-md:flex-wrap">
           <Button
-            primary
-            type="submit"
+            variant="primary"
+            typeButton="submit"
             onClick={() => handleOnlyTransactionEditing()}
-            label={id ? "Atualizar transação" : "Concluir transação"}
+            text={id ? "Atualizar transação" : "Concluir transação"}
           />
           {id && (
             <Button
-              type="button"
-              label="Cancelar"
+              typeButton="button"
+              text="Cancelar"
+              variant="primary-outline"
               onClick={() => {
                 handleCancelTransaction();
                 handleOnlyTransactionEditing();
