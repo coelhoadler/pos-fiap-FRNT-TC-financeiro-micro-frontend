@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// TODO: Verificar se precisa deste componente
+
 const initialState = {
     email: '',
     name: '',

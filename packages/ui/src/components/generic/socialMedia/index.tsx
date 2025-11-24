@@ -1,4 +1,4 @@
-// TODO: usar props
+
 import React from "react";
 import { TSocialMedia } from "../../../types/generic/TSocialMedia";
 

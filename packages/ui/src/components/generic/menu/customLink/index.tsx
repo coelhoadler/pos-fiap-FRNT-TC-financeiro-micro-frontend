@@ -1,7 +1,7 @@
 import React from "react";
 import { TCustomLinkMenu } from "../../../../types/generic/TMenu";
 import { cn } from "../../../../utils/utils";
-// TODO: usar props
+
 const CustomLinkMenu = ({
   text,
   href,

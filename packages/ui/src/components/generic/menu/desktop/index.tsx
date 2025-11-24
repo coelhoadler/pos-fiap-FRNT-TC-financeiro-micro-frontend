@@ -8,7 +8,6 @@ import MenuLogado from "../logado";
 
 import { default as store } from "../../../../store/login";
 
-// import useUserInfo from "../../../../hooks/useUserInfos";
 import { UserInfo } from "../../../../interfaces/login/IUser";
 
 import { logout } from "../../../../services/UserProfile/userService";
@@ -19,7 +18,7 @@ import byteBankLogoTablet from "./../../../../assets/svg/logo-bytebank-tablet.sv
 import illustrationRegisterModal from "./../../../../assets/svg/ilustration-register-modal.svg";
 import illustrationLoginModal from "./../../../../assets/svg/ilustration-login-modal.svg";
 import { cn } from "../../../../utils/utils";
-// TODO: usar props
+
 const MenuDesktop = ({
   className,
   useAuth,

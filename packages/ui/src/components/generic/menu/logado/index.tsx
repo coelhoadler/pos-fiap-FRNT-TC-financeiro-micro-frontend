@@ -7,7 +7,7 @@ import arrowDown from "./../../../../assets/svg/arrow-down.svg";
 import CustomLinkMenu from "../customLink";
 import { cn } from "../../../../utils/utils";
 
-// TODO: usar props
+
 const MenuLogado = ({
   name,
   className,

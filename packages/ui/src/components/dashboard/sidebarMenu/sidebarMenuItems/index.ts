@@ -9,13 +9,5 @@ export const sideBarMenuItems: TSideBarMenuItems[] = [
   {
     title: 'Transferências',
     path: Routes.TRANSFERENCIAS,
-  },
-  {
-    title: 'Investimentos',
-    path: Routes.INVESTIMENTOS,
-  },
-  {
-    title: 'Outros serviços',
-    path: Routes.OUTROS_SERVICOS,
-  },
+  }
 ];

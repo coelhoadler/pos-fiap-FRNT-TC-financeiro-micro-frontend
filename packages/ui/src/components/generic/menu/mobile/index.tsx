@@ -23,7 +23,7 @@ import ActionButtonsMenu from "../actionButtons";
 import CustomModal from "../../customModal";
 import { cn } from "../../../../utils/utils";
 
-// TODO: usar props
+
 const MenuMobile = ({
   className,
   menuLinksItems,

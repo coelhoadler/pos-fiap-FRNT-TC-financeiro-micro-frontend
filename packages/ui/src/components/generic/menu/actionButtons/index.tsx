@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "../../button";
 import { TActionButtonsMenu } from "../../../../types/generic/TMenu";
 
-// TODO: usar props - E mudar nome da função para algo extenso e mais fácil de entender
 const ActionButtonsMenu = ({
   onClickLogin,
   onClickRegister,

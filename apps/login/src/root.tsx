@@ -10,7 +10,6 @@ export default function Root(props) {
 
   return (
     <Provider store={store}>
-      {/* <Header /> */}
       <HeaderLogin />
       <Home />
       <Footer />

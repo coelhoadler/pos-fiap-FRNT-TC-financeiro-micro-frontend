@@ -5,7 +5,6 @@ import vantagem2Image from "./../../assets/vantagem2.svg";
 import vantagem3Image from "./../../assets/vantagem3.svg";
 import vantagem4Image from "./../../assets/vantagem4.svg";
 
-// TODO: Rever se precisa deste componente
 const Home: React.FC = () => {
   return (
     <div className="flex flex-col bg-linear-to-b bg-ui-primary to-white py-28 min-h-screen px-10">

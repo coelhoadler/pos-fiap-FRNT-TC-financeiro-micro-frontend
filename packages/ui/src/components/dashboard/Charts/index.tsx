@@ -1,7 +1,7 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { TransactionChartProps } from '../../../types/TChart';
+import { TransactionChartProps } from '../../../types/generic/TChart';
 
 export const Charts = ({
   data,

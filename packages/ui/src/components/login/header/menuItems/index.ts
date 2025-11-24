@@ -1,5 +1,5 @@
 import { TMenuLinksItems } from '../../../../types/generic/TMenu';
-// TODO: Criar um enum para os links do menu
+
 export const LoginMenuItems: TMenuLinksItems[] = [
   {
     text: 'Sobre',

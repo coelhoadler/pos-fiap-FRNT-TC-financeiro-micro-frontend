@@ -17,16 +17,16 @@ export const Footer = ({ className, id }: TFooter) => {
         <div className="max-md:w-full max-md:flex max-md:flex-col max-md:items-center">
           <MenuTitle text="Serviços" />
           <ul className="space-y-1">
-            {servicesFooter.map((item) => (
-              <MenuItems text={item.text} />
+            {servicesFooter.map((item,index) => (
+              <MenuItems key={index} text={item.text} />
             ))}
           </ul>
         </div>
         <div className="max-md:w-full max-md:flex max-md:flex-col max-md:items-center">
           <MenuTitle text="Contato" />
           <ul className="space-y-1">
-            {contactFooter.map((item) => (
-              <MenuItems text={item.text} link={item.link} />
+            {contactFooter.map((item, index) => (
+                <MenuItems key={index} text={item.text} link={item.link} />
             ))}
           </ul>
         </div>
@@ -38,11 +38,12 @@ export const Footer = ({ className, id }: TFooter) => {
             className="h-5 mb-2 mt-3 "
           />
           <div className="mt-4 flex space-x-4 ">
-            {socialMedia.map((item) => (
+            {socialMedia.map((item,index) => (
               <SocialMedia
                 text={item.text}
                 href={item.link}
                 image={item.image}
+                key={index}
               />
             ))}
           </div>
