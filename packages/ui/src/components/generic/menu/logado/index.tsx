@@ -21,7 +21,7 @@ const MenuLogado = ({
   };
 
   return (
-    <div className={`max-md:w-full menu-logado ${className ? className : ""}`}>
+    <div className={cn(`max-md:w-full menu-logado`, className)}>
       <div className="relative">
         <a
           href="#"

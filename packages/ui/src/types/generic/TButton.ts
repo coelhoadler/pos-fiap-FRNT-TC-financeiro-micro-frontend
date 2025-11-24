@@ -5,4 +5,5 @@ export type TButton = {
     variant?: | 'primary-outline' | 'primary' | 'primary-2-outline' | 'primary-2';
     typeButton?: "button" | "submit" | "reset";
     children?: React.ReactNode;
+    disabled?: boolean;
 };

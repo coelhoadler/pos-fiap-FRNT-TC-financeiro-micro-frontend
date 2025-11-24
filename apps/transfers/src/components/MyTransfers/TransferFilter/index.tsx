@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Button from '../../Button';
+// import Button from '../../Button';
 import CurrencyInput from 'react-currency-input-field';
+import {  Button } from "@financeiro/ui";
 
 //TODO: separar em componentes cada transfer
 
@@ -249,13 +250,13 @@ const TransfersFilters = ({
 
       <TransfersFiltersItemContainer className="mt-auto">
         <Button
-          label="Reiniciar Filtros"
-          type="button"
+          text="Reiniciar Filtros"
+          typeButton="button"
           onClick={() => {
             onResetFilters();
             setFilterDisabledButtonReset(true);
           }}
-          style={{ minWidth: '0', height: '40px', borderRadius: '4px' }}
+          variant="primary"
           disabled={filterDisabledButtonReset}
         />
       </TransfersFiltersItemContainer>
