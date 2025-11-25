@@ -37,7 +37,7 @@ export default function Root() {
 
   return (
     <TransactionProvider>
-      {/* <Header isLoggedIn={isLoggedIn} nameUser={username} /> */}
+      
       <Header />
       <main
         className={`flex justify-center min-w-[320px] pt-[116px] pb-4 max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7 ${error ? "h-screen" : ""
