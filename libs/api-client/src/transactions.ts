@@ -1,3 +1,4 @@
+
 import api from './http';
 import { ITransactionData, ITransactionMethods} from './Models/transactionModels';
 
@@ -20,13 +21,17 @@ export class transactionServices<T> implements ITransactionMethods {
     }
   };
 
-  // getTransactionById = async (id: string) => {
-  //   return;
-  // };
+  getTransactionById = async (id: string) => {
+    try {
+      const response = await api.get(`/api/transactions/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar transação por id:', error);
+    }
+  };
 
   updateTransaction = async (id: string, data: ITransactionData) => {
     try {
-
       const response = await api.put(`/api/transactions/${id}`,data);
       return response.data;
     } catch (error) {
@@ -34,7 +39,11 @@ export class transactionServices<T> implements ITransactionMethods {
     }
   };
 
-  // deleteTransactionById = async (id: string) => {
-  //   return;
-  // };
+  deleteTransactionById = async (id: string) => {
+    try {
+      await api.delete(`/api/transactions/${id}`);
+    } catch (error) {
+      console.error('Erro ao deletar transação por id:', error);
+    }
+  };
 }

@@ -1,17 +1,16 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-
-import { transactionServices } from '../../../../../libs/api-client/src/transactions';
-import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
-import { accountServices } from '../../services/Account/apiEndpoint';
-// import { transactionServices } from '../../services/Transacoes/apiEndpoints';
+import { accountServices, transactionServices } from '../../../../../libs/api-client/src/index';
+import { ITransactionData, ITypeTransaction } from '../../../../../libs/api-client/src/Models/transactionModels';
 import { TransactionContextType, TransactionProviderProps } from './types';
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
 
 // TODO Verificar a possibilidade refatorar itens neste arquivo
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
   undefined
 );
-const transactionAPIMethods = new transactionServices<ITransaction>();
+const transactionAPIMethods = new transactionServices<ITransactionData>();
+const accountAPIMethods = new accountServices<IaccountData>();
 
 export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   const [id, setId] = useState('');
@@ -47,7 +46,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
     fetchTransaction();
   }, []);
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
         item.amount
@@ -63,14 +62,14 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
     }, 0);
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const account = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
       currency: 'BRL',
       accountType: 'Conta Corrente',
     };
-    await accountServices.updateAccountById(user.accountNumber, account);
+    await accountAPIMethods.updateAccountById(user.accountNumber, account);
   };
 
   return (
