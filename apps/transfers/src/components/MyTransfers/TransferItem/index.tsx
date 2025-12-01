@@ -1,14 +1,16 @@
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import FilePresentIcon from '@mui/icons-material/FilePresent';
-import axios from 'axios';
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { ITransaction } from '../../../Models/transactionModels';
-import { useTransaction } from '../../../setup/context/transactionContext';
-import { formatDate, formatTime } from '../../../utils/formatters';
-import SuccessSnackbar from '../../SucessSnackBar';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import FilePresentIcon from "@mui/icons-material/FilePresent";
+import axios from "axios";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { ITransaction } from "../../../Models/transactionModels";
+import { useTransaction } from "../../../setup/context/transactionContext";
+import { formatDate, formatTime } from "../../../utils/formatters";
+import SuccessSnackbar from "../../SucessSnackBar";
+
+import { Button } from "@financeiro/ui";
 
 //TODO: colocar interface em arquivo separado
 interface TransactionItemProps {
@@ -39,10 +41,10 @@ const TransferItem: React.FC<TransactionItemProps> = ({
 
   const handleValueFormat = (value: string) => {
     return parseFloat(
-      value.replace('R$', '').trim().replace(/\./g, '').replace(',', '.')
-    ).toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL',
+      value.replace("R$", "").trim().replace(/\./g, "").replace(",", ".")
+    ).toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
@@ -58,46 +60,46 @@ const TransferItem: React.FC<TransactionItemProps> = ({
       const sizeAllowed = file.size < 1 * 1024 * 1024; // 1MB
 
       if (!sizeAllowed) {
-        console.error('File size exceeds 1MB limit.');
+        console.error("File size exceeds 1MB limit.");
         return false;
       }
 
       try {
         const formData = new FormData();
-        const API_BASE_URL = 'http://localhost:3000';
+        const API_BASE_URL = "http://localhost:3000";
         const url = `${API_BASE_URL}/api/transactions/${id}/upload-image`;
-        formData.append('file', file);
+        formData.append("file", file);
 
         const responseFile = await axios.patch(url, formData, {
           withCredentials: true,
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         });
 
         if (responseFile.status !== 200) {
-          throw new Error('Failed to upload file');
+          throw new Error("Failed to upload file");
         }
 
         setShowSuccess(true);
         setExtract([]);
       } catch (error) {
         if (error.status === 401) {
-          toast.error('Sessão expirada, por favor faça login novamente.');
-          window.location.href = '/login';
+          toast.error("Sessão expirada, por favor faça login novamente.");
+          window.location.href = "/login";
         }
 
-        console.error('Error uploading file:', error);
-        toast.error('Error uploading file.');
+        console.error("Error uploading file:", error);
+        toast.error("Error uploading file.");
       }
     }
   };
 
   const handleDownloadBase64 = (base64: string, mimeType: string) => {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = `data:${mimeType};base64,${base64}`;
     link.download =
-      'comprovante_' + new Date().getTime() + '.' + mimeType.split('/')[1];
+      "comprovante_" + new Date().getTime() + "." + mimeType.split("/")[1];
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -106,58 +108,37 @@ const TransferItem: React.FC<TransactionItemProps> = ({
   return (
     <div className="mb-4 pb-4 border-b border-link" {...props}>
       <span className="text-link font-semibold">
-        {formatDate(item.date || '')}
+        {formatDate(item.date || "")}
       </span>
       <span className="ml-3 text-sm text-gray-500">
-        {formatTime(item.date || '')}
+        {formatTime(item.date || "")}
       </span>
       <div className="flex justify-between items-center">
         <div>
           <p className="text-md">{item.typeTransaction?.description}</p>
           <p
-            className={`text-md font-bold ${parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
-              }`}
+            className={`text-md font-bold ${
+              parseFloat(item.amount || "0") < 0 ? "text-red-600" : "text-black"
+            }`}
           >
-            {parseFloat(item.amount || '0') < 0 ? '-' : ''}{' '}
-            {handleValueFormat(item.amount) || '0'}
+            {parseFloat(item.amount || "0") < 0 ? "-" : ""}{" "}
+            {handleValueFormat(item.amount) || "0"}
           </p>
         </div>
-        <p className={'text-sm flex flex-col gap-3.5 text-white'}>
-          <button
-            title="Editar"
-            className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
+        <div className={"flex flex-col gap-3.5"}>
+          <Button
+            variant="edit"
+            text="Editar"
             onClick={() => {
               handleEditTransaction(item as ITransaction);
               onEdit(item as ITransaction);
             }}
-          >
-            <DriveFileRenameOutlineIcon
-              sx={{
-                color: 'white',
-                cursor: 'pointer',
-                transition: 'color 0.3s',
-                '&:hover': {
-                  color: '#8aec49',
-                },
-              }}
-            />
-          </button>
-          <button
-            title="Excluir"
-            className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
-            onClick={() => onDelete(item.id || '')}
-          >
-            <DeleteForeverIcon
-              sx={{
-                color: 'white',
-                cursor: 'pointer',
-                transition: 'color 0.3s',
-                '&:hover': {
-                  color: '#8d4d48',
-                },
-              }}
-            />
-          </button>
+          />
+          <Button
+            variant="delete"
+            text="Excluir"
+            onClick={() => onDelete(item.id || "")}
+          />
 
           {item.base64Image ? (
             <label
@@ -170,11 +151,11 @@ const TransferItem: React.FC<TransactionItemProps> = ({
             >
               <FileDownloadIcon
                 sx={{
-                  color: 'white',
-                  cursor: 'pointer',
-                  transition: 'color 0.3s',
-                  '&:hover': {
-                    color: '#8aec49', // exemplo: azul claro ao passar o mouse
+                  color: "white",
+                  cursor: "pointer",
+                  transition: "color 0.3s",
+                  "&:hover": {
+                    color: "#8aec49", 
                   },
                 }}
               />
@@ -193,17 +174,17 @@ const TransferItem: React.FC<TransactionItemProps> = ({
                 className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
                 title="Anexar comprovante"
               >
-                <FilePresentIcon style={{ color: 'white' }} />
+                <FilePresentIcon style={{ color: "white" }} />
               </label>
             </>
           )}
-        </p>
+        </div>
       </div>
 
       <SuccessSnackbar
         open={showSuccess}
         onClose={() => setShowSuccess(false)}
-        message={'Arquivo adicionado com sucesso!'}
+        message={"Arquivo adicionado com sucesso!"}
         duration={3000}
       />
     </div>

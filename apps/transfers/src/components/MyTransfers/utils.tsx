@@ -19,7 +19,7 @@ export const buildTransactionEditForm = (transactionItem: ITransaction) => {
   };
 
   return (
-    <>
+    <div className='w-full'>
       <fieldset className="flex flex-col">
         <Title
           text="*Campo obrigatório"
@@ -90,6 +90,6 @@ export const buildTransactionEditForm = (transactionItem: ITransaction) => {
           }}
         />
       </fieldset>
-    </>
+    </div>
   );
 };

@@ -3,9 +3,7 @@ import React from 'react';
 import { ITransaction } from '../../Models/transactionModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../utils/formatters';
-
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import { Button } from '@financeiro/ui';
 
 // TODO Colocar está interface em um arquivo separado
 interface TransactionItemProps {
@@ -62,45 +60,15 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
             {handleValueFormat(item.amount) || '0'}
           </p>
         </div>
-        <p className={'text-sm flex flex-col gap-3.5 text-white'}>
-          <button
-            title="Editar"
-            className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
-            onClick={(e) => {
+        <div className={'flex flex-col gap-3.5 '}>
+
+          <Button variant="edit" text="Editar" onClick={(e) => {
               e.stopPropagation();
               handleEditTransaction(item as ITransaction);
               onEdit?.();
-            }}
-          >
-            <DriveFileRenameOutlineIcon
-              sx={{
-                color: 'white',
-                cursor: 'pointer',
-                transition: 'color 0.3s',
-                '&:hover': {
-                  color: '#8aec49',
-                },
-              }}
-            />
-          </button>
-
-          <button
-            title="Excluir"
-            className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
-            onClick={() => onDelete(item.id || '')}
-          >
-            <DeleteForeverIcon
-              sx={{
-                color: 'white',
-                cursor: 'pointer',
-                transition: 'color 0.3s',
-                '&:hover': {
-                  color: '#8d4d48',
-                },
-              }}
-            />
-          </button>
-        </p>
+            }} />
+          <Button variant="delete" text="Excluir" onClick={() => onDelete(item.id || '')} />
+        </div>
       </div>
     </div>
   );
