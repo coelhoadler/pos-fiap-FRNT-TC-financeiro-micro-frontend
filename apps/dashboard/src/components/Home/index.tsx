@@ -5,20 +5,14 @@ import AccountStatement from '../AccountStatement';
 import CardBalance from '../CardBalance';
 import { Charts } from '@financeiro/ui';
 import FormTransaction from '../TransactionContainer';
+import { transactions } from './utils/transactions';
 
 export default function Home({ username }: { username: string }) {
   const { extract, balance } = useTransaction();
 
-  // TODO Criar um arquivo global (constant.ts) para o array de tipos de transações
   const [typeTransactionOptions, setTypeTransactionOptions] = useState<
     ITypeTransaction[]
-  >(() => {
-    return [
-      { id: '1', description: 'Câmbio e Moedas' },
-      { id: '2', description: 'DOC/TED' },
-      { id: '3', description: 'Empréstimo e Financiamento' },
-    ];
-  });
+  >(() => transactions);
 
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');

@@ -16,6 +16,7 @@ import { TAlertDialogType } from "../../types/TAlertDialogType";
 import { IInputs } from "../../Models/FormModels";
 
 import { CustomModal, Button } from "@financeiro/ui";
+import { transactions } from "../Home/utils/transactions";
 
 // TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {
@@ -47,13 +48,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   // TODO Consumir do arquivo global que contem os tipos de transações
   const [typeTransactionOptions, setTypeTransactionOptions] = useState<
     ITypeTransaction[]
-  >(() => {
-    return [
-      { id: "1", description: "Câmbio e Moedas" },
-      { id: "2", description: "DOC/TED" },
-      { id: "3", description: "Empréstimo e Financiamento" },
-    ];
-  });
+  >(() => transactions);
 
   const [valueWatched, setValueWatched] = useState<string>("");
 
