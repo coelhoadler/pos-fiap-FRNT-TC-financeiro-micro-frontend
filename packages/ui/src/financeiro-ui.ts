@@ -2,7 +2,7 @@
 import './styles/index.css';
 
 export { Button } from './components/generic/button';
-export { default as Header } from './components/dashboard/header';
+export { default as Header } from './components/dashboard/Header';
 
 export { default as CustomModal } from './components/generic/customModal';
 
@@ -20,7 +20,7 @@ export { default as HeaderLogin } from './components/login/header';
 
 export { default as store } from './store/login';
 
-export { Title } from './components/dashboard/title';
-export { Charts } from './components/dashboard/charts';
-export { SuccessSnackbar } from './components/dashboard/successSnackbar';
+export { Title } from './components/dashboard/Title';
+export { Charts } from './components/dashboard/Charts';
+export { SuccessSnackbar } from './components/dashboard/SuccessSnackbar';
 export { default as SideBarMenuDashboard } from './components/dashboard/sidebarMenu';
