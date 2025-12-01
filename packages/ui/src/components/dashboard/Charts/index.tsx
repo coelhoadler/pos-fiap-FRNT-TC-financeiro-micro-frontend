@@ -1,7 +1,8 @@
-import React from 'react';
-import Stack from '@mui/material/Stack';
-import { PieChart } from '@mui/x-charts/PieChart';
-import { TransactionChartProps } from '../../../types/generic/TChart';
+import React from "react";
+import Stack from "@mui/material/Stack";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { TransactionChartProps } from "../../../types/generic/TChart";
+import { Button } from "../../generic/button";
 
 export const Charts = ({
   data,
@@ -48,32 +49,12 @@ export const Charts = ({
             />
           </div>
           <div className="flex items-center mt-5">
-            <button
+            <Button
+              variant="reload"
               onClick={OnResetFilter}
-              type="button"
               disabled={filterDisabled}
-              className={`w-10 h-10 rounded-full bg-ui-primary  text-ui-zero flex justify-center items-center cursor-pointer hover:opacity-[.9] transition-all ${filterDisabled ? 'pointer-events-none' : ''
-                }`}
-            >
-              Reiniciar Filtros
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-white"
-              >
-                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-                <path d="M21 3v5h-5" />
-                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-                <path d="M8 16H3v5" />
-              </svg>
-            </button>
+              text="Reiniciar Filtros"
+            />
           </div>
         </div>
       </div>
@@ -88,15 +69,15 @@ export const Charts = ({
           alignItems="center"
         >
           <PieChart
-            colors={['#004d61', '#47a138', '#ff5031']}
+            colors={["#004d61", "#47a138", "#ff5031"]}
             series={[
               {
                 innerRadius: 70,
                 outerRadius: 100,
                 valueFormatter: ({ value }) =>
-                  value.toLocaleString('pt-br', {
-                    style: 'currency',
-                    currency: 'BRL',
+                  value.toLocaleString("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
                   }),
                 data,
               },
@@ -105,9 +86,9 @@ export const Charts = ({
             width={250}
             slotProps={{
               legend: {
-                direction: 'horizontal',
-                position: { vertical: 'bottom', horizontal: 'center' },
-                className: 'flex w-full justify-start flex-wrap gap-2',
+                direction: "horizontal",
+                position: { vertical: "bottom", horizontal: "center" },
+                className: "flex w-full justify-start flex-wrap gap-2",
               },
             }}
           />

@@ -73,7 +73,7 @@ const CustomModal = ({
           </button>
 
           <div className="w-full flex flex-col items-center justify-center gap-2 mt-8 mb-8">
-            {children && children }
+            {children && variant !== "transactions" && children }
             {pathImage && (
               <div className="mb-4">
                 <img
@@ -137,6 +137,7 @@ const CustomModal = ({
                 <h4 className="font-family-ui-base text-ui-md font-semibold text-black text-center mb-4">
                   {getDialogMessage()}
                 </h4>
+                {children && children }
                 <div className="mt-2 max-w-[90%] flex justify-center items-center gap-10 m-auto max-md:max-w-full">
                   <Button
                     onClick={handleClose}

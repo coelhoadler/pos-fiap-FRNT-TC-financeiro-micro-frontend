@@ -385,7 +385,7 @@ const MyTransfers = () => {
 
       {dialogType?.type === alertDialogTypes.EDIT && (
         <>
-          <AlertDialog
+          {/* <AlertDialog
             open={showConfirmDialog}
             type={'Edit'}
             setOpen={setShowConfirmDialog}
@@ -395,8 +395,8 @@ const MyTransfers = () => {
             }}
             handleCancelSubmit={() => handleCancelEdit()}
             children={buildTransactionEditForm(edit)}
-          />
-          {/* <CustomModal
+          /> */}
+          <CustomModal
             open={showConfirmDialog}
             type={'Edit'}
             id="edit-transaction"
@@ -405,8 +405,9 @@ const MyTransfers = () => {
               if (!edit.amount) return;
               handleConfirmEditSubmit(edit);
             }}
+            variant="transactions"
             children={buildTransactionEditForm(edit)}
-          /> */}
+          />
 
           <SuccessSnackbar
             open={showSuccess}
