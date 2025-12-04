@@ -1,8 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { accountServices, transactionServices } from '../../../../../libs/api-client/src/index';
-import { ITransactionData, ITypeTransaction } from '../../../../../libs/api-client/src/Models/transactionModels';
-import { TransactionContextType, TransactionProviderProps } from './types';
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
 import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import {
+  ITransactionData,
+  ITypeTransaction,
+} from '../../../../../libs/api-client/src/Models/transactionModels';
+import {
+  TransactionContextType,
+  TransactionProviderProps,
+} from '../../types/TransactionContextType';
 
 // TODO Verificar a possibilidade refatorar itens neste arquivo
 

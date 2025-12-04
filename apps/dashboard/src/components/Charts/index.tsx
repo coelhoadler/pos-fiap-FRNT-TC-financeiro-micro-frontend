@@ -1,7 +1,6 @@
-import React from 'react';
 import Stack from '@mui/material/Stack';
 import { PieChart } from '@mui/x-charts/PieChart';
-import Button from '../Button';
+import React from 'react';
 
 // TODO colocar este type em um arquivo separado - mudar nome do type para TransactionChartProps
 type TCharts = {

@@ -1,15 +1,18 @@
-import Home from "./components/Home";
-import { TransactionProvider } from "./setup/context/transactionContext";
+import Home from './components/Home';
+import { TransactionProvider } from './setup/context/transactionContext';
 
-import Header from "./components/Header";
-import { DesktopMenu } from "./components/MobileMenu";
-import { useEffect, useState } from "react";
-import { getUserProfile } from "./services/UserProfile/apiEndpoints";
-import "./styles/globals.css";
+import Header from './components/Header';
+import { DesktopMenu } from './components/MobileMenu';
+import { useEffect, useState } from 'react';
+import { getUserProfile } from './services/UserProfile/apiEndpoints';
+import './styles/globals.css';
+
+// TODO: Resolver problema com uso do userInfo - Não direcina para o dashboard apos login
+// import { userInfo } from '../../../libs/api-client/src/index';
 
 export default function Root() {
-  const [username, setUsername] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState('');
+  const [error, setError] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -21,14 +24,14 @@ export default function Root() {
           setUsername(response.data.name);
           setIsLoggedIn(true);
         } else {
-          setError("Usuário não autenticado.");
+          setError('Usuário não autenticado.');
           setIsLoggedIn(false);
         }
       } catch (error) {
         if (error?.status === 401) {
           window.location.href = '/login';
         }
-        setError("Erro ao buscar informações do usuário.");
+        setError('Erro ao buscar informações do usuário.');
       }
     }
 
@@ -40,15 +43,22 @@ export default function Root() {
       <Header isLoggedIn={isLoggedIn} nameUser={username} />
       <main
         className={`flex justify-center min-w-[320px] pt-[116px] pb-[1rem] max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7 ${
-          error ? "h-screen" : ""
+          error ? 'h-screen' : ''
         }`}
       >
         {error ? (
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-col items-center justify-center shadow-lg py-6 px-10 bg-white rounded-md">
-              <h1 className="text-primary text-center font-family-base text-lg font-bold mb-5">{error}</h1>
-              <p className="font-family-base text-md mb-4">Por favor, faça login novamente.</p>
-              <a href="/" className="font-family-base text-md border border-primary rounded-sm py-2 px-4 text-primary hover:bg-primary transition-all hover:text-white ">
+              <h1 className="text-primary text-center font-family-base text-lg font-bold mb-5">
+                {error}
+              </h1>
+              <p className="font-family-base text-md mb-4">
+                Por favor, faça login novamente.
+              </p>
+              <a
+                href="/"
+                className="font-family-base text-md border border-primary rounded-sm py-2 px-4 text-primary hover:bg-primary transition-all hover:text-white "
+              >
                 Ir para a página de login
               </a>
             </div>

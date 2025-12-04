@@ -11,12 +11,14 @@ import SuccessSnackbar from '../SuccessSnackbar';
 import Title from '../Title';
 
 import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
-import { accountServices } from '../../services/Account/apiEndpoint';
-// import { transactionServices } from '../../services/Transacoes/apiEndpoints';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { IInputs } from '../../Models/FormModels';
-import { transactionServices } from '../../../../../libs/api-client/src/transactions';
+import {
+  transactionServices,
+  accountServices,
+} from '../../../../../libs/api-client/src/index';
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
 
 // TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {
@@ -24,6 +26,7 @@ type TFormTransaction = {
 };
 
 const transactionAPIMethods = new transactionServices<ITransaction>();
+const accountAPIMethods = new accountServices<IaccountData>();
 
 const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const {
@@ -179,7 +182,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
       accountType: 'Conta Corrente',
     };
     setBalance(accountJoana.balance);
-    await accountServices.updateAccountById(user.accountNumber, accountJoana);
+    await accountAPIMethods.updateAccountById(user.accountNumber, accountJoana);
   };
 
   const handleCancelTransaction = () => {

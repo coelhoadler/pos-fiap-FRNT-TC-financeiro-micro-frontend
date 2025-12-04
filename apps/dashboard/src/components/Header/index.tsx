@@ -1,9 +1,9 @@
-import profileIcon from '../../assets/svg/profile-icon.svg';
-import byteBankIconWhite from '../../assets/svg/icon-bytebank-white.svg';
-import arrowDown from '../../assets/svg/arrow-down.svg';
-import { MobileMenu } from '../MobileMenu';
 import { useState } from 'react';
-import { userLogout } from '../../services/UserProfile/apiEndpoints';
+import { userLogout } from '../../../../../libs/api-client/src/auth';
+import arrowDown from '../../assets/svg/arrow-down.svg';
+import byteBankIconWhite from '../../assets/svg/icon-bytebank-white.svg';
+import profileIcon from '../../assets/svg/profile-icon.svg';
+import { MobileMenu } from '../MobileMenu';
 
 // TODO Colocar este type em um arquivo separado - e mudar nome do type para HeaderProps
 export type THeader = {

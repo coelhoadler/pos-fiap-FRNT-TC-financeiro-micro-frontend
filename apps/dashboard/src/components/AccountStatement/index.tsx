@@ -1,21 +1,29 @@
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Tooltip from '@mui/material/Tooltip';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { ITransaction } from '../../Models/transactionModels';
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
 import { alertDialogTypes } from '../../enums/alertDialogTypes';
-import { accountServices } from '../../services/Account/apiEndpoint';
+import { ITransaction } from '../../Models/transactionModels';
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { sortExtractByAscDate } from '../../utils/formatters';
 import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SuccessSnackbar';
 import TransactionItem from '../TransactionItem';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import Tooltip from '@mui/material/Tooltip';
 
 type TAccountStatement = {
   onEditTransaction?: () => void;
 };
+
+const transactionAPIMethods = new transactionServices<ITransactionData>();
+const accountAPIMethods = new accountServices<IaccountData>();
 
 export default function AccountStatement({
   onEditTransaction,
@@ -23,8 +31,7 @@ export default function AccountStatement({
   const [updatedTransactions, setUpdatedTransactions] = useState<
     ITransaction[]
   >([]);
-  const { extract, transactionServices, setBalance, setExtract } =
-    useTransaction();
+  const { extract, setBalance, setExtract } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.DELETE,
   });
@@ -43,7 +50,7 @@ export default function AccountStatement({
   // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleTransactionDelete = async (transactionId: string) => {
     try {
-      await transactionServices.delete(transactionId);
+      await transactionAPIMethods.deleteTransactionById(transactionId);
 
       if (updatedTransactions) {
         const remainingTransactions = updatedTransactions.filter(
@@ -86,13 +93,13 @@ export default function AccountStatement({
       accountType: 'Conta Corrente',
     };
     setBalance(accountJoana.balance);
-    await accountServices.updateAccountById(user.accountNumber, accountJoana);
+    await accountAPIMethods.updateAccountById(user.accountNumber, accountJoana);
   };
 
   // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleConfirmSubmit = async (transactionId: string) => {
     try {
-      await transactionServices.delete(transactionId);
+      await transactionAPIMethods.deleteTransactionById(transactionId);
 
       if (updatedTransactions) {
         const remainingTransactions = updatedTransactions.filter(
