@@ -1,40 +1,25 @@
+import { createContext, useContext, useEffect, useState } from 'react';
+
 import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-
-import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
-import { accountServices } from '../../services/Account/apiEndpoint';
-// import { transactionServices } from '../../services/Transacoes/apiEndpoints';
-import { transactionServices } from '../../../../../libs/api-client/src/transactions';
-
-//TODO: verificar o que foi definido no modulo dashboard
-type TransactionContextType = {
-  id: string;
-  setId: (id: string) => void;
-  valueEdit: string;
-  setValueEdit: (value: string) => void;
-  extract: any[];
-  setExtract: (extract: any[]) => void;
-  transactionServices: any;
-  typeTransactionEdit: ITypeTransaction;
-  setTypeTransactionEdit: (typeTransaction: ITypeTransaction) => void;
-  balance: number;
-  setBalance: (balance: number) => void;
-};
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import {
+  ITransactionData,
+  ITypeTransaction,
+} from '../../../../../libs/api-client/src/Models/transactionModels';
+import {
+  TransactionContextType,
+  TransactionProviderProps,
+} from '../../types/TransactionContextType';
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
   undefined
 );
 
-type TransactionProviderProps = {
-  children: ReactNode;
-};
-
-const transactionAPIMethods = new transactionServices<ITransaction>();
+const transactionAPIMethods = new transactionServices<ITransactionData>();
+const accountAPIMethods = new accountServices<IaccountData>();
 
 export const TransactionProvider = ({ children }: TransactionProviderProps) => {
   const [id, setId] = useState('');
@@ -50,7 +35,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
       try {
         const responseData: any =
           await transactionAPIMethods.getTransactionsAll();
-        console.log(responseData);
+
         if (responseData?.message === 'Nenhuma transação encontrada.') {
           setExtract([]);
           handlerUpdateAccount([]);
@@ -63,10 +48,11 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         console.error('Erro ao buscar transações:', error);
       }
     };
+
     fetchTransaction();
   }, []);
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
         item.amount.replace('R$', '').trim().replace('.', '').replace(',', '.')
@@ -75,7 +61,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
     }, 0);
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const account = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
@@ -83,7 +69,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
       accountType: 'Conta Corrente',
     };
 
-    await accountServices.updateAccountById(user.accountNumber, account);
+    await accountAPIMethods.updateAccountById(user.accountNumber, account);
   };
 
   return (
@@ -95,7 +81,6 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         setValueEdit,
         extract,
         setExtract,
-        transactionServices: transactionAPIMethods,
         typeTransactionEdit,
         setTypeTransactionEdit,
         balance,

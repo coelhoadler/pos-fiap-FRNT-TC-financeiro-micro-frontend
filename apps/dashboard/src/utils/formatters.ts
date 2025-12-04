@@ -1,4 +1,4 @@
-import { ITransaction } from '../Models/transactionModels';
+import { ITransactionData } from '../../../../libs/api-client/src/Models/transactionModels';
 
 export const formatCurrency = (value: number) => {
   return value.toLocaleString('pt-BR', {
@@ -31,7 +31,7 @@ export const formatTime = (isoDate: string) => {
   return formatter.format(date);
 };
 
-export const sortExtractByAscDate = (extract: ITransaction[]) => {
+export const sortExtractByAscDate = (extract: ITransactionData[]) => {
   return extract.sort((a, b) => {
     const dateA = new Date(a.date || '').getTime();
     const dateB = new Date(b.date || '').getTime();

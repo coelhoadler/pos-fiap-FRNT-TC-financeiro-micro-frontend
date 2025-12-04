@@ -3,9 +3,12 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
 import { alertDialogTypes } from '../../enums/alertDialogTypes';
-import { ITransaction } from '../../Models/transactionModels';
-import { accountServices } from '../../services/Account/apiEndpoint';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { sortExtractByAscDate } from '../../utils/formatters';
@@ -14,11 +17,15 @@ import SuccessSnackbar from '../SucessSnackBar';
 import { TransfersFilters } from './TransferFilter';
 import TransferItem from './TransferItem';
 import { buildTransactionEditForm } from './utils';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
+
+const transactionAPIMethods = new transactionServices<ITransactionData>();
+const accountAPIMethods = new accountServices<IaccountData>();
 
 const MyTransfers = () => {
-  const [myTransactions, setMyTransactions] = useState<ITransaction[]>([]);
+  const [myTransactions, setMyTransactions] = useState<ITransactionData[]>([]);
   const [filteredTransactions, setFilteredTransactions] = useState<
-    ITransaction[]
+    ITransactionData[]
   >([]);
   const [filterError, setFilterError] = useState('');
   const [filters, setFilters] = useState({
@@ -29,11 +36,10 @@ const MyTransfers = () => {
     endDate: '',
   });
 
-  const { transactionServices, setBalance, extract, setExtract } =
-    useTransaction();
+  const { setBalance, extract, setExtract } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>();
   const [id, setId] = useState<string>('');
-  const [edit, setEdit] = useState<ITransaction>({} as ITransaction);
+  const [edit, setEdit] = useState<ITransactionData>({} as ITransactionData);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -44,8 +50,10 @@ const MyTransfers = () => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const responseData = await transactionServices.getAll();
+        const responseData = await transactionAPIMethods.getTransactionsAll();
+
         const extractOrdered = sortExtractByAscDate(responseData || []);
+
         setMyTransactions(extractOrdered);
       } catch (error) {
         if (error.status === 401) {
@@ -63,7 +71,7 @@ const MyTransfers = () => {
     setId(transactionId);
   };
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
         item.amount
@@ -79,7 +87,7 @@ const MyTransfers = () => {
     }, 0);
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const account = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
@@ -87,12 +95,12 @@ const MyTransfers = () => {
       accountType: 'Conta Corrente',
     };
 
-    await accountServices.updateAccountById(user.accountNumber, account);
+    await accountAPIMethods.updateAccountById(user.accountNumber, account);
   };
 
   const handleConfirmSubmit = async (transactionId: string) => {
     try {
-      await transactionServices.delete(transactionId);
+      await transactionAPIMethods.deleteTransactionById(transactionId);
       const remainingTransactions = myTransactions.filter(
         (t) => t.id !== transactionId
       );
@@ -109,14 +117,14 @@ const MyTransfers = () => {
     }
   };
 
-  const handleConfirmEditSubmit = async (transactionItem: ITransaction) => {
+  const handleConfirmEditSubmit = async (transactionItem: ITransactionData) => {
     const postTransaction = {
       ...transactionItem,
       date: new Date().toISOString(),
     };
 
     try {
-      const updatedTransaction = await transactionServices.update(
+      const updatedTransaction = await transactionAPIMethods.updateTransaction(
         postTransaction.id!,
         postTransaction
       );
@@ -141,7 +149,7 @@ const MyTransfers = () => {
     }
   };
 
-  const handleEditTransaction = (transactionItem: ITransaction) => {
+  const handleEditTransaction = (transactionItem: ITransactionData) => {
     localStorage.setItem('transactionItem', JSON.stringify(transactionItem));
 
     setDialogType({ type: alertDialogTypes.EDIT });

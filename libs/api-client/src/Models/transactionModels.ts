@@ -4,7 +4,6 @@ export interface ITransactionMethods {
   createTransaction: (data: Partial<{}>) => Promise<{}>;
   updateTransaction: (id: string, data: Partial<{}>) => Promise<{}>;
   deleteTransactionById: (id: string) => Promise<void>;
-  // updateAccountById: (accountNumber: string, data: Partial<{}>) => Promise<{}>;
 }
 
 export interface ITransactionData {
@@ -13,6 +12,8 @@ export interface ITransactionData {
   amount: string;
   date: string;
   accountNumber: string;
+  base64Image?: string;
+  fileMimetype?: string;
 }
 
 export interface ITypeTransaction {

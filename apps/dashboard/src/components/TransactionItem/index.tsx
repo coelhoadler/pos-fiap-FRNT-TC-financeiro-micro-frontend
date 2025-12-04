@@ -1,15 +1,14 @@
-import { Link } from '@mui/material';
 import React from 'react';
-import { ITransaction } from '../../Models/transactionModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../utils/formatters';
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
 
 // TODO Colocar está interface em um arquivo separado
 interface TransactionItemProps {
-  item: Partial<ITransaction>;
+  item: Partial<ITransactionData>;
   onDelete: (transactionId: string) => void;
   onEdit?: () => void;
 }
@@ -26,7 +25,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
     id,
     typeTransaction,
     amount,
-  }: ITransaction) => {
+  }: ITransactionData) => {
     setId(id!);
     setTypeTransactionEdit(typeTransaction);
     setValueEdit(amount);
@@ -69,7 +68,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
-              handleEditTransaction(item as ITransaction);
+              handleEditTransaction(item as ITransactionData);
               onEdit?.();
             }}
           >

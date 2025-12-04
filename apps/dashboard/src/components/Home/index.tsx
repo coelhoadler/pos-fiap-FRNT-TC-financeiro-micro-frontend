@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ITypeTransaction } from '../../Models/transactionModels';
+import { ITypeTransaction } from '../../../../../libs/api-client/src/Models/transactionModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import AccountStatement from '../AccountStatement';
 import CardBalance from '../CardBalance';

@@ -7,10 +7,9 @@ import {
   accountServices,
   transactionServices,
 } from '../../../../../libs/api-client/src/index';
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
 import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
 import { alertDialogTypes } from '../../enums/alertDialogTypes';
-import { ITransaction } from '../../Models/transactionModels';
-import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { sortExtractByAscDate } from '../../utils/formatters';
@@ -29,7 +28,7 @@ export default function AccountStatement({
   onEditTransaction,
 }: TAccountStatement) {
   const [updatedTransactions, setUpdatedTransactions] = useState<
-    ITransaction[]
+    ITransactionData[]
   >([]);
   const { extract, setBalance, setExtract } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
@@ -76,7 +75,7 @@ export default function AccountStatement({
     setId(transactionId);
   };
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
         item.amount.replace('R$', '').trim().replace('.', '').replace(',', '.')
@@ -85,7 +84,7 @@ export default function AccountStatement({
     }, 0);
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const accountJoana = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),

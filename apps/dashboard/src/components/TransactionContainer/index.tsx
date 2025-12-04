@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import CurrencyInput from 'react-currency-input-field';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import bgCardTransaction from '../../assets/img/bg-card-transaction.png';
 import womanCreditCard from '../../assets/img/woman-credit-card.png';
@@ -10,22 +10,25 @@ import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SuccessSnackbar';
 import Title from '../Title';
 
-import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
-import { useTransaction } from '../../setup/context/transactionContext';
-import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { IInputs } from '../../Models/FormModels';
 import {
-  transactionServices,
   accountServices,
+  transactionServices,
 } from '../../../../../libs/api-client/src/index';
 import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import {
+  ITransactionData,
+  ITypeTransaction,
+} from '../../../../../libs/api-client/src/Models/transactionModels';
+import { IInputs } from '../../Models/FormModels';
+import { useTransaction } from '../../setup/context/transactionContext';
+import { TAlertDialogType } from '../../types/TAlertDialogType';
 
 // TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
 };
 
-const transactionAPIMethods = new transactionServices<ITransaction>();
+const transactionAPIMethods = new transactionServices<ITransactionData>();
 const accountAPIMethods = new accountServices<IaccountData>();
 
 const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
@@ -43,9 +46,8 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.CONFIRM,
   });
-  const [pendingFormData, setPendingFormData] = useState<ITransaction | null>(
-    null
-  );
+  const [pendingFormData, setPendingFormData] =
+    useState<ITransactionData | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [idTemp, setIdTemp] = useState('');
   const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -99,7 +101,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
         ?.description || '';
     const _valueNew = watch('value');
 
-    const form: ITransaction = {
+    const form: ITransactionData = {
       typeTransaction: { id: optionId, description: typeDescription },
       amount: 0 ? '' : _valueNew,
       date: new Date().toISOString(),
@@ -144,7 +146,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     }
   };
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData?.reduce((total, item) => {
       const amount = parseFloat(
         item.amount
@@ -174,7 +176,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     }
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const accountJoana = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),

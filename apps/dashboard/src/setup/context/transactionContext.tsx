@@ -37,6 +37,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
       try {
         const responseData: any =
           await transactionAPIMethods.getTransactionsAll();
+
         if (responseData?.message === 'Nenhuma transação encontrada.') {
           setExtract([]);
           handlerUpdateAccount([]);
@@ -52,6 +53,7 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         console.error('Erro ao buscar transações:', error);
       }
     };
+
     fetchTransaction();
   }, []);
 
@@ -90,7 +92,6 @@ export const TransactionProvider = ({ children }: TransactionProviderProps) => {
         setValueEdit,
         extract,
         setExtract,
-        transactionServices: transactionAPIMethods,
         typeTransactionEdit,
         setTypeTransactionEdit,
         balance,

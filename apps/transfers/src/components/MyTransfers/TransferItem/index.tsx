@@ -5,16 +5,16 @@ import FilePresentIcon from '@mui/icons-material/FilePresent';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { ITransaction } from '../../../Models/transactionModels';
+import { ITransactionData } from '../../../../../../libs/api-client/src/Models/transactionModels';
 import { useTransaction } from '../../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../../utils/formatters';
 import SuccessSnackbar from '../../SucessSnackBar';
 
 //TODO: colocar interface em arquivo separado
 interface TransactionItemProps {
-  item: Partial<ITransaction>;
+  item: Partial<ITransactionData>;
   onDelete: (transactionId: string) => void;
-  onEdit: (transactionItem: ITransaction) => void;
+  onEdit: (transactionItem: ITransactionData) => void;
 }
 
 const TransferItem: React.FC<TransactionItemProps> = ({
@@ -31,7 +31,7 @@ const TransferItem: React.FC<TransactionItemProps> = ({
     id,
     typeTransaction,
     amount,
-  }: ITransaction) => {
+  }: ITransactionData) => {
     setId(id!);
     setTypeTransactionEdit(typeTransaction);
     setValueEdit(amount);
@@ -128,8 +128,8 @@ const TransferItem: React.FC<TransactionItemProps> = ({
             title="Editar"
             className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
             onClick={() => {
-              handleEditTransaction(item as ITransaction);
-              onEdit(item as ITransaction);
+              handleEditTransaction(item as ITransactionData);
+              onEdit(item as ITransactionData);
             }}
           >
             <DriveFileRenameOutlineIcon

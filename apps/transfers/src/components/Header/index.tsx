@@ -3,7 +3,7 @@ import byteBankIconWhite from '../../assets/svg/icon-bytebank-white.svg';
 import arrowDown from '../../assets/svg/arrow-down.svg';
 import { MobileMenu } from '../MobileMenu';
 import { useState } from 'react';
-import { userLogout } from '../../services/UserProfile/apiEndpoints';
+import { userLogout } from '../../../../../libs/api-client/src/index';
 
 //TODO: colocar type em arquivo separado
 export type THeader = {
