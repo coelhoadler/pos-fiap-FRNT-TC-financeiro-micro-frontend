@@ -5,7 +5,6 @@ import { store } from '@financeiro/ui';
 import { Footer } from '@financeiro/ui';
 import { HeaderLogin } from '@financeiro/ui';
 
-
 export default function Root(props) {
 
   return (

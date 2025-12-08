@@ -8,6 +8,7 @@ import {
   userLogout,
   userRegister,
 } from '../../../../../libs/api-client/src/auth';
+
 import { LoginUserProps, RegisterUserProps, UserInfoProps } from '../../interfaces/login/IUser';
 
 export const userInfos = async (): Promise<UserInfoProps | null> => {

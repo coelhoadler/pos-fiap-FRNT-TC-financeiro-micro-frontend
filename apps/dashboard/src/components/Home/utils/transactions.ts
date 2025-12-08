@@ -1,4 +1,4 @@
-import { ITypeTransaction } from "../../../Models/transactionModels";
+import { ITypeTransaction } from "../../../../../../libs/api-client/src/Models/transactionModels";
 
 export const transactions: ITypeTransaction[] = [
     { id: '1', description: 'Câmbio e Moedas' },

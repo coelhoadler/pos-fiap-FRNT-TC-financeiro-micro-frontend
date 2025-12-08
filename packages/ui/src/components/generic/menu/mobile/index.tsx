@@ -5,7 +5,6 @@ import { TMenuMobile } from "../../../../types/generic/TMenu";
 import { default as store } from "../../../../store/login";
 
 import useUserInfo from "../../../../hooks/useUserInfos";
-import { UserInfo } from "../../../../interfaces/login/IUser";
 
 import { logout } from "../../../../services/UserProfile/userService";
 import { logoutRequest } from "../../../../features/login/slice";
@@ -22,6 +21,7 @@ import MenuLogado from "../logado";
 import ActionButtonsMenu from "../actionButtons";
 import CustomModal from "../../customModal";
 import { cn } from "../../../../utils/utils";
+import { UserInfoProps } from "../../../../interfaces/login/IUser";
 
 
 const MenuMobile = ({
@@ -32,7 +32,7 @@ const MenuMobile = ({
   menuLinksItemsLogado,
 }: TMenuMobile) => {
   const userInfo = useAuth;
-  const [user, setUser] = useState<UserInfo>(userInfo);
+  const [user, setUser] = useState<UserInfoProps>(userInfo);
   const [authenticated, setAuthenticated] = useState<boolean>(
     userInfo.email !== undefined && userInfo.email !== ""
   );
@@ -98,17 +98,15 @@ const MenuMobile = ({
   return (
     <>
       <div
-        className={`flex items-center  justify-between space-x-4 w-full menu-mobile ${
-          className ? className : ""
-        }`}
+        className={`flex items-center  justify-between space-x-4 w-full menu-mobile ${className ? className : ""
+          }`}
       >
         <div className="w-full">
           <div
-            className={`open-menu-mobile-wrapper ${
-              open
-                ? "hidden"
-                : "flex justify-between w-full items-center animate-ui-slide-in-top"
-            }`}
+            className={`open-menu-mobile-wrapper ${open
+              ? "hidden"
+              : "flex justify-between w-full items-center animate-ui-slide-in-top"
+              }`}
           >
             <button
               type="button"
@@ -123,8 +121,8 @@ const MenuMobile = ({
                   variant === "dashboard"
                     ? "filter-(--filter-ui-white)"
                     : variant === "login"
-                    ? "filter-(--filter-ui-primary-2)"
-                    : ""
+                      ? "filter-(--filter-ui-primary-2)"
+                      : ""
                 )}
               />
             </button>
@@ -143,8 +141,8 @@ const MenuMobile = ({
                   variant === "dashboard"
                     ? "filter-(--filter-ui-white)"
                     : variant === "login"
-                    ? "filter-(--filter-ui-primary-2)"
-                    : ""
+                      ? "filter-(--filter-ui-primary-2)"
+                      : ""
                 )}
               />
             </div>
@@ -159,8 +157,8 @@ const MenuMobile = ({
               variant === "dashboard"
                 ? "bg-ui-primary"
                 : variant === "login"
-                ? "bg-black"
-                : ""
+                  ? "bg-black"
+                  : ""
             )}
           >
             <div className="container max-w-full pt-10 px-10 m-auto">
@@ -177,8 +175,8 @@ const MenuMobile = ({
                     variant === "dashboard"
                       ? "filter-(--filter-ui-white)"
                       : variant === "login"
-                      ? "filter-(--filter-ui-primary-2)"
-                      : ""
+                        ? "filter-(--filter-ui-primary-2)"
+                        : ""
                   )}
                 />
               </button>
@@ -204,8 +202,8 @@ const MenuMobile = ({
                             variant === "login"
                               ? "text-ui-primary-2 border-ui-primary-2"
                               : variant === "dashboard"
-                              ? "text-white border-white"
-                              : ""
+                                ? "text-white border-white"
+                                : ""
                           )}
                           key={link.text}
                           text={link.text}

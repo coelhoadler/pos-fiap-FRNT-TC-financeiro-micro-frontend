@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { TMenuDesktop } from "../../../../types/generic/TMenu";
 
-import CustomLinkMenu from "../customLink";
-import ActionButtonsMenu from "../actionButtons";
 import CustomModal from "../../customModal";
+import ActionButtonsMenu from "../actionButtons";
+import CustomLinkMenu from "../customLink";
 import MenuLogado from "../logado";
 
 import { default as store } from "../../../../store/login";
 
-import { UserInfo } from "../../../../interfaces/login/IUser";
-
-import { logout } from "../../../../services/UserProfile/userService";
 import { logoutRequest } from "../../../../features/login/slice";
+import { logout } from "../../../../services/UserProfile/userService";
 
-import byteBankLogo from "./../../../../assets/svg/logo-bytebank.svg";
-import byteBankLogoTablet from "./../../../../assets/svg/logo-bytebank-tablet.svg";
-import illustrationRegisterModal from "./../../../../assets/svg/ilustration-register-modal.svg";
-import illustrationLoginModal from "./../../../../assets/svg/ilustration-login-modal.svg";
+import { UserInfoProps } from "../../../../interfaces/login/IUser";
 import { cn } from "../../../../utils/utils";
+import illustrationLoginModal from "./../../../../assets/svg/ilustration-login-modal.svg";
+import illustrationRegisterModal from "./../../../../assets/svg/ilustration-register-modal.svg";
+import byteBankLogoTablet from "./../../../../assets/svg/logo-bytebank-tablet.svg";
+import byteBankLogo from "./../../../../assets/svg/logo-bytebank.svg";
 
 const MenuDesktop = ({
   className,
@@ -27,7 +26,7 @@ const MenuDesktop = ({
   menuLinksItemsLogado,
 }: TMenuDesktop) => {
   const userInfo = useAuth; // talvez receber por paramentro
-  const [user, setUser] = useState<UserInfo>(userInfo);
+  const [user, setUser] = useState<UserInfoProps>(userInfo);
   const [authenticated, setAuthenticated] = useState<boolean>(
     userInfo.email !== undefined && userInfo.email !== ""
   );

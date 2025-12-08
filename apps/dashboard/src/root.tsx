@@ -43,49 +43,30 @@ export default function Root() {
 
       <Header />
       <main
-<<<<<<< HEAD
         className={`flex justify-center min-w-[320px] pt-[116px] pb-4 max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7 ${error ? "h-screen" : ""
           }`}
-=======
-        className={`flex justify-center min-w-[320px] pt-[116px] pb-[1rem] max-w-[80%] m-auto max-lg:max-w-full max-lg:px-[15px] max-lg:pb-7 ${
-          error ? 'h-screen' : ''
-        }`}
->>>>>>> b77dd95ea2a5ce87b7e29c2d56784b41ad101ee1
       >
         {error ? (
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-col items-center justify-center shadow-lg py-6 px-10 bg-white rounded-md">
-<<<<<<< HEAD
               <h1 className="text-ui-primary text-center font-family-base text-lg font-bold mb-5">{error}</h1>
               <p className="font-family-base text-md mb-4">Por favor, faça login novamente.</p>
               <a href="/" className="font-family-base text-md border border-ui-primary rounded-sm py-2 px-4 text-ui-primary hover:bg-ui-primary transition-all hover:text-white">
-=======
-              <h1 className="text-primary text-center font-family-base text-lg font-bold mb-5">
-        {error}
-      </h1>
-      <p className="font-family-base text-md mb-4">
-        Por favor, faça login novamente.
-      </p>
-      <a
-        href="/"
-        className="font-family-base text-md border border-primary rounded-sm py-2 px-4 text-primary hover:bg-primary transition-all hover:text-white "
-      >
->>>>>>> b77dd95ea2a5ce87b7e29c2d56784b41ad101ee1
-        Ir para a página de login
-      </a>
-    </div>
+                Ir para a página de login
+              </a>
+            </div>
           </div >
         ) : (
-    <div className="lg:grid-cols-[250px_auto] lg:grid-colums md:grid-cols-1 w-full  grid gap-3 grid-cols-1">
-      <div className="lg:justify-center lg:items-start max-sm:hidden flex justify-center items-center box-content grow">
-        <SideBarMenuDashboard />
-      </div>
-      <div className="lg:justify-center items-center md:items-start flex grow-3 justify-center max-lg:pt-5">
-        <Home username={username} />
-      </div>
-    </div>
-  )
-}
+          <div className="lg:grid-cols-[250px_auto] lg:grid-colums md:grid-cols-1 w-full  grid gap-3 grid-cols-1">
+            <div className="lg:justify-center lg:items-start max-sm:hidden flex justify-center items-center box-content grow">
+              <SideBarMenuDashboard />
+            </div>
+            <div className="lg:justify-center items-center md:items-start flex grow-3 justify-center max-lg:pt-5">
+              <Home username={username} />
+            </div>
+          </div>
+        )
+        }
       </main >
     </TransactionProvider >
   );
