@@ -1,32 +1,36 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { ITransaction } from "../../Models/transactionModels";
-import { alertDialogTypes } from "../../enums/alertDialogTypes";
-import { accountServices } from "../../services/Account/apiEndpoint";
-import { useTransaction } from "../../setup/context/transactionContext";
-import { TAlertDialogType } from "../../types/TAlertDialogType";
-import { sortExtractByAscDate } from "../../utils/formatters";
-// import AlertDialog from '../Dialog';
-import SuccessSnackbar from "../SuccessSnackbar";
-import TransactionItem from "../TransactionItem";
+import { CustomModal } from "@financeiro/ui";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Tooltip from "@mui/material/Tooltip";
-
-import { CustomModal } from "@financeiro/ui";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
+import { alertDialogTypes } from "../../enums/alertDialogTypes";
+import { useTransaction } from "../../setup/context/transactionContext";
+import { TAlertDialogType } from "../../types/TAlertDialogType";
+import { sortExtractByAscDate } from "../../utils/formatters";
+import SuccessSnackbar from "../SuccessSnackbar";
+import TransactionItem from "../TransactionItem";
 
 type TAccountStatement = {
   onEditTransaction?: () => void;
 };
 
+const transactionAPIMethods = new transactionServices<ITransactionData>();
+const accountAPIMethods = new accountServices<IaccountData>();
+
 export default function AccountStatement({
   onEditTransaction,
 }: TAccountStatement) {
   const [updatedTransactions, setUpdatedTransactions] = useState<
-    ITransaction[]
+    ITransactionData[]
   >([]);
-  const { extract, transactionServices, setBalance, setExtract } =
-    useTransaction();
+  const { extract, setBalance, setExtract } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.DELETE,
   });
@@ -45,7 +49,7 @@ export default function AccountStatement({
   // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleTransactionDelete = async (transactionId: string) => {
     try {
-      await transactionServices.delete(transactionId);
+      await transactionAPIMethods.deleteTransactionById(transactionId);
 
       if (updatedTransactions) {
         const remainingTransactions = updatedTransactions.filter(
@@ -71,7 +75,7 @@ export default function AccountStatement({
     setId(transactionId);
   };
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
         item.amount.replace("R$", "").trim().replace(".", "").replace(",", ".")
@@ -80,7 +84,7 @@ export default function AccountStatement({
     }, 0);
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const accountJoana = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
@@ -88,13 +92,13 @@ export default function AccountStatement({
       accountType: "Conta Corrente",
     };
     setBalance(accountJoana.balance);
-    await accountServices.updateAccountById(user.accountNumber, accountJoana);
+    await accountAPIMethods.updateAccountById(user.accountNumber, accountJoana);
   };
 
   // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleConfirmSubmit = async (transactionId: string) => {
     try {
-      await transactionServices.delete(transactionId);
+      await transactionAPIMethods.deleteTransactionById(transactionId);
 
       if (updatedTransactions) {
         const remainingTransactions = updatedTransactions.filter(

@@ -1,11 +1,12 @@
-const { merge } = require("webpack-merge");
-const singleSpaDefaults = require("webpack-config-single-spa-react-ts");
-const path = require("path");
+const { merge } = require('webpack-merge');
+const singleSpaDefaults = require('webpack-config-single-spa-react-ts');
+const path = require('path');
+const webpack = require('webpack'); // 🔹 Import necessário para usar o DefinePlugin
 
 module.exports = (webpackConfigEnv, argv) => {
   const defaultConfig = singleSpaDefaults({
-    orgName: "financeiro",
-    projectName: "dashboard",
+    orgName: 'financeiro',
+    projectName: 'dashboard',
     webpackConfigEnv,
     argv,
   });
@@ -14,19 +15,19 @@ module.exports = (webpackConfigEnv, argv) => {
     externals: ["@financeiro/ui"],
 
     // ✅ Garante que os source maps são externos, e não embutidos
-    devtool: "source-map",
+    devtool: 'source-map',
 
     // ✅ Resolve os caminhos corretamente para debug
     output: {
-      devtoolModuleFilenameTemplate: info =>
-        path.resolve(info.absoluteResourcePath).replace(/\\/g, "/"),
+      devtoolModuleFilenameTemplate: (info) =>
+        path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
     },
 
     module: {
       rules: [
         {
           test: /\.css$/i,
-          use: ["postcss-loader"],
+          use: ['postcss-loader'],
         },
       ],
     },
@@ -35,5 +36,15 @@ module.exports = (webpackConfigEnv, argv) => {
       poll: true,
       ignored: /node_modules/,
     },
+
+    // ✅ Injeta variáveis de ambiente no bundle do navegador
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': JSON.stringify({
+          // 🔹 Você pode alterar essa URL conforme o ambiente
+          REACT_APP_ENDPOINT: process.env.REACT_APP_ENDPOINT,
+        }),
+      }),
+    ],
   });
 };

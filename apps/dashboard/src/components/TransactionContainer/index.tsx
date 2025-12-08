@@ -8,9 +8,6 @@ import { alertDialogTypes } from "../../enums/alertDialogTypes";
 import SuccessSnackbar from "../SuccessSnackbar";
 import { Title } from "@financeiro/ui";
 
-import { ITransaction, ITypeTransaction } from "../../Models/transactionModels";
-import { accountServices } from "../../services/Account/apiEndpoint";
-import { transactionServices } from "../../services/Transacoes/apiEndpoints";
 import { useTransaction } from "../../setup/context/transactionContext";
 import { TAlertDialogType } from "../../types/TAlertDialogType";
 import { IInputs } from "../../Models/FormModels";
@@ -18,10 +15,24 @@ import { IInputs } from "../../Models/FormModels";
 import { CustomModal, Button } from "@financeiro/ui";
 import { transactions } from "../Home/utils/transactions";
 
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import {
+  ITransactionData,
+  ITypeTransaction,
+} from '../../../../../libs/api-client/src/Models/transactionModels';
+
 // TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
 };
+
+const transactionAPIMethods = new transactionServices<ITransactionData>();
+const accountAPIMethods = new accountServices<IaccountData>();
 
 const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const {
@@ -38,9 +49,8 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.CONFIRM,
   });
-  const [pendingFormData, setPendingFormData] = useState<ITransaction | null>(
-    null
-  );
+  const [pendingFormData, setPendingFormData] =
+    useState<ITransactionData | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [idTemp, setIdTemp] = useState("");
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -88,14 +98,13 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
         ?.description || "";
     const _valueNew = watch("value");
 
-    const form: ITransaction = {
+    const form: ITransactionData = {
       typeTransaction: { id: optionId, description: typeDescription },
-      //   amount: id ? valueWatched : _valueNew,
-      // amount: 0 ? valueWatched : _valueNew,
-      amount: 0 ? "" : _valueNew,
+      amount: 0 ? '' : _valueNew,
       date: new Date().toISOString(),
       accountNumber: user.accountNumber,
     };
+
     setPendingFormData(form);
     setShowConfirmDialog(true);
   };
@@ -106,15 +115,15 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
     try {
       if (id) {
-        await transactionServices.update(id, pendingFormData);
+        await transactionAPIMethods.updateTransaction(id, pendingFormData);
         setIdTemp(id);
       } else {
-        await transactionServices.create(pendingFormData);
+        await transactionAPIMethods.createTransaction(pendingFormData);
         handleNew();
         setIdTemp("");
       }
 
-      const response = await transactionServices.getAll();
+      const response = await transactionAPIMethods.getTransactionsAll();
       setExtract(response || []);
       handlerUpdateAccount(response || []);
 
@@ -135,7 +144,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     }
   };
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData?.reduce((total, item) => {
       const amount = parseFloat(
         item.amount
@@ -165,7 +174,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     }
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const accountJoana = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
@@ -173,7 +182,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
       accountType: "Conta Corrente",
     };
     setBalance(accountJoana.balance);
-    await accountServices.updateAccountById(user.accountNumber, accountJoana);
+    await accountAPIMethods.updateAccountById(user.accountNumber, accountJoana);
   };
 
   const handleCancelTransaction = () => {

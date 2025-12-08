@@ -1,8 +1,11 @@
 import CurrencyInput from 'react-currency-input-field';
-import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
+import {
+  ITransactionData,
+  ITypeTransaction,
+} from '../../../../../libs/api-client/src/Models/transactionModels';
 import Title from '../Title';
 
-export const buildTransactionEditForm = (transactionItem: ITransaction) => {
+export const buildTransactionEditForm = (transactionItem: ITransactionData) => {
   //TODO: Criar um enum para typeTransaction
   const typeTransactionOptions: ITypeTransaction[] = [
     { id: '1', description: 'Câmbio e Moedas' },

@@ -1,11 +1,9 @@
 import { Header, SideBarMenuDashboard } from "@financeiro/ui";
-
-import "./styles/globals.css";
-
-import { TransactionProvider } from './setup/context/transactionContext';
 import { useEffect, useState } from 'react';
-import { getUserProfile } from './services/UserProfile/apiEndpoints';
 import MyTransfers from './components/MyTransfers';
+import { getUserProfile } from './services/UserProfile/apiEndpoints';
+import { TransactionProvider } from './setup/context/transactionContext';
+import "./styles/globals.css";
 
 export default function Root() {
   const [username, setUsername] = useState('');
@@ -21,16 +19,15 @@ export default function Root() {
           setUsername(response.data.name);
           setIsLoggedIn(true);
         } else {
-          setError("Usuário não autenticado.");
+          setError('Usuário não autenticado.');
           setIsLoggedIn(false);
         }
       } catch (error) {
-        setError("Erro ao buscar informações do usuário.");
+        setError('Erro ao buscar informações do usuário.');
       }
-    };
+    }
 
     getUserInfo();
-
   }, []);
 
   return (
@@ -61,6 +58,5 @@ export default function Root() {
         }
       </main>
     </TransactionProvider>
-
   );
 }

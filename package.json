@@ -1,6 +1,7 @@
 {
   "name": "pos-fiap-frnt-tc-financeiro-micro-frontend",
   "version": "1.0.0",
+  "private": true,
   "description": "Este é um projeto feito com multi-frontend, cujo objetivo é representar as **transações financeiras** de um usuário.",
   "main": "index.js",
   "scripts": {
@@ -16,6 +17,7 @@
     "docker:start": "docker compose -f docker-compose.dev.yml up --build",
     "start": "npm run docker:reset && npm run docker:start",
     "dev": "npm run docker:start",
+    "start:libs": "cd apps/libs && npm run build",
     "start:dashboard": "cd apps/dashboard && npm start",
     "start:login": "cd apps/login && npm start",
     "start:micro-api": "cd apps/api && npm run dev",
@@ -25,7 +27,7 @@
     "start:micro-dashboard": "cd apps/dashboard && npm start",
     "start:micro-login": "cd apps/login && npm start",
     "start:micro-root-config": "cd apps/root-config && npm start",
-    "start:dev": "npm-run-all --parallel start:micro-*",
+    "start:dev": "env-cmd -f environments/.env.development npm-run-all --parallel start:micro-*",
     "start:prod": "docker compose -f docker-compose.prod.yml up",
     "build": "npm-run-all --serial build:*",
     "build:transfers": "cd apps/transfers && npm run build",
@@ -46,9 +48,13 @@
   },
   "homepage": "https://github.com/coelhoadler/pos-fiap-FRNT-TC-financeiro-micro-frontend#readme",
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.28.5",
+    "@babel/runtime": "^7.28.4",
+    "@types/js-cookie": "^3.0.6",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "commitizen": "^4.3.1",
+    "env-cmd": "^11.0.0",
     "npm-run-all": "^4.1.5",
     "raw-loader": "^4.0.2",
     "rimraf": "^6.0.1"
@@ -59,7 +65,9 @@
     }
   },
   "dependencies": {
-    "axios": "^1.11.0",
+    "axios": "^1.13.1",
+    "dotenv": "^17.2.3",
+    "js-cookie": "^3.0.5",
     "mongodb": "^6.17.0",
     "react-currency-input-field": "^3.10.0",
     "react-currency-mask": "^1.3.3",

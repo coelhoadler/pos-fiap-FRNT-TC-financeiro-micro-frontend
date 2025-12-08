@@ -1,13 +1,12 @@
-import { Link } from '@mui/material';
 import React from 'react';
-import { ITransaction } from '../../Models/transactionModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../utils/formatters';
 import { Button } from '@financeiro/ui';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
 
 // TODO Colocar está interface em um arquivo separado
 interface TransactionItemProps {
-  item: Partial<ITransaction>;
+  item: Partial<ITransactionData>;
   onDelete: (transactionId: string) => void;
   onEdit?: () => void;
 }
@@ -24,7 +23,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
     id,
     typeTransaction,
     amount,
-  }: ITransaction) => {
+  }: ITransactionData) => {
     setId(id!);
     setTypeTransactionEdit(typeTransaction);
     setValueEdit(amount);
@@ -63,10 +62,10 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
         <div className={'flex flex-col gap-3.5 '}>
 
           <Button variant="edit" text="Editar" onClick={(e) => {
-              e.stopPropagation();
-              handleEditTransaction(item as ITransaction);
-              onEdit?.();
-            }} />
+            e.stopPropagation();
+            handleEditTransaction(item as ITransactionData);
+            onEdit?.();
+          }} />
           <Button variant="delete" text="Excluir" onClick={() => onDelete(item.id || '')} />
         </div>
       </div>

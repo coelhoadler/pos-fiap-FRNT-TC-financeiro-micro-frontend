@@ -1,22 +1,19 @@
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import { Button } from "@financeiro/ui";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { ITransaction } from "../../../Models/transactionModels";
+import { ITransactionData } from '../../../../../../libs/api-client/src/Models/transactionModels';
 import { useTransaction } from "../../../setup/context/transactionContext";
 import { formatDate, formatTime } from "../../../utils/formatters";
 import SuccessSnackbar from "../../SucessSnackBar";
 
-import { Button } from "@financeiro/ui";
-
 //TODO: colocar interface em arquivo separado
 interface TransactionItemProps {
-  item: Partial<ITransaction>;
+  item: Partial<ITransactionData>;
   onDelete: (transactionId: string) => void;
-  onEdit: (transactionItem: ITransaction) => void;
+  onEdit: (transactionItem: ITransactionData) => void;
 }
 
 const TransferItem: React.FC<TransactionItemProps> = ({
@@ -33,7 +30,7 @@ const TransferItem: React.FC<TransactionItemProps> = ({
     id,
     typeTransaction,
     amount,
-  }: ITransaction) => {
+  }: ITransactionData) => {
     setId(id!);
     setTypeTransactionEdit(typeTransaction);
     setValueEdit(amount);
@@ -117,9 +114,8 @@ const TransferItem: React.FC<TransactionItemProps> = ({
         <div>
           <p className="text-md">{item.typeTransaction?.description}</p>
           <p
-            className={`text-md font-bold ${
-              parseFloat(item.amount || "0") < 0 ? "text-red-600" : "text-black"
-            }`}
+            className={`text-md font-bold ${parseFloat(item.amount || "0") < 0 ? "text-red-600" : "text-black"
+              }`}
           >
             {parseFloat(item.amount || "0") < 0 ? "-" : ""}{" "}
             {handleValueFormat(item.amount) || "0"}
@@ -130,8 +126,8 @@ const TransferItem: React.FC<TransactionItemProps> = ({
             variant="edit"
             text="Editar"
             onClick={() => {
-              handleEditTransaction(item as ITransaction);
-              onEdit(item as ITransaction);
+              handleEditTransaction(item as ITransactionData);
+              onEdit(item as ITransactionData);
             }}
           />
           <Button
@@ -155,7 +151,7 @@ const TransferItem: React.FC<TransactionItemProps> = ({
                   cursor: "pointer",
                   transition: "color 0.3s",
                   "&:hover": {
-                    color: "#8aec49", 
+                    color: "#8aec49",
                   },
                 }}
               />
