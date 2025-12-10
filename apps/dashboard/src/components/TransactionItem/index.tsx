@@ -2,7 +2,7 @@ import React from 'react';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../utils/formatters';
 import { Button } from '@financeiro/ui';
-import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
+import { ITransactionData } from '@financeiro/api-client';
 
 // TODO Colocar está interface em um arquivo separado
 interface TransactionItemProps {

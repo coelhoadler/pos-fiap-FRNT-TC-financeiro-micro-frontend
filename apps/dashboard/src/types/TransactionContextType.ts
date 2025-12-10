@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { ITypeTransaction } from '../../../../libs/api-client/src/Models/transactionModels';
+import { ITypeTransaction } from '@financeiro/api-client';
 
 export type TransactionContextType = {
   id: string;

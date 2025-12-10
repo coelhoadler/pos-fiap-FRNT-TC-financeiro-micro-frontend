@@ -7,9 +7,9 @@ import { toast } from "react-toastify";
 import {
   accountServices,
   transactionServices,
-} from '../../../../../libs/api-client/src/index';
-import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
-import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
+} from '@financeiro/api-client';
+import { IaccountData } from '@financeiro/api-client';
+import { ITransactionData } from '@financeiro/api-client';
 import { alertDialogTypes } from "../../enums/alertDialogTypes";
 import { useTransaction } from "../../setup/context/transactionContext";
 import { TAlertDialogType } from "../../types/TAlertDialogType";

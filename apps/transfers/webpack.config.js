@@ -12,7 +12,7 @@ module.exports = (webpackConfigEnv, argv) => {
   });
 
   return merge(defaultConfig, {
-    externals: ["@financeiro/ui"],
+    externals: ["@financeiro/ui", "@financeiro/api-client"],
 
     // ✅ Garante que os source maps são externos, e não embutidos
     devtool: 'source-map',

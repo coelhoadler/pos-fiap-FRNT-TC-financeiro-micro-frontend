@@ -18,13 +18,13 @@ import { transactions } from "../Home/utils/transactions";
 import {
   accountServices,
   transactionServices,
-} from '../../../../../libs/api-client/src/index';
+} from '@financeiro/api-client';
 
-import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import { IaccountData } from '@financeiro/api-client';
 import {
   ITransactionData,
   ITypeTransaction,
-} from '../../../../../libs/api-client/src/Models/transactionModels';
+} from '@financeiro/api-client';
 
 // TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {

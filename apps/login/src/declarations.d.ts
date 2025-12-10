@@ -40,3 +40,5 @@ declare module "*.svg" {
 
 declare module "@financeiro/ui";
 
+declare module "@financeiro/api-client";
+

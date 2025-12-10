@@ -1,4 +1,5 @@
 import { Header, SideBarMenuDashboard } from "@financeiro/ui";
+
 import "./styles/globals.css";
 
 import Home from "./components/Home";

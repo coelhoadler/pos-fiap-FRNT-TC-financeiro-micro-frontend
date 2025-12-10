@@ -11,14 +11,9 @@ module.exports = (webpackConfigEnv, argv) => {
   });
 
   return merge(defaultConfig, {
-    externals: ["react", "react-dom"],
+    externals: ["react", "react-dom", "react-dom"],
 
     devtool: "source-map",
-
-    output: {
-      devtoolModuleFilenameTemplate: (info) =>
-        path.resolve(info.absoluteResourcePath).replace(/\\/g, "/"),
-    },
 
     watchOptions: {
       poll: true,

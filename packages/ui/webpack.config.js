@@ -12,8 +12,8 @@ module.exports = (webpackConfigEnv, argv) => {
   });
 
   return merge(defaultConfig, {
-    externals: ["react", "react-dom"],
-    
+    externals: ["react", "react-dom", "@financeiro/api-client"],
+
     devtool: "source-map",
 
     output: {
@@ -29,7 +29,7 @@ module.exports = (webpackConfigEnv, argv) => {
       ],
     },
 
-    
+
     watchOptions: {
       poll: true,
       ignored: /node_modules/,

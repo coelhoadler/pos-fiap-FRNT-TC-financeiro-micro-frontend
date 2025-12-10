@@ -2,7 +2,7 @@ import CurrencyInput from 'react-currency-input-field';
 import {
   ITransactionData,
   ITypeTransaction,
-} from '../../../../../libs/api-client/src/Models/transactionModels';
+} from '@financeiro/api-client';
 import Title from '../Title';
 
 export const buildTransactionEditForm = (transactionItem: ITransactionData) => {

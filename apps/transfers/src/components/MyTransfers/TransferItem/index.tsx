@@ -4,7 +4,7 @@ import FilePresentIcon from "@mui/icons-material/FilePresent";
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { ITransactionData } from '../../../../../../libs/api-client/src/Models/transactionModels';
+import { ITransactionData } from '@financeiro/api-client';
 import { useTransaction } from "../../../setup/context/transactionContext";
 import { formatDate, formatTime } from "../../../utils/formatters";
 import SuccessSnackbar from "../../SucessSnackBar";

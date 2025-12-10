@@ -24,6 +24,7 @@
     "start:root-config": "cd apps/root-config && npm start",
     "start:micro-transfers": "cd apps/transfers && npm start",
     "start:micro-shared-ui": "cd packages/ui && npm start",
+    "start:micro-api-client": "cd libs/api-client && npm start",
     "start:micro-dashboard": "cd apps/dashboard && npm start",
     "start:micro-login": "cd apps/login && npm start",
     "start:micro-root-config": "cd apps/root-config && npm start",
