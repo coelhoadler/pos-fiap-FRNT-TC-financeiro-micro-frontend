@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { store } from '@financeiro/ui';
 import { Footer } from '@financeiro/ui';
 import { HeaderLogin } from '@financeiro/ui';
-import { publicApiFunction, IaccountData } from '@financeiro/utils';
+import { publicApiFunction } from '@financeiro/api-client';
 
 export default function Root(props) {
   publicApiFunction();
