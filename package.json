@@ -13,6 +13,7 @@
     "install:dashboard": "cd apps/dashboard && npm install",
     "install:login": "cd apps/login && npm install",
     "install:api": "cd apps/api && npm install",
+    "install:api-client": "cd libs/api-client && npm install",
     "docker:reset": "docker compose -f docker-compose.dev.yml down --rmi all --volumes --remove-orphans",
     "docker:start": "docker compose -f docker-compose.dev.yml up --build",
     "start": "npm run docker:reset && npm run docker:start",
