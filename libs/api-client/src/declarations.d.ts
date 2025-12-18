@@ -37,3 +37,12 @@ declare module "*.svg" {
   const src: string;
   export default src;
 }
+
+// Explicit module shape for consumers of this package
+declare module "@financeiro/api-client" {
+  export function publicApiFunction(): void;
+  export function publicApiFunction2(): void;
+  export interface XPTOResponse {
+    data: string;
+  }
+}
