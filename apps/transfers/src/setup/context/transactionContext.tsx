@@ -1,18 +1,19 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-
-import {
-  accountServices,
-  transactionServices,
-} from '@financeiro/api-client';
-import { IaccountData } from '@financeiro/api-client';
-import {
-  ITransactionData,
-  ITypeTransaction,
-} from '@financeiro/api-client';
 import {
   TransactionContextType,
   TransactionProviderProps,
 } from '../../types/TransactionContextType';
+
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import {
+  ITransactionData,
+  ITypeTransaction,
+} from '../../../../../libs/api-client/src/Models/transactionModels';
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
   undefined

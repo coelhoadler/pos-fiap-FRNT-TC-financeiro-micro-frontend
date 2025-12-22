@@ -2,7 +2,7 @@ import CurrencyInput from 'react-currency-input-field';
 import {
   ITransactionData,
   ITypeTransaction,
-} from '@financeiro/api-client';
+} from '../../../../../libs/api-client/src/Models/transactionModels';
 import Title from '../Title';
 
 export const buildTransactionEditForm = (transactionItem: ITransactionData) => {
@@ -22,7 +22,7 @@ export const buildTransactionEditForm = (transactionItem: ITransactionData) => {
   };
 
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <fieldset className="flex flex-col">
         <Title
           text="*Campo obrigatório"

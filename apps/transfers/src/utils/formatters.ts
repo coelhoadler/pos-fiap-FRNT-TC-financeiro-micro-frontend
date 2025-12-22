@@ -1,4 +1,4 @@
-import { ITransactionData } from '@financeiro/api-client';
+import { ITransactionData } from '../../../../libs/api-client/src/Models/transactionModels';
 
 export const formatCurrency = (value: number) => {
   return value.toLocaleString('pt-BR', {

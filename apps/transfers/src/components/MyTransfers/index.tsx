@@ -3,26 +3,27 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import {
-  accountServices,
-  transactionServices,
-} from '@financeiro/api-client';
-import { IaccountData } from '@financeiro/api-client';
 import { alertDialogTypes } from '../../enums/alertDialogTypes';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { sortExtractByAscDate } from '../../utils/formatters';
-import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SucessSnackBar';
 import { TransfersFilters } from './TransferFilter';
 import TransferItem from './TransferItem';
 import { buildTransactionEditForm } from './utils';
-import { ITransactionData } from '@financeiro/api-client';
+
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
 
 const transactionAPIMethods = new transactionServices<ITransactionData>();
 const accountAPIMethods = new accountServices<IaccountData>();
 
-import { CustomModal } from "@financeiro/ui";
+import { CustomModal } from '@financeiro/ui';
 
 const MyTransfers = () => {
   const [myTransactions, setMyTransactions] = useState<ITransactionData[]>([]);
@@ -205,13 +206,13 @@ const MyTransfers = () => {
         );
         const min = filters.minimumValue
           ? parseFloat(
-            filters.minimumValue.replace(/\./g, '').replace(',', '.')
-          )
+              filters.minimumValue.replace(/\./g, '').replace(',', '.')
+            )
           : undefined;
         const max = filters.maximumValue
           ? parseFloat(
-            filters.maximumValue.replace(/\./g, '').replace(',', '.')
-          )
+              filters.maximumValue.replace(/\./g, '').replace(',', '.')
+            )
           : undefined;
 
         if (min !== undefined && isNaN(min)) return false;
@@ -340,22 +341,22 @@ const MyTransfers = () => {
 
               {filteredTransactions.length >
                 (currentPage + 1) * itemsPerPage && (
-                  <Tooltip title="Próxima página">
-                    <button
-                      className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
-                      onClick={() =>
-                        setCurrentPage((prev) =>
-                          Math.min(
-                            prev + 1,
-                            Math.floor(filteredTransactions.length / itemsPerPage)
-                          )
+                <Tooltip title="Próxima página">
+                  <button
+                    className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
+                    onClick={() =>
+                      setCurrentPage((prev) =>
+                        Math.min(
+                          prev + 1,
+                          Math.floor(filteredTransactions.length / itemsPerPage)
                         )
-                      }
-                    >
-                      <ChevronRightIcon style={{ color: 'white' }} />
-                    </button>
-                  </Tooltip>
-                )}
+                      )
+                    }
+                  >
+                    <ChevronRightIcon style={{ color: 'white' }} />
+                  </button>
+                </Tooltip>
+              )}
             </div>
           )}
         </>
@@ -379,7 +380,6 @@ const MyTransfers = () => {
             type={'Delete'}
             setOpen={setShowConfirmDialog}
             handleConfirmSubmit={() => handleConfirmSubmit(id)}
-
           />
 
           <SuccessSnackbar
