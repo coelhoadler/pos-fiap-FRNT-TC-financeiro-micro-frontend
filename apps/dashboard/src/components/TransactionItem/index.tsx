@@ -1,8 +1,8 @@
+import { Button } from '@financeiro/ui';
 import React from 'react';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../utils/formatters';
-import { Button } from '@financeiro/ui';
-import { ITransactionData } from '@financeiro/api-client';
 
 // TODO Colocar está interface em um arquivo separado
 interface TransactionItemProps {
@@ -52,21 +52,29 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
         <div>
           <p className="text-md">{item.typeTransaction?.description}</p>
           <p
-            className={`text-md font-bold ${parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
-              }`}
+            className={`text-md font-bold ${
+              parseFloat(item.amount || '0') < 0 ? 'text-red-600' : 'text-black'
+            }`}
           >
             {parseFloat(item.amount || '0') < 0 ? '-' : ''}{' '}
             {handleValueFormat(item.amount) || '0'}
           </p>
         </div>
         <div className={'flex flex-col gap-3.5 '}>
-
-          <Button variant="edit" text="Editar" onClick={(e) => {
-            e.stopPropagation();
-            handleEditTransaction(item as ITransactionData);
-            onEdit?.();
-          }} />
-          <Button variant="delete" text="Excluir" onClick={() => onDelete(item.id || '')} />
+          <Button
+            variant="edit"
+            text="Editar"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEditTransaction(item as ITransactionData);
+              onEdit?.();
+            }}
+          />
+          <Button
+            variant="delete"
+            text="Excluir"
+            onClick={() => onDelete(item.id || '')}
+          />
         </div>
       </div>
     </div>

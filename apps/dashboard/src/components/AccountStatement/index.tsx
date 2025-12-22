@@ -1,21 +1,23 @@
-import { CustomModal } from "@financeiro/ui";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import Tooltip from "@mui/material/Tooltip";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { CustomModal } from '@financeiro/ui';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Tooltip from '@mui/material/Tooltip';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { alertDialogTypes } from '../../enums/alertDialogTypes';
+import { useTransaction } from '../../setup/context/transactionContext';
+import { TAlertDialogType } from '../../types/TAlertDialogType';
+import { sortExtractByAscDate } from '../../utils/formatters';
+import SuccessSnackbar from '../SuccessSnackbar';
+import TransactionItem from '../TransactionItem';
+
 import {
   accountServices,
   transactionServices,
-} from '@financeiro/api-client';
-import { IaccountData } from '@financeiro/api-client';
-import { ITransactionData } from '@financeiro/api-client';
-import { alertDialogTypes } from "../../enums/alertDialogTypes";
-import { useTransaction } from "../../setup/context/transactionContext";
-import { TAlertDialogType } from "../../types/TAlertDialogType";
-import { sortExtractByAscDate } from "../../utils/formatters";
-import SuccessSnackbar from "../SuccessSnackbar";
-import TransactionItem from "../TransactionItem";
+} from '../../../../../libs/api-client/src/index';
+
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
 
 type TAccountStatement = {
   onEditTransaction?: () => void;
@@ -34,12 +36,12 @@ export default function AccountStatement({
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.DELETE,
   });
-  const [id, setId] = useState<string>("");
+  const [id, setId] = useState<string>('');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5; // Número de itens por página
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   useEffect(() => {
     const extractOrdered = sortExtractByAscDate(extract || []);
@@ -60,13 +62,13 @@ export default function AccountStatement({
         setUpdatedTransactions(remainingTransactions);
         setExtract(remainingTransactions); // <-- Atualiza o contexto global
 
-        toast.success("Transação excluída com sucesso!");
+        toast.success('Transação excluída com sucesso!');
       }
     } catch (error) {
       if (error?.status === 401) {
-        window.location.href = "/login";
+        window.location.href = '/login';
       }
-      console.error("Error deleting transaction:", error);
+      console.error('Error deleting transaction:', error);
     }
   };
 
@@ -78,7 +80,7 @@ export default function AccountStatement({
   const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
-        item.amount.replace("R$", "").trim().replace(".", "").replace(",", ".")
+        item.amount.replace('R$', '').trim().replace('.', '').replace(',', '.')
       );
       return total + amount;
     }, 0);
@@ -88,8 +90,8 @@ export default function AccountStatement({
     const accountJoana = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
-      currency: "BRL",
-      accountType: "Conta Corrente",
+      currency: 'BRL',
+      accountType: 'Conta Corrente',
     };
     setBalance(accountJoana.balance);
     await accountAPIMethods.updateAccountById(user.accountNumber, accountJoana);
@@ -114,10 +116,10 @@ export default function AccountStatement({
       }
     } catch (error) {
       if (error?.status === 401) {
-        toast.error("Sessão expirada, por favor faça login novamente.");
-        window.location.href = "/login";
+        toast.error('Sessão expirada, por favor faça login novamente.');
+        window.location.href = '/login';
       }
-      console.error("Erro ao enviar o formulário:", error);
+      console.error('Erro ao enviar o formulário:', error);
     }
   };
 
@@ -155,21 +157,21 @@ export default function AccountStatement({
                       setCurrentPage((prev) => Math.max(prev - 1, 0))
                     }
                   >
-                    <ChevronLeftIcon style={{ color: "white" }} />
+                    <ChevronLeftIcon style={{ color: 'white' }} />
                   </button>
                 </Tooltip>
               )}
               {(currentPage + 1) * itemsPerPage <
                 updatedTransactions.length && (
-                  <Tooltip title="Próxima página">
-                    <button
-                      className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
-                      onClick={() => setCurrentPage((prev) => prev + 1)}
-                    >
-                      <ChevronRightIcon style={{ color: "white" }} />
-                    </button>
-                  </Tooltip>
-                )}
+                <Tooltip title="Próxima página">
+                  <button
+                    className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
+                    onClick={() => setCurrentPage((prev) => prev + 1)}
+                  >
+                    <ChevronRightIcon style={{ color: 'white' }} />
+                  </button>
+                </Tooltip>
+              )}
             </div>
           </>
         ) : (
@@ -193,7 +195,7 @@ export default function AccountStatement({
         <SuccessSnackbar
           open={showSuccess}
           onClose={() => setShowSuccess(false)}
-          message={"Transação excluída com sucesso!"}
+          message={'Transação excluída com sucesso!'}
           duration={3000}
         />
       }

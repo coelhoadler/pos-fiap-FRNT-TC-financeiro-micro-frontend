@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import CurrencyInput from "react-currency-input-field";
-import { toast } from "react-toastify";
-import bgCardTransaction from "../../assets/img/bg-card-transaction.png";
-import womanCreditCard from "../../assets/img/woman-credit-card.png";
-import { alertDialogTypes } from "../../enums/alertDialogTypes";
-import SuccessSnackbar from "../SuccessSnackbar";
-import { Title } from "@financeiro/ui";
+import { Title } from '@financeiro/ui';
+import { useEffect, useState } from 'react';
+import CurrencyInput from 'react-currency-input-field';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import bgCardTransaction from '../../assets/img/bg-card-transaction.png';
+import womanCreditCard from '../../assets/img/woman-credit-card.png';
+import { alertDialogTypes } from '../../enums/alertDialogTypes';
+import SuccessSnackbar from '../SuccessSnackbar';
 
-import { useTransaction } from "../../setup/context/transactionContext";
-import { TAlertDialogType } from "../../types/TAlertDialogType";
-import { IInputs } from "../../Models/FormModels";
+import { IInputs } from '../../Models/FormModels';
+import { useTransaction } from '../../setup/context/transactionContext';
+import { TAlertDialogType } from '../../types/TAlertDialogType';
 
-import { CustomModal, Button } from "@financeiro/ui";
-import { transactions } from "../Home/utils/transactions";
+import { Button, CustomModal } from '@financeiro/ui';
+import { transactions } from '../Home/utils/transactions';
 
 import {
   accountServices,
   transactionServices,
-} from '@financeiro/api-client';
+} from '../../../../../libs/api-client/src/index';
 
-import { IaccountData } from '@financeiro/api-client';
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
 import {
   ITransactionData,
   ITypeTransaction,
-} from '@financeiro/api-client';
+} from '../../../../../libs/api-client/src/Models/transactionModels';
 
 // TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {
@@ -52,15 +52,15 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const [pendingFormData, setPendingFormData] =
     useState<ITransactionData | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [idTemp, setIdTemp] = useState("");
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const [idTemp, setIdTemp] = useState('');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   // TODO Consumir do arquivo global que contem os tipos de transações
   const [typeTransactionOptions, setTypeTransactionOptions] = useState<
     ITypeTransaction[]
   >(() => transactions);
 
-  const [valueWatched, setValueWatched] = useState<string>("");
+  const [valueWatched, setValueWatched] = useState<string>('');
 
   const {
     register,
@@ -80,23 +80,23 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     if (!typeTransactionOptions || typeTransactionOptions.length === 0) return;
     if (id) {
       setValueWatched(valueEdit);
-      setValue("typeTransaction", typeTransactionEdit.id);
+      setValue('typeTransaction', typeTransactionEdit.id);
     }
 
     if (!id) {
-      setValueWatched("");
-      setValue("value", "");
-      setValue("typeTransaction", "");
-      setTypeTransactionEdit({ id: "", description: "" });
+      setValueWatched('');
+      setValue('value', '');
+      setValue('typeTransaction', '');
+      setTypeTransactionEdit({ id: '', description: '' });
     }
   }, [id, typeTransactionOptions]);
 
   const onSubmit: SubmitHandler<IInputs> = async () => {
-    const optionId = watch("typeTransaction");
+    const optionId = watch('typeTransaction');
     const typeDescription =
       typeTransactionOptions.find((option) => option.id === optionId)
-        ?.description || "";
-    const _valueNew = watch("value");
+        ?.description || '';
+    const _valueNew = watch('value');
 
     const form: ITransactionData = {
       typeTransaction: { id: optionId, description: typeDescription },
@@ -120,7 +120,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
       } else {
         await transactionAPIMethods.createTransaction(pendingFormData);
         handleNew();
-        setIdTemp("");
+        setIdTemp('');
       }
 
       const response = await transactionAPIMethods.getTransactionsAll();
@@ -133,14 +133,14 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
       toast.dismiss();
       setShowSuccess(true);
 
-      setId("");
+      setId('');
       reset();
     } catch (error) {
       if (error.status === 401) {
-        toast.error("Sessão expirada, por favor faça login novamente.");
-        window.location.href = "/login";
+        toast.error('Sessão expirada, por favor faça login novamente.');
+        window.location.href = '/login';
       }
-      console.error("Erro ao enviar o formulário:", error);
+      console.error('Erro ao enviar o formulário:', error);
     }
   };
 
@@ -148,10 +148,10 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     return responseData?.reduce((total, item) => {
       const amount = parseFloat(
         item.amount
-          .replace("R$", "")
+          .replace('R$', '')
           .trim()
-          .replace(/\./g, "")
-          .replace(",", ".")
+          .replace(/\./g, '')
+          .replace(',', '.')
       );
 
       setBalance((total + amount) as number);
@@ -178,8 +178,8 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     const accountJoana = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
-      currency: "BRL",
-      accountType: "Conta Corrente",
+      currency: 'BRL',
+      accountType: 'Conta Corrente',
     };
     setBalance(accountJoana.balance);
     await accountAPIMethods.updateAccountById(user.accountNumber, accountJoana);
@@ -187,7 +187,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
   const handleCancelTransaction = () => {
     reset();
-    setId("");
+    setId('');
   };
 
   return (
@@ -201,22 +201,22 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
           width={146}
           height={144}
           src={bgCardTransaction}
-          alt={"Fundo quadriculado do card de transação financeira"}
+          alt={'Fundo quadriculado do card de transação financeira'}
           className="absolute top-0 right-0 max-h-[144px] max-w-[146px] z-[-1]"
         />
 
         <fieldset className="flex flex-col">
           <Title
-            text={0 ? "Editar transação" : "Nova transação"}
+            text={0 ? 'Editar transação' : 'Nova transação'}
             titleForID="type-transaction-option"
             size="xlarge"
-            otherClasses={["mb-5"]}
+            otherClasses={['mb-5']}
           />
 
           <select
             id="type-transaction-option"
             className="w-full md:w-[355px] h-[48px] border-solid border border-ui-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
-            {...register("typeTransaction", { required: true })}
+            {...register('typeTransaction', { required: true })}
           >
             <option value="">Selecione uma opção</option>
             {typeTransactionOptions &&
@@ -235,7 +235,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
               text="* Campo obrigatório"
               titleForID="type-transaction-option"
               size="small"
-              otherClasses={["mb-3", "text-red-600", "font-medium"]}
+              otherClasses={['mb-3', 'text-red-600', 'font-medium']}
             />
           )}
         </fieldset>
@@ -245,7 +245,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             text="Valor"
             titleForID="value"
             size="medium"
-            otherClasses={["mb-3"]}
+            otherClasses={['mb-3']}
           />
 
           <CurrencyInput
@@ -254,18 +254,18 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             decimalSeparator=","
             groupSeparator="."
             intlConfig={{
-              locale: "pt-BR",
-              currency: "BRL",
+              locale: 'pt-BR',
+              currency: 'BRL',
             }}
             className="w-full md:w-[250px] h-[48px] border border-ui-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
             onValueChange={(event, originalValue, maskedValue) => {
               const valueWithoutCurrencySymbol = maskedValue.formatted.replace(
-                "R$",
-                ""
+                'R$',
+                ''
               );
               setValueWatched(valueWithoutCurrencySymbol as string);
             }}
-            {...(register("value", { required: true }) as any)}
+            {...(register('value', { required: true }) as any)}
             placeholder="R$ 0,00"
           />
 
@@ -274,7 +274,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
               text="* Campo obrigatório"
               titleForID="value"
               size="small"
-              otherClasses={["mb-3", "text-red-600", "font-medium"]}
+              otherClasses={['mb-3', 'text-red-600', 'font-medium']}
             />
           )}
         </fieldset>
@@ -284,7 +284,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
             variant="primary"
             typeButton="submit"
             onClick={() => handleOnlyTransactionEditing()}
-            text={id ? "Atualizar transação" : "Concluir transação"}
+            text={id ? 'Atualizar transação' : 'Concluir transação'}
           />
           {id && (
             <Button
@@ -303,7 +303,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
           width={283}
           height={228}
           src={womanCreditCard}
-          alt={"Ícone de mulher com cartão de crédito"}
+          alt={'Ícone de mulher com cartão de crédito'}
           className="absolute bottom-5 right-5 max-h-[228px] max-w-[283px] z-[-1]"
         />
 
@@ -311,7 +311,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
           width={283}
           height={228}
           src={bgCardTransaction}
-          alt={"Fundo quadriculado do card de transação financeira"}
+          alt={'Fundo quadriculado do card de transação financeira'}
           className="absolute bottom-0 left-0 max-h-[177px] max-w-[180px] rotate-180 z-[-1]"
         />
       </form>
@@ -332,8 +332,8 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
           onClose={() => setShowSuccess(false)}
           message={
             idTemp
-              ? "Transação alterada com sucesso!"
-              : "Transação realizada com sucesso!"
+              ? 'Transação alterada com sucesso!'
+              : 'Transação realizada com sucesso!'
           }
           duration={3000}
         />

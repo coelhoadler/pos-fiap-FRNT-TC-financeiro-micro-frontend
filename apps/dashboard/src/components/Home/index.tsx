@@ -1,9 +1,9 @@
+import { Charts } from '@financeiro/ui';
 import { useState } from 'react';
-import { ITypeTransaction } from '@financeiro/api-client';
+import { ITypeTransaction } from '../../../../../libs/api-client/src/Models/transactionModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import AccountStatement from '../AccountStatement';
 import CardBalance from '../CardBalance';
-import { Charts } from '@financeiro/ui';
 import FormTransaction from '../TransactionContainer';
 import { transactions } from './utils/transactions';
 
