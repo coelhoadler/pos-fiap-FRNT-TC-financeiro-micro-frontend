@@ -7,7 +7,7 @@ import {
   userInfo,
   userLogout,
   userRegister,
-} from '@financeiro/api-client';
+} from '../../../../../libs/api-client/src/index';
 
 import { LoginUserProps, RegisterUserProps, UserInfoProps } from '../../interfaces/login/IUser';
 

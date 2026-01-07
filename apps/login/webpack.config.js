@@ -42,7 +42,7 @@ module.exports = (webpackConfigEnv, argv) => {
       new webpack.DefinePlugin({
         'process.env': JSON.stringify({
           // 🔹 Você pode alterar essa URL conforme o ambiente
-          REACT_APP_ENDPOINT: process.env.REACT_APP_ENDPOINT,
+          REACT_APP_ENDPOINT: 'http://localhost:3000',
         }),
       }),
     ],

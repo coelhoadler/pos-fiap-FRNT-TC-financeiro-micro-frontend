@@ -6,7 +6,7 @@ const TOKEN_COOKIE_NAME = 'token';
 
 // Configuração base do cliente HTTP
 const httpClient: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_ENDPOINT,
+  baseURL: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json',
   },
