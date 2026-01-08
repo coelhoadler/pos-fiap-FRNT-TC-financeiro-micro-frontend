@@ -1,5 +1,6 @@
 import React from 'react';
 
+//TODO: seguir o que foi definido no modulo dashboard
 interface TitleProps {
   text: string;
   size?: 'small' | 'medium' | 'large' | 'xlarge';

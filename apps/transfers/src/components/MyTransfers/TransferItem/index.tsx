@@ -1,18 +1,19 @@
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import { Button } from '@financeiro/ui';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FilePresentIcon from '@mui/icons-material/FilePresent';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { ITransaction } from '../../../Models/transactionModels';
+import { ITransactionData } from '../../../../../../libs/api-client/src/Models/transactionModels';
 import { useTransaction } from '../../../setup/context/transactionContext';
 import { formatDate, formatTime } from '../../../utils/formatters';
 import SuccessSnackbar from '../../SucessSnackBar';
+
+//TODO: colocar interface em arquivo separado
 interface TransactionItemProps {
-  item: Partial<ITransaction>;
+  item: Partial<ITransactionData>;
   onDelete: (transactionId: string) => void;
-  onEdit: (transactionItem: ITransaction) => void;
+  onEdit: (transactionItem: ITransactionData) => void;
 }
 
 const TransferItem: React.FC<TransactionItemProps> = ({
@@ -21,15 +22,15 @@ const TransferItem: React.FC<TransactionItemProps> = ({
   onEdit,
   ...props
 }) => {
-  const { setId, setTypeTransactionEdit, setValueEdit, setExtract, extract } = useTransaction();
+  const { setId, setTypeTransactionEdit, setValueEdit, setExtract, extract } =
+    useTransaction();
   const [showSuccess, setShowSuccess] = useState(false);
-  
 
   const handleEditTransaction = ({
     id,
     typeTransaction,
     amount,
-  }: ITransaction) => {
+  }: ITransactionData) => {
     setId(id!);
     setTypeTransactionEdit(typeTransaction);
     setValueEdit(amount);
@@ -73,13 +74,12 @@ const TransferItem: React.FC<TransactionItemProps> = ({
           },
         });
 
-        if(responseFile.status !== 200) {
+        if (responseFile.status !== 200) {
           throw new Error('Failed to upload file');
         }
 
         setShowSuccess(true);
-        setExtract([]);        
-
+        setExtract([]);
       } catch (error) {
         if (error.status === 401) {
           toast.error('Sessão expirada, por favor faça login novamente.');
@@ -122,59 +122,40 @@ const TransferItem: React.FC<TransactionItemProps> = ({
             {handleValueFormat(item.amount) || '0'}
           </p>
         </div>
-        <p className={'text-sm flex flex-col gap-3.5 text-white'}>
-          <button
-            title="Editar"
-            className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+        <div className={'flex flex-col gap-3.5'}>
+          <Button
+            variant="edit"
+            text="Editar"
             onClick={() => {
-              handleEditTransaction(item as ITransaction);
-              onEdit(item as ITransaction);
+              handleEditTransaction(item as ITransactionData);
+              onEdit(item as ITransactionData);
             }}
-          >
-            <DriveFileRenameOutlineIcon 
-              sx={{
-                color: 'white',
-                cursor: 'pointer',
-                transition: 'color 0.3s',
-                '&:hover': {
-                  color: '#8aec49',
-                },
-              }} />
-          </button>
-          <button
-            title="Excluir"
-            className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+          />
+          <Button
+            variant="delete"
+            text="Excluir"
             onClick={() => onDelete(item.id || '')}
-          >
-            <DeleteForeverIcon 
-              sx={{
-                  color: 'white',
-                  cursor: 'pointer',
-                  transition: 'color 0.3s',
-                  '&:hover': {
-                    color: '#8d4d48', 
-                  },
-                }} />
-          </button>
+          />
 
           {item.base64Image ? (
             <label
               htmlFor={`file-${item.id}`}
-              className="bg-green-600 rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+              className="bg-green-600 rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
               title="Baixar comprovante"
               onClick={() =>
                 handleDownloadBase64(item.base64Image!, item.fileMimetype!)
               }
             >
-              <FileDownloadIcon  
+              <FileDownloadIcon
                 sx={{
-                    color: 'white',
-                    cursor: 'pointer',
-                    transition: 'color 0.3s',
-                    '&:hover': {
-                      color: '#8aec49', // exemplo: azul claro ao passar o mouse
-                    },
-                  }} />
+                  color: 'white',
+                  cursor: 'pointer',
+                  transition: 'color 0.3s',
+                  '&:hover': {
+                    color: '#8aec49',
+                  },
+                }}
+              />
             </label>
           ) : (
             <>
@@ -187,14 +168,14 @@ const TransferItem: React.FC<TransactionItemProps> = ({
               />
               <label
                 htmlFor={`file-${item.id}`}
-                className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
                 title="Anexar comprovante"
               >
                 <FilePresentIcon style={{ color: 'white' }} />
               </label>
             </>
           )}
-        </p>
+        </div>
       </div>
 
       <SuccessSnackbar

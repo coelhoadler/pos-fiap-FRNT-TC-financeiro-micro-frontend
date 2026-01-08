@@ -1,0 +1,15 @@
+{
+  "extends": "ts-config-single-spa",
+  "compilerOptions": {
+    "declarationDir": "dist"
+  },
+  "files": [
+    "src/financeiro-api-client.ts"
+  ],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/**/*.test*"
+  ]
+}

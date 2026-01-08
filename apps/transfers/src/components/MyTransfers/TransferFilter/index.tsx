@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Button from "../../Button";
-import CurrencyInput from "react-currency-input-field";
+import React, { useEffect, useState } from 'react';
+// import Button from '../../Button';
+import CurrencyInput from 'react-currency-input-field';
+import {  Button } from "@financeiro/ui";
 
+//TODO: separar em componentes cada transfer
+
+//TODO: colocar type em arquivo separado
 type TTransfersFilters = {
   filters: {
     typeTransaction: string;
@@ -20,6 +24,7 @@ type TTransfersFilters = {
   ) => void;
 };
 
+//TODO: colocar type em arquivo separado
 type TTransfersFiltersItem = {
   name: string;
   value: string;
@@ -30,12 +35,13 @@ type TTransfersFiltersItem = {
   ) => void;
   type?: string;
   className?: string;
-  typeItem: "select" | "input" | "currency";
+  typeItem: 'select' | 'input' | 'currency';
   onKeyDown?: (
     e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
 };
 
+//TODO: colocar type em arquivo separado
 type TTransfersFiltersLabels = {
   text: string;
   className?: string;
@@ -46,6 +52,7 @@ type TTransfersFiltersItemContainer = {
   className?: string;
 };
 
+//TODO: usar props
 const TransfersFiltersItemContainer = ({
   children,
   className,
@@ -58,6 +65,8 @@ const TransfersFiltersItemContainer = ({
     </div>
   );
 };
+
+//TODO: usar props
 const TransfersFiltersItem = ({
   name,
   value,
@@ -71,11 +80,10 @@ const TransfersFiltersItem = ({
 }: TTransfersFiltersItem) => {
   return (
     <>
-      {typeItem === "select" ? (
+      {typeItem === 'select' ? (
         <select
-          className={`border w-full border-primary  focus:outline-none focus:shadow-md focus-visible:shadow-md h-[40px]  px-2 rounded cursor-pointer text-primary text-sm font-family-base ${
-            className ? className : ""
-          }`}
+          className={`border w-full border-ui-primary  focus:outline-none focus:shadow-md focus-visible:shadow-md h-10  px-2 rounded cursor-pointer text-ui-primary text-sm font-family-base ${className ? className : ''
+            }`}
           name={name}
           value={value}
           onChange={onChange}
@@ -87,7 +95,7 @@ const TransfersFiltersItem = ({
             Empréstimo e Financiamento
           </option>
         </select>
-      ) : typeItem === "input" ? (
+      ) : typeItem === 'input' ? (
         <input
           type={type}
           name={name}
@@ -95,12 +103,11 @@ const TransfersFiltersItem = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={`border border-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-[40px]  px-2 rounded cursor-pointer text-primary text-sm font-family-base ${
-            className ? className : ""
-          }`}
+          className={`border border-ui-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md  h-10  px-2 rounded cursor-pointer text-ui-primary text-sm font-family-base ${className ? className : ''
+            }`}
           onKeyDown={onKeyDown}
         />
-      ) : typeItem === "currency" ? (
+      ) : typeItem === 'currency' ? (
         <CurrencyInput
           name={name}
           placeholder={placeholder}
@@ -108,25 +115,25 @@ const TransfersFiltersItem = ({
           decimalsLimit={2}
           decimalSeparator=","
           groupSeparator="."
-          intlConfig={{ locale: "pt-BR", currency: "BRL" }}
+          intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
           onValueChange={(value) => {
             const customEvent = {
               target: {
                 name,
-                value: value || "",
+                value: value || '',
               },
             } as React.ChangeEvent<HTMLInputElement>;
             onChange(customEvent);
           }}
-          className={`border border-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md h-[40px] px-2 rounded cursor-pointer text-primary text-sm font-family-base ${
-            className || ""
-          }`}
+          className={`border border-ui-primary w-full  focus:outline-none focus:shadow-md focus-visible:shadow-md h-10 px-2 rounded cursor-pointer text-ui-primary text-sm font-family-base ${className || ''
+            }`}
         />
       ) : null}
     </>
   );
 };
 
+//TODO: usar props
 const TransfersFiltersLabels = ({
   text,
   className,
@@ -134,9 +141,8 @@ const TransfersFiltersLabels = ({
 }: TTransfersFiltersLabels) => {
   return (
     <label
-      className={`text-primary text-sm font-bold font-family-base mb-1 ${
-        className ? className : ""
-      }`}
+      className={`text-ui-primary text-sm font-bold font-family-base mb-1 ${className ? className : ''
+        }`}
       style={style}
     >
       {text}
@@ -144,6 +150,7 @@ const TransfersFiltersLabels = ({
   );
 };
 
+//TODO: usar props
 const TransfersFilters = ({
   filters,
   onChange,
@@ -155,11 +162,11 @@ const TransfersFilters = ({
     useState(true);
   useEffect(() => {
     if (
-      filters.typeTransaction !== "" ||
-      filters.minimumValue !== "" ||
-      filters.maximumValue !== "" ||
-      filters.startDate !== "" ||
-      filters.endDate !== ""
+      filters.typeTransaction !== '' ||
+      filters.minimumValue !== '' ||
+      filters.maximumValue !== '' ||
+      filters.startDate !== '' ||
+      filters.endDate !== ''
     ) {
       setFilterDisabledButtonReset(false);
     }
@@ -174,7 +181,7 @@ const TransfersFilters = ({
           name="typeTransaction"
           value={filters.typeTransaction}
           onChange={onChange}
-          typeItem={"select"}
+          typeItem={'select'}
         />
       </TransfersFiltersItemContainer>
 
@@ -188,7 +195,7 @@ const TransfersFilters = ({
           value={filters.minimumValue}
           onChange={onChange}
           onKeyDown={onKeyDown}
-          typeItem={"currency"}
+          typeItem={'currency'}
         />
       </TransfersFiltersItemContainer>
 
@@ -202,7 +209,7 @@ const TransfersFilters = ({
           value={filters.maximumValue}
           onChange={onChange}
           onKeyDown={onKeyDown}
-          typeItem={"currency"}
+          typeItem={'currency'}
         />
       </TransfersFiltersItemContainer>
 
@@ -215,27 +222,27 @@ const TransfersFilters = ({
           <div className="w-1/2">
             <TransfersFiltersLabels
               text="De:"
-              style={{ fontWeight: "normal" }}
+              style={{ fontWeight: 'normal' }}
             />
             <TransfersFiltersItem
               type="date"
               name="startDate"
               value={filters.startDate}
               onChange={onChange}
-              typeItem={"input"}
+              typeItem={'input'}
             />
           </div>
           <div className="w-1/2">
             <TransfersFiltersLabels
               text="Até:"
-              style={{ fontWeight: "normal" }}
+              style={{ fontWeight: 'normal' }}
             />
             <TransfersFiltersItem
               type="date"
               name="endDate"
               value={filters.endDate}
               onChange={onChange}
-              typeItem={"input"}
+              typeItem={'input'}
             />
           </div>
         </div>
@@ -243,13 +250,13 @@ const TransfersFilters = ({
 
       <TransfersFiltersItemContainer className="mt-auto">
         <Button
-          label="Reiniciar Filtros"
-          type="button"
+          text="Reiniciar Filtros"
+          typeButton="button"
           onClick={() => {
             onResetFilters();
             setFilterDisabledButtonReset(true);
           }}
-          style={{ minWidth: "0", height: "40px", borderRadius: "4px" }}
+          variant="primary"
           disabled={filterDisabledButtonReset}
         />
       </TransfersFiltersItemContainer>

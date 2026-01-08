@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+  --bg-ui-check-primary-icon: url("../assets/svg/check-icon-primary.svg");
+  --bg-ui-check-black-icon: url("../assets/svg/check-icon-black.svg");
+  --bg-ui-check-icon: url("../assets/svg/check-icon.svg");
+}

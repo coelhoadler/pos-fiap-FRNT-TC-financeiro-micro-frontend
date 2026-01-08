@@ -1,0 +1,16 @@
+{
+  "extends": "ts-config-single-spa",
+  "files": [
+    "src/financeiro-ui.ts"
+  ],
+  "compilerOptions": {
+    "jsx": "react",
+    "declarationDir": "dist",
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/**/*.test*"
+  ]
+}

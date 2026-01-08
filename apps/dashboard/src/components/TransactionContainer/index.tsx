@@ -1,26 +1,38 @@
+import { Title } from '@financeiro/ui';
 import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import CurrencyInput from 'react-currency-input-field';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import bgCardTransaction from '../../assets/img/bg-card-transaction.png';
 import womanCreditCard from '../../assets/img/woman-credit-card.png';
 import { alertDialogTypes } from '../../enums/alertDialogTypes';
-import Button from '../Button';
-import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SuccessSnackbar';
-import Title from '../Title';
 
-import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
-import { accountServices } from '../../services/Account/apiEndpoint';
-import { transactionServices } from '../../services/Transacoes/apiEndpoints';
+import { IInputs } from '../../Models/FormModels';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { IInputs } from '../../Models/FormModels';
 
+import { Button, CustomModal } from '@financeiro/ui';
+import { transactions } from '../Home/utils/transactions';
 
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import {
+  ITransactionData,
+  ITypeTransaction,
+} from '../../../../../libs/api-client/src/Models/transactionModels';
+
+// TODO Colocar este type em um arquivo separado - e mudar nome do type para TransactionFormProps
 type TFormTransaction = {
   onlyTransactionEditing?: () => void;
 };
+
+const transactionAPIMethods = new transactionServices<ITransactionData>();
+const accountAPIMethods = new accountServices<IaccountData>();
 
 const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const {
@@ -37,22 +49,16 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.CONFIRM,
   });
-  const [pendingFormData, setPendingFormData] = useState<ITransaction | null>(
-    null
-  );
+  const [pendingFormData, setPendingFormData] =
+    useState<ITransactionData | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [idTemp, setIdTemp] = useState('');
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
+  // TODO Consumir do arquivo global que contem os tipos de transações
   const [typeTransactionOptions, setTypeTransactionOptions] = useState<
     ITypeTransaction[]
-  >(() => {
-    return [
-      { id: '1', description: 'Câmbio e Moedas' },
-      { id: '2', description: 'DOC/TED' },
-      { id: '3', description: 'Empréstimo e Financiamento' },
-    ];
-  });
+  >(() => transactions);
 
   const [valueWatched, setValueWatched] = useState<string>('');
 
@@ -90,34 +96,34 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     const typeDescription =
       typeTransactionOptions.find((option) => option.id === optionId)
         ?.description || '';
-    const _valueNew = watch('value');    
+    const _valueNew = watch('value');
 
-    const form: ITransaction = {
+    const form: ITransactionData = {
       typeTransaction: { id: optionId, description: typeDescription },
-      //   amount: id ? valueWatched : _valueNew,
-      // amount: 0 ? valueWatched : _valueNew,
       amount: 0 ? '' : _valueNew,
       date: new Date().toISOString(),
       accountNumber: user.accountNumber,
     };
+
     setPendingFormData(form);
     setShowConfirmDialog(true);
   };
 
+  // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleConfirmSubmit = async () => {
     if (!pendingFormData) return;
 
     try {
       if (id) {
-        await transactionServices.update(id, pendingFormData);
+        await transactionAPIMethods.updateTransaction(id, pendingFormData);
         setIdTemp(id);
       } else {
-        await transactionServices.create(pendingFormData);
+        await transactionAPIMethods.createTransaction(pendingFormData);
         handleNew();
         setIdTemp('');
       }
 
-      const response = await transactionServices.getAll();
+      const response = await transactionAPIMethods.getTransactionsAll();
       setExtract(response || []);
       handlerUpdateAccount(response || []);
 
@@ -138,7 +144,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     }
   };
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData?.reduce((total, item) => {
       const amount = parseFloat(
         item.amount
@@ -152,7 +158,6 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
       return (total + amount) as number;
     }, 0);
-
   };
 
   const handleOnlyTransactionEditing = () => {
@@ -169,7 +174,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
     }
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const accountJoana = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
@@ -177,7 +182,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
       accountType: 'Conta Corrente',
     };
     setBalance(accountJoana.balance);
-    await accountServices.updateAccountById(user.accountNumber, accountJoana);
+    await accountAPIMethods.updateAccountById(user.accountNumber, accountJoana);
   };
 
   const handleCancelTransaction = () => {
@@ -210,7 +215,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
           <select
             id="type-transaction-option"
-            className="w-full md:w-[355px] h-[48px] border-solid border-1 border-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+            className="w-full md:w-[355px] h-[48px] border-solid border border-ui-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
             {...register('typeTransaction', { required: true })}
           >
             <option value="">Selecione uma opção</option>
@@ -252,7 +257,7 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
               locale: 'pt-BR',
               currency: 'BRL',
             }}
-            className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+            className="w-full md:w-[250px] h-[48px] border border-ui-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
             onValueChange={(event, originalValue, maskedValue) => {
               const valueWithoutCurrencySymbol = maskedValue.formatted.replace(
                 'R$',
@@ -276,15 +281,16 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
 
         <section className="flex gap-2 max-md:flex-wrap">
           <Button
-            primary
-            type="submit"
+            variant="primary"
+            typeButton="submit"
             onClick={() => handleOnlyTransactionEditing()}
-            label={id ? 'Atualizar transação' : 'Concluir transação'}
+            text={id ? 'Atualizar transação' : 'Concluir transação'}
           />
           {id && (
             <Button
-              type="button"
-              label="Cancelar"
+              typeButton="button"
+              text="Cancelar"
+              variant="primary-outline"
               onClick={() => {
                 handleCancelTransaction();
                 handleOnlyTransactionEditing();
@@ -310,7 +316,9 @@ const FormTransaction = ({ onlyTransactionEditing }: TFormTransaction) => {
         />
       </form>
       {
-        <AlertDialog
+        <CustomModal
+          variant="transactions"
+          id="transaction-form-dialog"
           type={dialogType.type}
           open={showConfirmDialog}
           setOpen={setShowConfirmDialog}

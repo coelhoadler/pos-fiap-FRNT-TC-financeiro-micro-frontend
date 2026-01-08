@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --filter-ui-primary: brightness(0) saturate(100%) invert(23%) sepia(14%)
+    saturate(5068%) hue-rotate(157deg) brightness(94%) contrast(101%);
+  --filter-ui-primary-500: brightness(0) saturate(100%) invert(24%) sepia(90%)
+    saturate(1174%) hue-rotate(162deg) brightness(98%) contrast(96%);
+  --filter-ui-primary-600: brightness(0) saturate(100%) invert(70%) sepia(12%)
+    saturate(564%) hue-rotate(314deg) brightness(101%) contrast(85%);
+
+  --filter-ui-primary-2: brightness(0) saturate(100%) invert(71%) sepia(13%)
+    saturate(2376%) hue-rotate(64deg) brightness(73%) contrast(84%);
+  --filter-ui-primary-2-500: brightness(0) saturate(100%) invert(36%) sepia(98%)
+    saturate(341%) hue-rotate(65deg) brightness(95%) contrast(88%);
+
+  --filter-ui-secondary: brightness(0) saturate(100%) invert(41%) sepia(76%)
+    saturate(3136%) hue-rotate(341deg) brightness(110%) contrast(110%);
+
+  --filter-ui-tertiary: brightness(0) saturate(100%) invert(21%) sepia(12%)
+    saturate(1054%) hue-rotate(146deg) brightness(88%) contrast(89%);
+
+  --filter-ui-gray-100: brightness(0) saturate(100%) invert(99%) sepia(51%)
+    saturate(66%) hue-rotate(172deg) brightness(116%) contrast(95%);
+  --filter-ui-gray-200: brightness(0) saturate(100%) invert(100%) sepia(9%)
+    saturate(490%) hue-rotate(275deg) brightness(115%) contrast(92%);
+  --filter-ui-gray-300: brightness(0) saturate(100%) invert(76%) sepia(0%)
+    saturate(91%) hue-rotate(173deg) brightness(103%) contrast(103%);
+
+  --filter-ui-error: brightness(0) saturate(100%) invert(14%) sepia(67%)
+    saturate(5712%) hue-rotate(353deg) brightness(82%) contrast(98%);
+
+  --filter-ui-inactive: brightness(0) saturate(100%) invert(91%) sepia(9%)
+    saturate(166%) hue-rotate(137deg) brightness(103%) contrast(90%);
+
+  --filter-ui-white: brightness(0) saturate(100%) invert(100%) sepia(0%)
+    saturate(7488%) hue-rotate(262deg) brightness(118%) contrast(100%);
+}

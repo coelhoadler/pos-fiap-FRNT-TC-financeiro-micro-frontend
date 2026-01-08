@@ -1,8 +1,12 @@
 import CurrencyInput from 'react-currency-input-field';
-import { ITransaction, ITypeTransaction } from '../../Models/transactionModels';
+import {
+  ITransactionData,
+  ITypeTransaction,
+} from '../../../../../libs/api-client/src/Models/transactionModels';
 import Title from '../Title';
 
-export const buildTransactionEditForm = (transactionItem: ITransaction) => {
+export const buildTransactionEditForm = (transactionItem: ITransactionData) => {
+  //TODO: Criar um enum para typeTransaction
   const typeTransactionOptions: ITypeTransaction[] = [
     { id: '1', description: 'Câmbio e Moedas' },
     { id: '2', description: 'DOC/TED' },
@@ -18,7 +22,7 @@ export const buildTransactionEditForm = (transactionItem: ITransaction) => {
   };
 
   return (
-    <>
+    <div className="w-full">
       <fieldset className="flex flex-col">
         <Title
           text="*Campo obrigatório"
@@ -29,7 +33,7 @@ export const buildTransactionEditForm = (transactionItem: ITransaction) => {
 
         <select
           id="type-transaction-option"
-          className="w-full md:w-[355px] h-[48px] border-solid border-1 border-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+          className="w-full md:w-[355px] h-12 border-solid border border-ui-primary rounded p-16 bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
           defaultValue={
             typeTransactionOptions.find(
               (option) =>
@@ -69,7 +73,7 @@ export const buildTransactionEditForm = (transactionItem: ITransaction) => {
 
         <CurrencyInput
           key={`edit-${transactionItem.id}`}
-          className="w-full md:w-[250px] h-[48px] border border-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
+          className="w-full md:w-[250px] h-12 border border-ui-primary rounded bg-white text-black px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3"
           defaultValue={transactionItem.amount
             .replace('R$', '')
             .trim()
@@ -89,6 +93,6 @@ export const buildTransactionEditForm = (transactionItem: ITransaction) => {
           }}
         />
       </fieldset>
-    </>
+    </div>
   );
 };

@@ -1,28 +1,23 @@
-import { useState } from "react";
-import { ITypeTransaction } from "../../Models/transactionModels";
-import { useTransaction } from "../../setup/context/transactionContext";
-import AccountStatement from "../AccountStatement";
-import CardBalance from "../CardBalance";
-import Charts from "../Charts";
-import FormTransaction from "../TransactionContainer";
+import { Charts } from '@financeiro/ui';
+import { useState } from 'react';
+import { ITypeTransaction } from '../../../../../libs/api-client/src/Models/transactionModels';
+import { useTransaction } from '../../setup/context/transactionContext';
+import AccountStatement from '../AccountStatement';
+import CardBalance from '../CardBalance';
+import FormTransaction from '../TransactionContainer';
+import { transactions } from './utils/transactions';
 
 export default function Home({ username }: { username: string }) {
   const { extract, balance } = useTransaction();
 
   const [typeTransactionOptions, setTypeTransactionOptions] = useState<
     ITypeTransaction[]
-  >(() => {
-    return [
-      { id: "1", description: "Câmbio e Moedas" },
-      { id: "2", description: "DOC/TED" },
-      { id: "3", description: "Empréstimo e Financiamento" },
-    ];
-  });
+  >(() => transactions);
 
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
   const [dateFilterActive, setDateFilterActive] = useState(false);
-  const [dateError, setDateError] = useState<string>("");
+  const [dateError, setDateError] = useState<string>('');
   const [disableResetFilter, setDisableResetFilter] = useState(true);
 
   function handleStartDateChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -31,9 +26,9 @@ export default function Home({ username }: { username: string }) {
     setDateFilterActive(!!endDate || !!value);
 
     if (endDate && value > endDate) {
-      setDateError("A data inicial não pode ser maior que a data final.");
+      setDateError('A data inicial não pode ser maior que a data final.');
     } else {
-      setDateError("");
+      setDateError('');
     }
     setDisableResetFilter(false);
   }
@@ -44,19 +39,19 @@ export default function Home({ username }: { username: string }) {
     setDateFilterActive(!!startDate || !!value);
 
     if (startDate && startDate > value) {
-      setDateError("A data inicial não pode ser maior que a data final.");
+      setDateError('A data inicial não pode ser maior que a data final.');
     } else {
-      setDateError("");
+      setDateError('');
     }
     setDisableResetFilter(false);
   }
 
   function handleResetFilter() {
-    if (startDate || endDate != "") {
-      setStartDate("");
-      setEndDate("");
+    if (startDate || endDate != '') {
+      setStartDate('');
+      setEndDate('');
       setDateFilterActive(false);
-      setDateError("");
+      setDateError('');
       setDisableResetFilter(true);
     }
   }
@@ -76,10 +71,10 @@ export default function Home({ username }: { username: string }) {
       .reduce((sum, item) => {
         const value = parseFloat(
           item.amount
-            .replace("R$", "")
+            .replace('R$', '')
             .trim()
-            .replace(".", "")
-            .replace(",", ".")
+            .replace('.', '')
+            .replace(',', '.')
         );
         return sum + (isNaN(value) ? 0 : value);
       }, 0);
@@ -87,7 +82,7 @@ export default function Home({ username }: { username: string }) {
   const chartData = typeTransactionOptions
     .map((type) => ({
       label: (location: string) =>
-        location === "tooltip" ? "" : type.description,
+        location === 'tooltip' ? '' : type.description,
       value: getSumByType(type.id),
     }))
     .filter((item) => item.value > 0);

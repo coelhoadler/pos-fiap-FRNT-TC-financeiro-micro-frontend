@@ -1,29 +1,38 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { ITransaction } from '../../Models/transactionModels';
-import { alertDialogTypes } from '../../enums/alertDialogTypes';
-import { accountServices } from '../../services/Account/apiEndpoint';
-import { useTransaction } from '../../setup/context/transactionContext';
-import { TAlertDialogType } from '../../types/TAlertDialogType';
-import { sortExtractByAscDate } from '../../utils/formatters';
-import AlertDialog from '../Dialog';
-import SuccessSnackbar from '../SuccessSnackbar';
-import TransactionItem from '../TransactionItem';
+import { CustomModal } from '@financeiro/ui';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Tooltip from '@mui/material/Tooltip';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { alertDialogTypes } from '../../enums/alertDialogTypes';
+import { useTransaction } from '../../setup/context/transactionContext';
+import { TAlertDialogType } from '../../types/TAlertDialogType';
+import { sortExtractByAscDate } from '../../utils/formatters';
+import SuccessSnackbar from '../SuccessSnackbar';
+import TransactionItem from '../TransactionItem';
+
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
 
 type TAccountStatement = {
   onEditTransaction?: () => void;
 };
 
+const transactionAPIMethods = new transactionServices<ITransactionData>();
+const accountAPIMethods = new accountServices<IaccountData>();
+
 export default function AccountStatement({
   onEditTransaction,
 }: TAccountStatement) {
   const [updatedTransactions, setUpdatedTransactions] = useState<
-    ITransaction[]
+    ITransactionData[]
   >([]);
-  const { extract, transactionServices, setBalance, setExtract } = useTransaction();
+  const { extract, setBalance, setExtract } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>({
     type: alertDialogTypes.DELETE,
   });
@@ -39,9 +48,10 @@ export default function AccountStatement({
     setUpdatedTransactions(extractOrdered || []);
   }, [extract]);
 
+  // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleTransactionDelete = async (transactionId: string) => {
     try {
-      await transactionServices.delete(transactionId);
+      await transactionAPIMethods.deleteTransactionById(transactionId);
 
       if (updatedTransactions) {
         const remainingTransactions = updatedTransactions.filter(
@@ -56,7 +66,7 @@ export default function AccountStatement({
       }
     } catch (error) {
       if (error?.status === 401) {
-          window.location.href = '/login';
+        window.location.href = '/login';
       }
       console.error('Error deleting transaction:', error);
     }
@@ -67,7 +77,7 @@ export default function AccountStatement({
     setId(transactionId);
   };
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
         item.amount.replace('R$', '').trim().replace('.', '').replace(',', '.')
@@ -76,7 +86,7 @@ export default function AccountStatement({
     }, 0);
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const accountJoana = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
@@ -84,12 +94,13 @@ export default function AccountStatement({
       accountType: 'Conta Corrente',
     };
     setBalance(accountJoana.balance);
-    await accountServices.updateAccountById(user.accountNumber , accountJoana);
+    await accountAPIMethods.updateAccountById(user.accountNumber, accountJoana);
   };
 
+  // TODO  Verificar se é necessário refatorar  - useHook (regra de negocio)
   const handleConfirmSubmit = async (transactionId: string) => {
     try {
-      await transactionServices.delete(transactionId);
+      await transactionAPIMethods.deleteTransactionById(transactionId);
 
       if (updatedTransactions) {
         const remainingTransactions = updatedTransactions.filter(
@@ -104,7 +115,7 @@ export default function AccountStatement({
         setShowConfirmDialog(false);
       }
     } catch (error) {
-     if (error?.status === 401) {
+      if (error?.status === 401) {
         toast.error('Sessão expirada, por favor faça login novamente.');
         window.location.href = '/login';
       }
@@ -122,12 +133,17 @@ export default function AccountStatement({
         {updatedTransactions.length > 0 ? (
           <>
             {updatedTransactions
-              .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+              .slice(
+                currentPage * itemsPerPage,
+                (currentPage + 1) * itemsPerPage
+              )
               .map((transaction, index) => (
                 <TransactionItem
                   item={transaction}
                   key={index}
-                  onDelete={() => handleTransactionDeleteConfirmation(transaction.id!)}
+                  onDelete={() =>
+                    handleTransactionDeleteConfirmation(transaction.id!)
+                  }
                   onEdit={onEditTransaction}
                 />
               ))}
@@ -135,34 +151,39 @@ export default function AccountStatement({
               {currentPage > 0 && (
                 <Tooltip title="Página anterior">
                   <button
-                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                    className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
                     disabled={currentPage === 0}
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 0))
+                    }
                   >
                     <ChevronLeftIcon style={{ color: 'white' }} />
                   </button>
                 </Tooltip>
               )}
-              {((currentPage + 1) * itemsPerPage < updatedTransactions.length) && (
+              {(currentPage + 1) * itemsPerPage <
+                updatedTransactions.length && (
                 <Tooltip title="Próxima página">
                   <button
-                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                    className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
                     onClick={() => setCurrentPage((prev) => prev + 1)}
                   >
-                    <ChevronRightIcon style={{ color: 'white' }}/>
+                    <ChevronRightIcon style={{ color: 'white' }} />
                   </button>
                 </Tooltip>
               )}
             </div>
           </>
         ) : (
-          <span className="text-gray-500 text-center">
+          <span className="text-ui-gray-500 text-center">
             Nenhuma transação encontrada.
           </span>
         )}
       </ul>
       {
-        <AlertDialog
+        <CustomModal
+          variant="transactions"
+          id="delete-transaction-dialog"
           open={showConfirmDialog}
           type={dialogType.type}
           setOpen={setShowConfirmDialog}

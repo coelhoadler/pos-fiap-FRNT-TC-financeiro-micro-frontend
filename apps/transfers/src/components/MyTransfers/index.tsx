@@ -4,21 +4,31 @@ import { Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { alertDialogTypes } from '../../enums/alertDialogTypes';
-import { ITransaction } from '../../Models/transactionModels';
-import { accountServices } from '../../services/Account/apiEndpoint';
 import { useTransaction } from '../../setup/context/transactionContext';
 import { TAlertDialogType } from '../../types/TAlertDialogType';
 import { sortExtractByAscDate } from '../../utils/formatters';
-import AlertDialog from '../Dialog';
 import SuccessSnackbar from '../SucessSnackBar';
 import { TransfersFilters } from './TransferFilter';
 import TransferItem from './TransferItem';
 import { buildTransactionEditForm } from './utils';
 
+import {
+  accountServices,
+  transactionServices,
+} from '../../../../../libs/api-client/src/index';
+
+import { IaccountData } from '../../../../../libs/api-client/src/Models/accountModels';
+import { ITransactionData } from '../../../../../libs/api-client/src/Models/transactionModels';
+
+const transactionAPIMethods = new transactionServices<ITransactionData>();
+const accountAPIMethods = new accountServices<IaccountData>();
+
+import { CustomModal } from '@financeiro/ui';
+
 const MyTransfers = () => {
-  const [myTransactions, setMyTransactions] = useState<ITransaction[]>([]);
+  const [myTransactions, setMyTransactions] = useState<ITransactionData[]>([]);
   const [filteredTransactions, setFilteredTransactions] = useState<
-    ITransaction[]
+    ITransactionData[]
   >([]);
   const [filterError, setFilterError] = useState('');
   const [filters, setFilters] = useState({
@@ -29,28 +39,31 @@ const MyTransfers = () => {
     endDate: '',
   });
 
-  const { transactionServices, setBalance, extract, setExtract } = useTransaction();
+  const { setBalance, extract, setExtract } = useTransaction();
   const [dialogType, setDialogType] = useState<TAlertDialogType>();
   const [id, setId] = useState<string>('');
-  const [edit, setEdit] = useState<ITransaction>({} as ITransaction);
+  const [edit, setEdit] = useState<ITransactionData>({} as ITransactionData);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 3;
   const user = JSON.parse(localStorage.getItem('user')) || '';
 
+  //TODO: usar hooks para pegar as transacoes
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const responseData = await transactionServices.getAll();
+        const responseData = await transactionAPIMethods.getTransactionsAll();
+
         const extractOrdered = sortExtractByAscDate(responseData || []);
-        setMyTransactions(extractOrdered);  
+
+        setMyTransactions(extractOrdered);
       } catch (error) {
         if (error.status === 401) {
           window.location.href = '/login';
           console.error('Erro ao enviar o formulário:', error);
-        }      
-      }      
+        }
+      }
     };
     fetchTransaction();
   }, [extract]);
@@ -61,7 +74,7 @@ const MyTransfers = () => {
     setId(transactionId);
   };
 
-  const calculateTotalAmount = (responseData: ITransaction[]) => {
+  const calculateTotalAmount = (responseData: ITransactionData[]) => {
     return responseData.reduce((total, item) => {
       const amount = parseFloat(
         item.amount
@@ -77,20 +90,20 @@ const MyTransfers = () => {
     }, 0);
   };
 
-  const handlerUpdateAccount = async (responseData: ITransaction[]) => {
+  const handlerUpdateAccount = async (responseData: ITransactionData[]) => {
     const account = {
       accountNumber: user.accountNumber,
       balance: calculateTotalAmount(responseData || []),
       currency: 'BRL',
       accountType: 'Conta Corrente',
     };
-    
-    await accountServices.updateAccountById(user.accountNumber, account);
+
+    await accountAPIMethods.updateAccountById(user.accountNumber, account);
   };
 
   const handleConfirmSubmit = async (transactionId: string) => {
     try {
-      await transactionServices.delete(transactionId);
+      await transactionAPIMethods.deleteTransactionById(transactionId);
       const remainingTransactions = myTransactions.filter(
         (t) => t.id !== transactionId
       );
@@ -100,21 +113,21 @@ const MyTransfers = () => {
       setShowConfirmDialog(false);
       toast.dismiss();
     } catch (error) {
-        if (error?.status === 401) {
-          window.location.href = '/login';
-          console.error('Erro ao enviar o formulário:', error);
-        } 
+      if (error?.status === 401) {
+        window.location.href = '/login';
+        console.error('Erro ao enviar o formulário:', error);
+      }
     }
   };
 
-  const handleConfirmEditSubmit = async (transactionItem: ITransaction) => {
+  const handleConfirmEditSubmit = async (transactionItem: ITransactionData) => {
     const postTransaction = {
       ...transactionItem,
       date: new Date().toISOString(),
     };
 
     try {
-      const updatedTransaction = await transactionServices.update(
+      const updatedTransaction = await transactionAPIMethods.updateTransaction(
         postTransaction.id!,
         postTransaction
       );
@@ -130,17 +143,16 @@ const MyTransfers = () => {
       setShowSuccess(true);
       setShowConfirmDialog(false);
       toast.dismiss();
-      setExtract([])
-
+      setExtract([]);
     } catch (error) {
-        if (error.status === 401) {
-          window.location.href = '/login';
-          console.error('Erro ao enviar o formulário:', error);
-        } 
+      if (error.status === 401) {
+        window.location.href = '/login';
+        console.error('Erro ao enviar o formulário:', error);
+      }
     }
   };
 
-  const handleEditTransaction = (transactionItem: ITransaction) => {
+  const handleEditTransaction = (transactionItem: ITransactionData) => {
     localStorage.setItem('transactionItem', JSON.stringify(transactionItem));
 
     setDialogType({ type: alertDialogTypes.EDIT });
@@ -161,8 +173,8 @@ const MyTransfers = () => {
   };
 
   const handleCancelSubmit = () => {
-    setShowConfirmDialog
-  }
+    setShowConfirmDialog;
+  };
 
   const normalizeStartDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split('-');
@@ -317,7 +329,7 @@ const MyTransfers = () => {
                 currentPage > 0 && (
                   <Tooltip title="Página anterior">
                     <button
-                      className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                      className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
                       onClick={() =>
                         setCurrentPage((prev) => Math.max(prev - 1, 0))
                       }
@@ -331,7 +343,7 @@ const MyTransfers = () => {
                 (currentPage + 1) * itemsPerPage && (
                 <Tooltip title="Próxima página">
                   <button
-                    className="bg-primary rounded-full h-[40px] w-[40px] flex items-center justify-center cursor-pointer"
+                    className="bg-ui-primary rounded-full h-10 w-10 flex items-center justify-center cursor-pointer"
                     onClick={() =>
                       setCurrentPage((prev) =>
                         Math.min(
@@ -354,13 +366,20 @@ const MyTransfers = () => {
 
       {dialogType?.type === alertDialogTypes.DELETE && (
         <>
-          <AlertDialog
+          {/* <AlertDialog
             open={showConfirmDialog}
             type={'Delete'}
             setOpen={setShowConfirmDialog}
             handleConfirmSubmit={() => handleConfirmSubmit(id)}
             handleCancelSubmit={handleCancelSubmit}
-            
+          /> */}
+          <CustomModal
+            open={showConfirmDialog}
+            variant="transactions"
+            id="delete-transaction"
+            type={'Delete'}
+            setOpen={setShowConfirmDialog}
+            handleConfirmSubmit={() => handleConfirmSubmit(id)}
           />
 
           <SuccessSnackbar
@@ -374,7 +393,7 @@ const MyTransfers = () => {
 
       {dialogType?.type === alertDialogTypes.EDIT && (
         <>
-          <AlertDialog
+          {/* <AlertDialog
             open={showConfirmDialog}
             type={'Edit'}
             setOpen={setShowConfirmDialog}
@@ -383,6 +402,18 @@ const MyTransfers = () => {
               handleConfirmEditSubmit(edit);
             }}
             handleCancelSubmit={() => handleCancelEdit()}
+            children={buildTransactionEditForm(edit)}
+          /> */}
+          <CustomModal
+            open={showConfirmDialog}
+            type={'Edit'}
+            id="edit-transaction"
+            setOpen={setShowConfirmDialog}
+            handleConfirmSubmit={() => {
+              if (!edit.amount) return;
+              handleConfirmEditSubmit(edit);
+            }}
+            variant="transactions"
             children={buildTransactionEditForm(edit)}
           />
 

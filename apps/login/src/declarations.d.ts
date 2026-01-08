@@ -37,3 +37,8 @@ declare module "*.svg" {
   const src: string;
   export default src;
 }
+
+declare module "@financeiro/ui";
+
+declare module "@financeiro/api-client";
+
